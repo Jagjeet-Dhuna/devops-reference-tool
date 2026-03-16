@@ -55,7 +55,7 @@ export function CategorySidebar({
   onOsChange,
 }: CategorySidebarProps) {
   return (
-    <aside className="hidden sm:flex flex-col border-r border-zinc-800 bg-[#0a0a0c] w-14 lg:w-48 shrink-0">
+    <aside className="hidden sm:flex flex-col overflow-hidden border-r border-zinc-800 bg-[#0a0a0c] w-14 lg:w-48 shrink-0">
       <div className="p-2 lg:p-3">
         <button
           onClick={() => onCategoryChange(null)}

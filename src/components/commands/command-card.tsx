@@ -34,7 +34,7 @@ export function CommandCard({ command, isActive, onClick }: CommandCardProps) {
           className="text-sm font-mono leading-tight truncate"
           style={{ color: category?.color ?? "#71717a" }}
         >
-          $ {command.id}
+          $ {command.command}
         </code>
       </div>
       <p className="text-xs text-zinc-500 font-mono truncate">
