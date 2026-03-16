@@ -165,7 +165,7 @@ export default function Home() {
         />
 
         {/* Command list — desktop middle panel */}
-        <div className="w-72 lg:w-80 border-r border-zinc-800 bg-[#0c0c0e] overflow-hidden shrink-0 hidden sm:block">
+        <div className="h-full w-72 lg:w-80 border-r border-zinc-800 bg-[#0c0c0e] overflow-hidden shrink-0 hidden sm:block">
           <CommandList
             commands={commands}
             activeCommandId={selectedCommand?.id || null}
@@ -188,7 +188,7 @@ export default function Home() {
                 >
                   <ArrowLeft className="h-4 w-4 text-emerald-500 shrink-0" />
                   <code className="text-xs font-mono text-zinc-300 truncate">
-                    $ {selectedCommand.id}
+                    $ {selectedCommand.id.replace(/-/g, ' ')}
                   </code>
                 </button>
                 <div className="flex-1 overflow-hidden">
