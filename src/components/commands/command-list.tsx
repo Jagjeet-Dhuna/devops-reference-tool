@@ -2,7 +2,6 @@
 
 import { Command } from "@/lib/types";
 import { CommandCard } from "./command-card";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface CommandListProps {
@@ -47,7 +46,7 @@ export function CommandList({
           No commands found
         </div>
       ) : (
-        <ScrollArea className="flex-1">
+        <div className="flex-1 overflow-y-auto min-h-0">
           {commands.map((cmd) => (
             <CommandCard
               key={`${cmd.category}-${cmd.id}`}
@@ -56,7 +55,7 @@ export function CommandList({
               onClick={() => onCommandSelect(cmd)}
             />
           ))}
-        </ScrollArea>
+        </div>
       )}
     </div>
   );

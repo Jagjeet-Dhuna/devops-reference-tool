@@ -2,16 +2,23 @@
 
 import {
   Terminal,
-  Hash,
-  Blocks,
-  Container,
-  Ship,
-  GitBranch,
   Network,
-  Cog,
   Layers,
   type LucideIcon,
 } from "lucide-react";
+import {
+  SiDocker,
+  SiKubernetes,
+  SiTerraform,
+  SiAnsible,
+  SiGit,
+  SiAmazonwebservices,
+  SiMicrosoftazure,
+  SiPowershell,
+  SiLinux,
+  SiGnubash,
+} from "react-icons/si";
+import type { IconType } from "react-icons";
 import { cn } from "@/lib/utils";
 import { categories } from "@/lib/categories";
 import {
@@ -20,16 +27,23 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-const iconMap: Record<string, LucideIcon> = {
-  Terminal,
-  Hash,
-  Blocks,
-  Container,
-  Ship,
-  GitBranch,
+const lucideIconMap: Record<string, LucideIcon> = {
   Network,
-  Cog,
   Layers,
+};
+
+// Brand logos via react-icons/si — keyed by category id
+const brandIconMap: Record<string, IconType> = {
+  linux:      SiLinux,
+  bash:       SiGnubash,
+  docker:     SiDocker,
+  kubernetes: SiKubernetes,
+  terraform:  SiTerraform,
+  ansible:    SiAnsible,
+  git:        SiGit,
+  aws:        SiAmazonwebservices,
+  azure:      SiMicrosoftazure,
+  powershell: SiPowershell,
 };
 
 const OS_OPTIONS = [
@@ -75,9 +89,11 @@ export function CategorySidebar({
 
       <nav className="flex-1 p-2 lg:p-3 space-y-1 overflow-y-auto">
         {categories.map((cat) => {
-          const Icon = iconMap[cat.icon] || Terminal;
+          const BrandIcon = brandIconMap[cat.id];
+          const FallbackIcon = lucideIconMap[cat.icon] || Terminal;
           const isActive = activeCategory === cat.id;
           const count = commandCounts[cat.id] || 0;
+          const iconColor = isActive ? cat.color : undefined;
 
           return (
             <Tooltip key={cat.id}>
@@ -95,7 +111,10 @@ export function CategorySidebar({
                     : undefined
                 }
               >
-                <Icon className="h-5 w-5 shrink-0" style={{ color: isActive ? cat.color : undefined }} />
+                {BrandIcon
+                  ? <BrandIcon className="h-5 w-5 shrink-0" style={{ color: iconColor }} />
+                  : <FallbackIcon className="h-5 w-5 shrink-0" style={{ color: iconColor }} />
+                }
                 <span className="hidden lg:inline flex-1 text-left">{cat.label}</span>
                 {count > 0 && (
                   <span className="hidden lg:inline text-xs text-zinc-500">
