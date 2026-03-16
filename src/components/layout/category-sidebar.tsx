@@ -4,6 +4,9 @@ import {
   Terminal,
   Network,
   Layers,
+  Cloud,
+  CloudCog,
+  Code2,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -12,9 +15,6 @@ import {
   SiTerraform,
   SiAnsible,
   SiGit,
-  SiAmazonwebservices,
-  SiMicrosoftazure,
-  SiPowershell,
   SiLinux,
   SiGnubash,
 } from "react-icons/si";
@@ -30,9 +30,13 @@ import {
 const lucideIconMap: Record<string, LucideIcon> = {
   Network,
   Layers,
+  Cloud,
+  CloudCog,
+  Code2,
 };
 
 // Brand logos via react-icons/si — keyed by category id
+// AWS, Azure, PowerShell not available in react-icons v5 si subset — Lucide fallback used
 const brandIconMap: Record<string, IconType> = {
   linux:      SiLinux,
   bash:       SiGnubash,
@@ -41,9 +45,6 @@ const brandIconMap: Record<string, IconType> = {
   terraform:  SiTerraform,
   ansible:    SiAnsible,
   git:        SiGit,
-  aws:        SiAmazonwebservices,
-  azure:      SiMicrosoftazure,
-  powershell: SiPowershell,
 };
 
 const OS_OPTIONS = [
