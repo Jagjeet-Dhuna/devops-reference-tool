@@ -77,4 +77,6 @@ To add a new category, add an entry to `src/lib/categories.ts` and a matching `d
 
 ## License
 
-MIT
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
+AGPL-3.0
