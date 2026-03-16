@@ -1,0 +1,5622 @@
+[
+  {
+    "id": "ls",
+    "category": "linux",
+    "command": "ls -lah",
+    "title": "List directory contents",
+    "difficulty": "beginner",
+    "description": "List directory contents with permissions, ownership, size, and timestamps — the most-used command for exploring any filesystem.",
+    "breakdown": [
+      {
+        "part": "ls",
+        "meaning": "List directory contents"
+      },
+      {
+        "part": "-l",
+        "meaning": "Long format — shows permissions, owner, size, date"
+      },
+      {
+        "part": "-a",
+        "meaning": "All files — includes hidden files starting with ."
+      },
+      {
+        "part": "-h",
+        "meaning": "Human readable — sizes shown as KB, MB, GB"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-a, --all",
+        "description": "Do not ignore entries starting with .",
+        "source": "local"
+      },
+      {
+        "flag": "-l",
+        "description": "Use a long listing format",
+        "source": "local"
+      },
+      {
+        "flag": "-h, --human-readable",
+        "description": "Print sizes in human readable format",
+        "source": "local"
+      },
+      {
+        "flag": "-r, --reverse",
+        "description": "Reverse order while sorting",
+        "source": "local"
+      },
+      {
+        "flag": "-t",
+        "description": "Sort by modification time, newest first",
+        "source": "local"
+      }
+    ],
+    "example": "ls -lah /var/log",
+    "output": "total 128K\ndrwxr-xr-x  8 root root 4.0K Mar 12 09:00 .\ndrwxr-xr-x 14 root root 4.0K Mar 10 12:00 ..\n-rw-r--r--  1 root root  18K Mar 12 08:55 syslog\n-rw-r--r--  1 root root  42K Mar 11 23:00 auth.log",
+    "tip": "Add 'alias ll=\"ls -lah\"' to ~/.bashrc for a permanent shortcut. Use 'ls -lt' to sort by modification time (newest first) or 'ls -lS' to sort by size.",
+    "tags": [
+      "files",
+      "navigation",
+      "directory",
+      "list",
+      "show",
+      "folder",
+      "view",
+      "browse",
+      "contents"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "cp",
+    "category": "linux",
+    "command": "cp -r source/ dest/",
+    "title": "Copy files and directories",
+    "difficulty": "beginner",
+    "description": "Copy files or directories to another location, preserving structure. Use -r for directories and -a to preserve permissions, timestamps, and ownership.",
+    "breakdown": [
+      {
+        "part": "cp",
+        "meaning": "Copy files and directories"
+      },
+      {
+        "part": "-r",
+        "meaning": "Recursive — copy directories and their contents"
+      },
+      {
+        "part": "source/",
+        "meaning": "Source directory to copy from"
+      },
+      {
+        "part": "dest/",
+        "meaning": "Destination path to copy to"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-r, --recursive",
+        "description": "Copy directories recursively",
+        "source": "local"
+      },
+      {
+        "flag": "-p, --preserve",
+        "description": "Preserve file attributes (mode, ownership, timestamps)",
+        "source": "local"
+      },
+      {
+        "flag": "-i, --interactive",
+        "description": "Prompt before overwriting",
+        "source": "local"
+      },
+      {
+        "flag": "-n, --no-clobber",
+        "description": "Do not overwrite existing files",
+        "source": "local"
+      },
+      {
+        "flag": "-v, --verbose",
+        "description": "Show files as they are copied",
+        "source": "local"
+      },
+      {
+        "flag": "-a, --archive",
+        "description": "Archive mode — same as -dR --preserve=all",
+        "source": "local"
+      }
+    ],
+    "example": "cp -rp /etc/nginx /backup/nginx-$(date +%F)",
+    "output": "(no output — silently copies directory)\n\n# Check with: ls /backup/\nnginx-2024-03-12",
+    "tip": "Use -a (archive) instead of -r to preserve all file attributes including ownership and timestamps — essential for backups.",
+    "tags": [
+      "files",
+      "copy",
+      "backup",
+      "duplicate",
+      "clone"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "mv",
+    "category": "linux",
+    "command": "mv oldname.txt newname.txt",
+    "title": "Move or rename files",
+    "difficulty": "beginner",
+    "description": "Rename a file or move it to a different location. Works for both files and directories.",
+    "breakdown": [
+      {
+        "part": "mv",
+        "meaning": "Move (rename) files or directories"
+      },
+      {
+        "part": "oldname.txt",
+        "meaning": "Source file or directory"
+      },
+      {
+        "part": "newname.txt",
+        "meaning": "Destination name or path"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-i, --interactive",
+        "description": "Prompt before overwriting",
+        "source": "local"
+      },
+      {
+        "flag": "-n, --no-clobber",
+        "description": "Do not overwrite an existing file",
+        "source": "local"
+      },
+      {
+        "flag": "-v, --verbose",
+        "description": "Explain what is being done",
+        "source": "local"
+      },
+      {
+        "flag": "-f, --force",
+        "description": "Do not prompt before overwriting",
+        "source": "local"
+      }
+    ],
+    "example": "mv /tmp/deploy.sh /usr/local/bin/deploy.sh",
+    "output": "(no output — file is moved silently)\n\n# Verify with: ls /usr/local/bin/deploy.sh\n-rwxr-xr-x 1 root root 1024 Mar 12 10:00 /usr/local/bin/deploy.sh",
+    "tip": "mv across filesystems copies then deletes. For large files across mounts, consider rsync --remove-source-files instead.",
+    "tags": [
+      "files",
+      "rename",
+      "move",
+      "relocate"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "rm",
+    "category": "linux",
+    "command": "rm -rf /path/to/dir",
+    "title": "Remove files and directories",
+    "difficulty": "beginner",
+    "description": "Forcefully and recursively delete a directory and all its contents with no confirmation prompt.",
+    "breakdown": [
+      {
+        "part": "rm",
+        "meaning": "Remove files or directories"
+      },
+      {
+        "part": "-r",
+        "meaning": "Recursive — remove directories and their contents"
+      },
+      {
+        "part": "-f",
+        "meaning": "Force — ignore nonexistent files, never prompt"
+      },
+      {
+        "part": "/path/to/dir",
+        "meaning": "Target to delete"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-r, --recursive",
+        "description": "Remove directories and their contents recursively",
+        "source": "local"
+      },
+      {
+        "flag": "-f, --force",
+        "description": "Ignore nonexistent files, never prompt",
+        "source": "local"
+      },
+      {
+        "flag": "-i",
+        "description": "Prompt before every removal",
+        "source": "local"
+      },
+      {
+        "flag": "-v, --verbose",
+        "description": "Explain what is being done",
+        "source": "local"
+      }
+    ],
+    "example": "rm -rf /tmp/build-artifacts/",
+    "output": "(deletes silently — no output unless -v is used)",
+    "tip": "DANGER: rm -rf is irreversible. Use trash-cli instead for a recoverable delete. Always double-check the path before running.",
+    "tags": [
+      "files",
+      "delete",
+      "cleanup",
+      "remove",
+      "erase",
+      "clean",
+      "wipe"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "mkdir",
+    "category": "linux",
+    "command": "mkdir -p /path/to/nested/dir",
+    "title": "Create directories",
+    "difficulty": "beginner",
+    "description": "Create one or more directories, including all required parent directories in a single command with -p.",
+    "breakdown": [
+      {
+        "part": "mkdir",
+        "meaning": "Make directories"
+      },
+      {
+        "part": "-p",
+        "meaning": "Parents — create parent directories as needed, no error if exists"
+      },
+      {
+        "part": "/path/to/nested/dir",
+        "meaning": "Full directory path to create"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-p, --parents",
+        "description": "Create parent directories as needed",
+        "source": "local"
+      },
+      {
+        "flag": "-m, --mode",
+        "description": "Set file mode (permissions) on creation",
+        "source": "local"
+      },
+      {
+        "flag": "-v, --verbose",
+        "description": "Print a message for each created directory",
+        "source": "local"
+      }
+    ],
+    "example": "mkdir -p /var/www/myapp/{logs,tmp,config}",
+    "output": "(creates: /var/www/myapp/logs, /var/www/myapp/tmp, /var/www/myapp/config)",
+    "tip": "Use brace expansion to create multiple subdirectories at once: mkdir -p project/{src,test,docs,build}.",
+    "tags": [
+      "files",
+      "directory",
+      "create",
+      "folder",
+      "make",
+      "new",
+      "create folder",
+      "new folder",
+      "make dir",
+      "new directory"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "touch",
+    "category": "linux",
+    "command": "touch file.txt",
+    "title": "Create files / update timestamps",
+    "difficulty": "beginner",
+    "description": "Create an empty file if it doesn't exist, or update its access and modification timestamps if it does.",
+    "breakdown": [
+      {
+        "part": "touch",
+        "meaning": "Change file timestamps (creates file if it doesn't exist)"
+      },
+      {
+        "part": "file.txt",
+        "meaning": "Target file to create or update"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-a",
+        "description": "Change only the access time",
+        "source": "local"
+      },
+      {
+        "flag": "-m",
+        "description": "Change only the modification time",
+        "source": "local"
+      },
+      {
+        "flag": "-t STAMP",
+        "description": "Use specified time instead of current time (format: [[CC]YY]MMDDhhmm[.ss])",
+        "source": "local"
+      },
+      {
+        "flag": "-r FILE",
+        "description": "Use the timestamps of a reference file",
+        "source": "local"
+      }
+    ],
+    "example": "touch index.html style.css app.js",
+    "output": "(creates three empty files)\n\n$ ls -la\n-rw-r--r-- 1 user user 0 Mar 12 14:00 app.js\n-rw-r--r-- 1 user user 0 Mar 12 14:00 index.html\n-rw-r--r-- 1 user user 0 Mar 12 14:00 style.css",
+    "tip": "touch is often used in scripts to ensure a file exists before writing to it, avoiding 'file not found' errors.",
+    "tags": [
+      "files",
+      "create",
+      "timestamps",
+      "new file",
+      "create file",
+      "empty file",
+      "blank"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "cat",
+    "category": "linux",
+    "command": "cat /etc/os-release",
+    "title": "Display file contents",
+    "difficulty": "beginner",
+    "description": "Print the full contents of a file to standard output. Also useful for concatenating multiple files.",
+    "breakdown": [
+      {
+        "part": "cat",
+        "meaning": "Concatenate and print files"
+      },
+      {
+        "part": "/etc/os-release",
+        "meaning": "File to display (OS version info)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-n, --number",
+        "description": "Number all output lines",
+        "source": "local"
+      },
+      {
+        "flag": "-A, --show-all",
+        "description": "Show non-printing characters, tabs, and line ends",
+        "source": "local"
+      },
+      {
+        "flag": "-s, --squeeze-blank",
+        "description": "Suppress repeated empty output lines",
+        "source": "local"
+      },
+      {
+        "flag": "-b",
+        "description": "Number non-empty output lines",
+        "source": "local"
+      }
+    ],
+    "example": "cat /etc/os-release",
+    "output": "NAME=\"Ubuntu\"\nVERSION=\"22.04.3 LTS (Jammy Jellyfish)\"\nID=ubuntu\nID_LIKE=debian\nVERSION_ID=\"22.04\"\nHOME_URL=\"https://www.ubuntu.com/\"",
+    "tip": "For large files, use less instead of cat to avoid flooding the terminal. cat is best for files under a few dozen lines.",
+    "tags": [
+      "files",
+      "view",
+      "text",
+      "read",
+      "show",
+      "print",
+      "open",
+      "display"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "head",
+    "category": "linux",
+    "command": "head -n 20 /var/log/syslog",
+    "title": "View first N lines of a file",
+    "difficulty": "beginner",
+    "description": "Display the first 20 lines of a file — useful for quickly checking log headers or file structure.",
+    "breakdown": [
+      {
+        "part": "head",
+        "meaning": "Output the first part of files"
+      },
+      {
+        "part": "-n 20",
+        "meaning": "Show the first 20 lines (default is 10)"
+      },
+      {
+        "part": "/var/log/syslog",
+        "meaning": "Target file"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-n, --lines=N",
+        "description": "Print the first N lines (default 10)",
+        "source": "local"
+      },
+      {
+        "flag": "-c, --bytes=N",
+        "description": "Print the first N bytes",
+        "source": "local"
+      },
+      {
+        "flag": "-q, --quiet",
+        "description": "Never print headers giving file names",
+        "source": "local"
+      }
+    ],
+    "example": "head -n 5 /etc/passwd",
+    "output": "root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\nsync:x:4:65534:sync:/bin:/bin/sync",
+    "tip": "Use 'head -1 file' to grab just the header row of a CSV or TSV. Combine with tail: 'head -n 20 file | tail -n 10' to extract lines 11–20.",
+    "tags": [
+      "files",
+      "view",
+      "logs",
+      "top",
+      "first",
+      "preview",
+      "peek"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "less",
+    "category": "linux",
+    "command": "less +F /var/log/syslog",
+    "title": "Page through files interactively",
+    "difficulty": "beginner",
+    "description": "Open a file for interactive paging with search support. +F starts in follow mode like tail -f.",
+    "breakdown": [
+      {
+        "part": "less",
+        "meaning": "Opposite of more — paginate file output interactively"
+      },
+      {
+        "part": "+F",
+        "meaning": "Start in follow mode — stream new content as it's written"
+      },
+      {
+        "part": "/var/log/syslog",
+        "meaning": "File to view"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "+F",
+        "description": "Follow mode — monitor file for new content (Ctrl+C to stop following)",
+        "source": "local"
+      },
+      {
+        "flag": "-N",
+        "description": "Show line numbers",
+        "source": "local"
+      },
+      {
+        "flag": "-S",
+        "description": "Chop long lines instead of wrapping",
+        "source": "local"
+      },
+      {
+        "flag": "-i",
+        "description": "Case-insensitive search",
+        "source": "local"
+      },
+      {
+        "flag": "+/pattern",
+        "description": "Open file with first match of pattern highlighted",
+        "source": "local"
+      }
+    ],
+    "example": "less -N /etc/nginx/nginx.conf",
+    "output": "(interactive pager opens)\n  1 user www-data;\n  2 worker_processes auto;\n  3\n  4 error_log /var/log/nginx/error.log;\n  5 pid /run/nginx.pid;\n(press q to quit, / to search, G to jump to end)",
+    "tip": "Key shortcuts: / to search forward, n for next match, G for end, g for start, q to quit. Press F to toggle follow mode without reopening.",
+    "tags": [
+      "files",
+      "view",
+      "pager",
+      "logs",
+      "read",
+      "scroll",
+      "open",
+      "browse"
+    ],
+    "manPage": "1",
+    "package": "less",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "ln",
+    "category": "linux",
+    "command": "ln -s /path/to/target linkname",
+    "title": "Create symbolic links",
+    "difficulty": "intermediate",
+    "description": "Create hard links or symbolic links (symlinks) — symlinks point to a path, hard links share the same inode as the target.",
+    "breakdown": [
+      {
+        "part": "ln",
+        "meaning": "Make links between files"
+      },
+      {
+        "part": "-s",
+        "meaning": "Symbolic — create a symlink instead of a hard link"
+      },
+      {
+        "part": "/path/to/target",
+        "meaning": "The actual file or directory to point to"
+      },
+      {
+        "part": "linkname",
+        "meaning": "Name of the symlink to create"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-s, --symbolic",
+        "description": "Make symbolic links instead of hard links",
+        "source": "local"
+      },
+      {
+        "flag": "-f, --force",
+        "description": "Remove existing destination files",
+        "source": "local"
+      },
+      {
+        "flag": "-v, --verbose",
+        "description": "Print name of each linked file",
+        "source": "local"
+      },
+      {
+        "flag": "-n, --no-dereference",
+        "description": "Treat destination as a normal file if it is a symlink to a directory",
+        "source": "local"
+      }
+    ],
+    "example": "ln -s /usr/local/bin/node /usr/bin/node",
+    "output": "# Verify with: ls -la /usr/bin/node\nlrwxrwxrwx 1 root root 22 Mar 12 10:00 /usr/bin/node -> /usr/local/bin/node",
+    "tip": "Always use absolute paths for the target when the symlink may be accessed from different directories. Use readlink -f to resolve a symlink chain.",
+    "tags": [
+      "files",
+      "links",
+      "symlink",
+      "link",
+      "shortcut",
+      "symbolic"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "wc",
+    "category": "linux",
+    "command": "wc -l file.txt",
+    "title": "Count lines, words, bytes",
+    "difficulty": "beginner",
+    "description": "Count the number of lines in a file — a quick way to measure log size or file length.",
+    "breakdown": [
+      {
+        "part": "wc",
+        "meaning": "Word count — print newline, word, and byte counts"
+      },
+      {
+        "part": "-l",
+        "meaning": "Print the newline (line) count only"
+      },
+      {
+        "part": "file.txt",
+        "meaning": "Input file"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-l, --lines",
+        "description": "Print the newline count",
+        "source": "local"
+      },
+      {
+        "flag": "-w, --words",
+        "description": "Print the word count",
+        "source": "local"
+      },
+      {
+        "flag": "-c, --bytes",
+        "description": "Print the byte count",
+        "source": "local"
+      },
+      {
+        "flag": "-m, --chars",
+        "description": "Print the character count",
+        "source": "local"
+      }
+    ],
+    "example": "wc -l /var/log/nginx/access.log",
+    "output": "48291 /var/log/nginx/access.log",
+    "tip": "Chain with grep to count matches: grep -c 'ERROR' app.log is equivalent to grep 'ERROR' app.log | wc -l.",
+    "tags": [
+      "text",
+      "count",
+      "files",
+      "lines",
+      "words",
+      "measure"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "sort",
+    "category": "linux",
+    "command": "sort -rn file.txt",
+    "title": "Sort lines of text",
+    "difficulty": "beginner",
+    "description": "Sort lines of text by various criteria — alphabetically, numerically, by field, in reverse order, or removing duplicates.",
+    "breakdown": [
+      {
+        "part": "sort",
+        "meaning": "Sort lines of text files"
+      },
+      {
+        "part": "-r",
+        "meaning": "Reverse — sort in descending order"
+      },
+      {
+        "part": "-n",
+        "meaning": "Numeric — compare according to numeric value"
+      },
+      {
+        "part": "file.txt",
+        "meaning": "Input file to sort"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-n, --numeric-sort",
+        "description": "Compare according to string numerical value",
+        "source": "local"
+      },
+      {
+        "flag": "-r, --reverse",
+        "description": "Reverse the result of comparisons",
+        "source": "local"
+      },
+      {
+        "flag": "-k, --key=KEYDEF",
+        "description": "Sort by a specific field/column",
+        "source": "local"
+      },
+      {
+        "flag": "-u, --unique",
+        "description": "Output only the first of equal lines",
+        "source": "local"
+      },
+      {
+        "flag": "-h, --human-numeric-sort",
+        "description": "Compare human readable numbers (e.g. 2K, 1G)",
+        "source": "local"
+      },
+      {
+        "flag": "-t, --field-separator=SEP",
+        "description": "Use SEP as field separator",
+        "source": "local"
+      }
+    ],
+    "example": "du -sh /var/log/* | sort -rh | head -5",
+    "output": "42M\t/var/log/journal\n18M\t/var/log/syslog\n12M\t/var/log/auth.log\n8.5M\t/var/log/kern.log\n4.2M\t/var/log/dpkg.log",
+    "tip": "Use sort -u to deduplicate while sorting — faster than sort | uniq for large files. Use sort -t: -k3 -n to sort /etc/passwd by UID.",
+    "tags": [
+      "text",
+      "sort",
+      "processing",
+      "order",
+      "alphabetical",
+      "numeric",
+      "rank"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "uniq",
+    "category": "linux",
+    "command": "sort file.txt | uniq -c",
+    "title": "Filter duplicate lines",
+    "difficulty": "intermediate",
+    "description": "Count occurrences of each unique line — input must be sorted first since uniq only compares adjacent lines.",
+    "breakdown": [
+      {
+        "part": "sort file.txt",
+        "meaning": "Sort lines so duplicates are adjacent"
+      },
+      {
+        "part": "|",
+        "meaning": "Pipe sorted output into uniq"
+      },
+      {
+        "part": "uniq",
+        "meaning": "Report or filter repeated lines"
+      },
+      {
+        "part": "-c",
+        "meaning": "Count — prefix lines with the number of occurrences"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-c, --count",
+        "description": "Prefix lines by the number of occurrences",
+        "source": "local"
+      },
+      {
+        "flag": "-d, --repeated",
+        "description": "Only print duplicate lines",
+        "source": "local"
+      },
+      {
+        "flag": "-u, --unique",
+        "description": "Only print unique lines (not repeated)",
+        "source": "local"
+      },
+      {
+        "flag": "-i, --ignore-case",
+        "description": "Ignore differences in case when comparing",
+        "source": "local"
+      }
+    ],
+    "example": "awk '{print $9}' /var/log/nginx/access.log | sort | uniq -c | sort -rn | head -5",
+    "output": "   4821 200\n   1203 304\n    412 404\n     89 500\n     23 301",
+    "tip": "The classic pattern for frequency analysis: sort | uniq -c | sort -rn. Always sort before piping to uniq.",
+    "tags": [
+      "text",
+      "dedup",
+      "count",
+      "processing",
+      "dedupe",
+      "deduplicate",
+      "unique",
+      "distinct"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "cut",
+    "category": "linux",
+    "command": "cut -d: -f1,3 /etc/passwd",
+    "title": "Extract fields from text",
+    "difficulty": "intermediate",
+    "description": "Extract specific columns or character ranges from each line of text — fast, simple field extraction from delimited data.",
+    "breakdown": [
+      {
+        "part": "cut",
+        "meaning": "Remove sections from each line of files"
+      },
+      {
+        "part": "-d:",
+        "meaning": "Delimiter — use colon as the field separator"
+      },
+      {
+        "part": "-f1,3",
+        "meaning": "Fields 1 and 3 (username and UID in /etc/passwd)"
+      },
+      {
+        "part": "/etc/passwd",
+        "meaning": "Input file"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-d, --delimiter=DELIM",
+        "description": "Use DELIM instead of TAB for field delimiter",
+        "source": "local"
+      },
+      {
+        "flag": "-f, --fields=LIST",
+        "description": "Select only these fields",
+        "source": "local"
+      },
+      {
+        "flag": "-c, --characters=LIST",
+        "description": "Select only these character positions",
+        "source": "local"
+      },
+      {
+        "flag": "-b, --bytes=LIST",
+        "description": "Select only these bytes",
+        "source": "local"
+      }
+    ],
+    "example": "cut -d: -f1,3 /etc/passwd | head -5",
+    "output": "root:0\ndaemon:1\nbin:2\nsys:3\nsync:4",
+    "tip": "For more complex field extraction, awk is more powerful: awk -F: '{print $1, $3}' /etc/passwd. cut is faster for simple cases.",
+    "tags": [
+      "text",
+      "columns",
+      "parsing",
+      "csv",
+      "extract",
+      "fields",
+      "parse",
+      "delimiter"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "tr",
+    "category": "linux",
+    "command": "echo 'Hello World' | tr '[:upper:]' '[:lower:]'",
+    "title": "Translate or delete characters",
+    "difficulty": "intermediate",
+    "description": "Convert all uppercase characters to lowercase by translating one character set to another.",
+    "breakdown": [
+      {
+        "part": "echo 'Hello World'",
+        "meaning": "Produce the input string"
+      },
+      {
+        "part": "|",
+        "meaning": "Pipe to tr"
+      },
+      {
+        "part": "tr",
+        "meaning": "Translate or delete characters from stdin"
+      },
+      {
+        "part": "'[:upper:]'",
+        "meaning": "Match any uppercase letter"
+      },
+      {
+        "part": "'[:lower:]'",
+        "meaning": "Translate to corresponding lowercase letter"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-d, --delete",
+        "description": "Delete characters in the first set",
+        "source": "local"
+      },
+      {
+        "flag": "-s, --squeeze-repeats",
+        "description": "Squeeze repeated characters in the second set",
+        "source": "local"
+      },
+      {
+        "flag": "-c, --complement",
+        "description": "Use the complement of the first set",
+        "source": "local"
+      }
+    ],
+    "example": "cat /etc/hostname | tr '[:lower:]' '[:upper:]'",
+    "output": "WEBSERVER-01",
+    "tip": "Use tr -d '\\r' to remove Windows carriage returns from files transferred between systems (CRLF to LF).",
+    "tags": [
+      "text",
+      "transform",
+      "characters",
+      "replace",
+      "convert",
+      "translate",
+      "uppercase",
+      "lowercase"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "tee",
+    "category": "linux",
+    "command": "command | tee output.log",
+    "title": "Write to stdout and file simultaneously",
+    "difficulty": "intermediate",
+    "description": "Read from stdin and write to both stdout and a file simultaneously — lets you log output while still seeing it in the terminal.",
+    "breakdown": [
+      {
+        "part": "command",
+        "meaning": "Any command producing output"
+      },
+      {
+        "part": "|",
+        "meaning": "Pipe stdout into tee"
+      },
+      {
+        "part": "tee",
+        "meaning": "Read stdin and write to stdout and files simultaneously"
+      },
+      {
+        "part": "output.log",
+        "meaning": "File to write the output to"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-a, --append",
+        "description": "Append to the given files, do not overwrite",
+        "source": "local"
+      },
+      {
+        "flag": "-i, --ignore-interrupts",
+        "description": "Ignore interrupt signals",
+        "source": "local"
+      }
+    ],
+    "example": "ansible-playbook deploy.yml | tee -a deploy-$(date +%F).log",
+    "output": "PLAY [web servers] ****\nTASK [Gathering Facts] ****\nok: [web01]\n...\n(output shown on screen AND appended to log file)",
+    "tip": "Use sudo tee to write to privileged files: echo 'net.ipv4.ip_forward=1' | sudo tee /etc/sysctl.conf",
+    "tags": [
+      "redirect",
+      "logging",
+      "pipeline",
+      "split",
+      "duplicate output",
+      "log",
+      "write"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "chmod",
+    "category": "linux",
+    "command": "chmod 755 script.sh",
+    "title": "Change file permissions",
+    "difficulty": "beginner",
+    "description": "Sets file permissions using octal notation. 7=rwx for owner, 5=r-x for group and others.",
+    "breakdown": [
+      {
+        "part": "chmod",
+        "meaning": "Change file mode bits (permissions)"
+      },
+      {
+        "part": "755",
+        "meaning": "Owner: rwx (7), Group: r-x (5), Others: r-x (5)"
+      },
+      {
+        "part": "script.sh",
+        "meaning": "Target file to change permissions on"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-R, --recursive",
+        "description": "Change files and directories recursively",
+        "source": "local"
+      },
+      {
+        "flag": "-v, --verbose",
+        "description": "Output a diagnostic for every file processed",
+        "source": "local"
+      }
+    ],
+    "example": "chmod 755 deploy.sh && ls -la deploy.sh",
+    "output": "-rwxr-xr-x 1 user user 2048 Mar 12 10:00 deploy.sh",
+    "tip": "Use chmod +x for quick executable permission. Remember: 4=read, 2=write, 1=execute.",
+    "tags": [
+      "permissions",
+      "security",
+      "files",
+      "permission",
+      "access",
+      "executable",
+      "read",
+      "write",
+      "execute",
+      "mode"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "chown",
+    "category": "linux",
+    "command": "chown -R user:group /var/www/html",
+    "title": "Change file ownership",
+    "difficulty": "beginner",
+    "description": "Change the owner and/or group of files and directories, recursively with -R — required when fixing permission errors after file transfers.",
+    "breakdown": [
+      {
+        "part": "chown",
+        "meaning": "Change file owner and group"
+      },
+      {
+        "part": "-R",
+        "meaning": "Recursive — apply to all files and subdirectories"
+      },
+      {
+        "part": "user:group",
+        "meaning": "New owner (user) and group to assign"
+      },
+      {
+        "part": "/var/www/html",
+        "meaning": "Target directory"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-R, --recursive",
+        "description": "Operate on files and directories recursively",
+        "source": "local"
+      },
+      {
+        "flag": "-v, --verbose",
+        "description": "Output a diagnostic for every file processed",
+        "source": "local"
+      },
+      {
+        "flag": "--reference=FILE",
+        "description": "Use the owner/group of FILE instead of specifying",
+        "source": "local"
+      }
+    ],
+    "example": "chown -R www-data:www-data /var/www/myapp",
+    "output": "# Verify with: ls -la /var/www/myapp\ndrwxr-xr-x 5 www-data www-data 4096 Mar 12 10:00 /var/www/myapp",
+    "tip": "Use chown user: (with trailing colon, no group) to change only the owner and set the group to the user's login group.",
+    "tags": [
+      "permissions",
+      "ownership",
+      "security",
+      "owner",
+      "group",
+      "permission",
+      "user",
+      "change owner"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "grep",
+    "category": "linux",
+    "command": "grep -rni 'pattern' /path",
+    "title": "Search text patterns in files",
+    "difficulty": "beginner",
+    "description": "Recursively search for a text pattern in files, showing line numbers and ignoring case.",
+    "breakdown": [
+      {
+        "part": "grep",
+        "meaning": "Global regular expression print — search for patterns"
+      },
+      {
+        "part": "-r",
+        "meaning": "Recursive — search all files in directory tree"
+      },
+      {
+        "part": "-n",
+        "meaning": "Line number — show line numbers in output"
+      },
+      {
+        "part": "-i",
+        "meaning": "Ignore case — case-insensitive matching"
+      },
+      {
+        "part": "'pattern'",
+        "meaning": "The search pattern (supports regex)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-r, --recursive",
+        "description": "Read all files under each directory recursively",
+        "source": "local"
+      },
+      {
+        "flag": "-n, --line-number",
+        "description": "Prefix each line with line number",
+        "source": "local"
+      },
+      {
+        "flag": "-i, --ignore-case",
+        "description": "Ignore case distinctions",
+        "source": "local"
+      },
+      {
+        "flag": "-c, --count",
+        "description": "Only print count of matching lines per file",
+        "source": "local"
+      },
+      {
+        "flag": "-l, --files-with-matches",
+        "description": "Only print filenames with matches",
+        "source": "local"
+      },
+      {
+        "flag": "-v, --invert-match",
+        "description": "Select non-matching lines",
+        "source": "local"
+      },
+      {
+        "flag": "-A N",
+        "description": "Print N lines after match",
+        "source": "local"
+      },
+      {
+        "flag": "-B N",
+        "description": "Print N lines before match",
+        "source": "local"
+      }
+    ],
+    "example": "grep -rni 'error' /var/log/",
+    "output": "/var/log/syslog:142:Mar 12 08:55:01 server ERROR: Connection timeout\n/var/log/auth.log:89:Mar 12 07:30:22 server error: PAM authentication failure",
+    "tip": "Use grep -E for extended regex. Combine with | for pipeline filtering: cat log | grep error.",
+    "tags": [
+      "search",
+      "text",
+      "regex",
+      "filter",
+      "find",
+      "match",
+      "look for",
+      "text search",
+      "keyword"
+    ],
+    "manPage": "1",
+    "package": "grep",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "find",
+    "category": "linux",
+    "command": "find /path -name '*.log' -mtime -7",
+    "title": "Find files by criteria",
+    "difficulty": "intermediate",
+    "description": "Search for files and directories matching criteria such as name, size, modification time, or permissions — and optionally act on them.",
+    "breakdown": [
+      {
+        "part": "find",
+        "meaning": "Search for files in a directory hierarchy"
+      },
+      {
+        "part": "/path",
+        "meaning": "Starting directory for the search"
+      },
+      {
+        "part": "-name '*.log'",
+        "meaning": "Match files ending in .log"
+      },
+      {
+        "part": "-mtime -7",
+        "meaning": "Modified within the last 7 days"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-name",
+        "description": "Base of file name matches pattern",
+        "source": "local"
+      },
+      {
+        "flag": "-type f",
+        "description": "Only regular files",
+        "source": "local"
+      },
+      {
+        "flag": "-type d",
+        "description": "Only directories",
+        "source": "local"
+      },
+      {
+        "flag": "-mtime",
+        "description": "File was modified n*24 hours ago",
+        "source": "local"
+      },
+      {
+        "flag": "-exec",
+        "description": "Execute command on each found file",
+        "source": "local"
+      },
+      {
+        "flag": "-size",
+        "description": "File uses n units of space",
+        "source": "local"
+      },
+      {
+        "flag": "-perm",
+        "description": "File has given permissions",
+        "source": "local"
+      },
+      {
+        "flag": "-user",
+        "description": "File is owned by given user",
+        "source": "local"
+      }
+    ],
+    "example": "find /var/log -name '*.log' -mtime -7 -size +1M",
+    "output": "/var/log/syslog\n/var/log/kern.log\n/var/log/auth.log",
+    "tip": "Use -exec to chain actions: find . -name '*.tmp' -exec rm {} \\; removes all .tmp files.",
+    "tags": [
+      "search",
+      "files",
+      "filter",
+      "locate",
+      "look for",
+      "where is",
+      "discover"
+    ],
+    "manPage": "1",
+    "package": "findutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "stat",
+    "category": "linux",
+    "command": "stat /etc/passwd",
+    "title": "File and filesystem status",
+    "difficulty": "intermediate",
+    "description": "Display detailed metadata about a file including permissions, inode, size, and all timestamps.",
+    "breakdown": [
+      {
+        "part": "stat",
+        "meaning": "Display file or filesystem status"
+      },
+      {
+        "part": "/etc/passwd",
+        "meaning": "Target file to inspect"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-f, --file-system",
+        "description": "Display filesystem status instead of file status",
+        "source": "local"
+      },
+      {
+        "flag": "-c, --format=FORMAT",
+        "description": "Use specified format string instead of default",
+        "source": "local"
+      },
+      {
+        "flag": "-L, --dereference",
+        "description": "Follow symlinks",
+        "source": "local"
+      }
+    ],
+    "example": "stat /etc/nginx/nginx.conf",
+    "output": "  File: /etc/nginx/nginx.conf\n  Size: 1490\t\tBlocks: 8\t\tIO Block: 4096  regular file\nDevice: 801h/2049d\tInode: 786435\t\tLinks: 1\nAccess: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)\nAccess: 2024-03-12 09:00:00.000 +0000\nModify: 2024-03-10 14:22:33.000 +0000\nChange: 2024-03-10 14:22:33.000 +0000",
+    "tip": "Use stat -c '%a %n' * to quickly print octal permissions for all files in a directory.",
+    "tags": [
+      "files",
+      "metadata",
+      "permissions",
+      "inode",
+      "info",
+      "details",
+      "size",
+      "modified",
+      "created"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "kill",
+    "category": "linux",
+    "command": "kill -9 PID",
+    "title": "Send signal to a process",
+    "difficulty": "beginner",
+    "description": "Send a signal to a process by PID — default is SIGTERM (graceful shutdown), use SIGKILL (-9) only when the process won't respond.",
+    "breakdown": [
+      {
+        "part": "kill",
+        "meaning": "Send a signal to a process"
+      },
+      {
+        "part": "-9",
+        "meaning": "SIGKILL — forceful termination, cannot be caught or ignored"
+      },
+      {
+        "part": "PID",
+        "meaning": "Process ID of the target process"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-9, -SIGKILL",
+        "description": "Forceful kill — cannot be caught or blocked",
+        "source": "local"
+      },
+      {
+        "flag": "-15, -SIGTERM",
+        "description": "Graceful termination request (default signal)",
+        "source": "local"
+      },
+      {
+        "flag": "-1, -SIGHUP",
+        "description": "Hangup — often used to reload config without restart",
+        "source": "local"
+      },
+      {
+        "flag": "-l",
+        "description": "List all available signal names",
+        "source": "local"
+      }
+    ],
+    "example": "kill -15 $(pgrep nginx) && sleep 2 && kill -0 $(pgrep nginx) || echo 'nginx stopped'",
+    "output": "nginx stopped",
+    "tip": "Always try SIGTERM (-15) first — it allows the process to clean up. Use SIGKILL (-9) only if SIGTERM doesn't work. Use 'pkill nginx' to kill by name.",
+    "tags": [
+      "processes",
+      "signals",
+      "system",
+      "stop",
+      "terminate",
+      "end",
+      "close",
+      "signal"
+    ],
+    "manPage": "1",
+    "package": "procps",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "killall",
+    "category": "linux",
+    "command": "killall -9 process-name",
+    "title": "Kill processes by name",
+    "difficulty": "beginner",
+    "description": "Send a signal to all processes matching a name — no need to look up process IDs first.",
+    "breakdown": [
+      {
+        "part": "killall",
+        "meaning": "Kill processes by name"
+      },
+      {
+        "part": "-9",
+        "meaning": "SIGKILL — forceful termination"
+      },
+      {
+        "part": "process-name",
+        "meaning": "Name of the process(es) to kill"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-9",
+        "description": "SIGKILL — force kill",
+        "source": "local"
+      },
+      {
+        "flag": "-15",
+        "description": "SIGTERM — graceful kill (default)",
+        "source": "local"
+      },
+      {
+        "flag": "-u USER",
+        "description": "Kill only processes owned by USER",
+        "source": "local"
+      },
+      {
+        "flag": "-i",
+        "description": "Ask for confirmation before killing each process",
+        "source": "local"
+      },
+      {
+        "flag": "-v",
+        "description": "Report if the signal was successfully sent",
+        "source": "local"
+      }
+    ],
+    "example": "killall -15 nginx",
+    "output": "# Verify with: pgrep nginx || echo 'all nginx processes stopped'\nall nginx processes stopped",
+    "tip": "pkill is a more flexible alternative: pkill -f 'python manage.py' matches against the full command line, not just the process name.",
+    "tags": [
+      "processes",
+      "signals",
+      "system",
+      "stop",
+      "terminate",
+      "end",
+      "close"
+    ],
+    "manPage": "1",
+    "package": "psmisc",
+    "os": [
+      "linux",
+      "wsl"
+    ]
+  },
+  {
+    "id": "nohup",
+    "category": "linux",
+    "command": "nohup ./script.sh > output.log 2>&1 &",
+    "title": "Run process immune to hangups",
+    "difficulty": "intermediate",
+    "description": "Run a script in the background that continues running after you log out, with stdout and stderr redirected to a log file.",
+    "breakdown": [
+      {
+        "part": "nohup",
+        "meaning": "No hangup — run command immune to SIGHUP (logout)"
+      },
+      {
+        "part": "./script.sh",
+        "meaning": "The script or command to run"
+      },
+      {
+        "part": "> output.log",
+        "meaning": "Redirect stdout to a log file"
+      },
+      {
+        "part": "2>&1",
+        "meaning": "Redirect stderr (2) to the same place as stdout (1)"
+      },
+      {
+        "part": "&",
+        "meaning": "Run in the background"
+      }
+    ],
+    "flags": [],
+    "example": "nohup python3 server.py > server.log 2>&1 &\necho $!",
+    "output": "[1] 12345\n12345",
+    "tip": "Save the PID with: nohup ./script.sh & PID=$! — then kill $PID later to stop it. For more control, use tmux or screen instead.",
+    "tags": [
+      "processes",
+      "background",
+      "daemon",
+      "session",
+      "detach",
+      "persistent",
+      "keep running"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "crontab",
+    "category": "linux",
+    "command": "crontab -e",
+    "title": "Schedule recurring tasks",
+    "difficulty": "intermediate",
+    "description": "Edit the current user's crontab file to schedule commands to run automatically at specified times.",
+    "breakdown": [
+      {
+        "part": "crontab",
+        "meaning": "Maintain crontab files for individual users"
+      },
+      {
+        "part": "-e",
+        "meaning": "Edit the crontab file using the default editor"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-e",
+        "description": "Edit the crontab file",
+        "source": "local"
+      },
+      {
+        "flag": "-l",
+        "description": "List the current crontab entries",
+        "source": "local"
+      },
+      {
+        "flag": "-r",
+        "description": "Remove the current crontab",
+        "source": "local"
+      },
+      {
+        "flag": "-u USER",
+        "description": "Specify the user whose crontab to edit (root only)",
+        "source": "local"
+      }
+    ],
+    "example": "# m h dom mon dow command\n0 2 * * * /usr/local/bin/backup.sh >> /var/log/backup.log 2>&1\n*/5 * * * * /usr/local/bin/health-check.sh",
+    "output": "# Format: minute(0-59) hour(0-23) day(1-31) month(1-12) weekday(0-7) command\n# */5 = every 5 minutes | 0 2 * * * = daily at 2am | 0 9 * * 1 = every Monday at 9am",
+    "tip": "Use crontab.guru to visually build and test cron expressions. Always redirect output to a log file or /dev/null to avoid mail buildup.",
+    "tags": [
+      "scheduling",
+      "automation",
+      "cron",
+      "tasks",
+      "schedule",
+      "recurring",
+      "automatic",
+      "timer",
+      "job",
+      "periodic"
+    ],
+    "manPage": "1",
+    "package": "cron",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "systemctl",
+    "category": "linux",
+    "command": "systemctl status nginx",
+    "title": "Manage systemd services",
+    "difficulty": "intermediate",
+    "description": "Check the status of a systemd service, showing whether it's running, enabled, and recent logs.",
+    "breakdown": [
+      {
+        "part": "systemctl",
+        "meaning": "Control the systemd system and service manager"
+      },
+      {
+        "part": "status",
+        "meaning": "Show runtime status of a unit"
+      },
+      {
+        "part": "nginx",
+        "meaning": "The service unit name to check"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "start",
+        "description": "Start (activate) a unit",
+        "source": "local"
+      },
+      {
+        "flag": "stop",
+        "description": "Stop (deactivate) a unit",
+        "source": "local"
+      },
+      {
+        "flag": "restart",
+        "description": "Restart a unit",
+        "source": "local"
+      },
+      {
+        "flag": "reload",
+        "description": "Reload config without full restart",
+        "source": "local"
+      },
+      {
+        "flag": "enable",
+        "description": "Enable a unit to start at boot",
+        "source": "local"
+      },
+      {
+        "flag": "disable",
+        "description": "Disable a unit from starting at boot",
+        "source": "local"
+      },
+      {
+        "flag": "list-units",
+        "description": "List loaded units",
+        "source": "local"
+      }
+    ],
+    "example": "systemctl status nginx",
+    "output": "● nginx.service - A high performance web server\n   Loaded: loaded (/lib/systemd/system/nginx.service; enabled)\n   Active: active (running) since Tue 2024-03-12 09:00:00 UTC\n   Main PID: 1234 (nginx)\n   CGroup: /system.slice/nginx.service\n           ├─1234 nginx: master process\n           └─1235 nginx: worker process",
+    "tip": "Use 'systemctl enable --now nginx' to start AND enable a service in one command.",
+    "tags": [
+      "services",
+      "systemd",
+      "daemon",
+      "service",
+      "start",
+      "stop",
+      "restart",
+      "enable",
+      "disable",
+      "boot"
+    ],
+    "manPage": "1",
+    "package": "systemd",
+    "os": [
+      "linux",
+      "wsl"
+    ]
+  },
+  {
+    "id": "journalctl",
+    "category": "linux",
+    "command": "journalctl -u nginx -f --since '1 hour ago'",
+    "title": "Query systemd journal logs",
+    "difficulty": "intermediate",
+    "description": "Follow the live log output of a specific service from the last hour using systemd's centralized journal.",
+    "breakdown": [
+      {
+        "part": "journalctl",
+        "meaning": "Query the systemd journal"
+      },
+      {
+        "part": "-u nginx",
+        "meaning": "Unit — filter logs from the nginx service only"
+      },
+      {
+        "part": "-f",
+        "meaning": "Follow — stream new log entries as they arrive"
+      },
+      {
+        "part": "--since '1 hour ago'",
+        "meaning": "Show only entries from the past hour"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-u, --unit=UNIT",
+        "description": "Show logs from the specified systemd unit",
+        "source": "local"
+      },
+      {
+        "flag": "-f, --follow",
+        "description": "Follow journal output (like tail -f)",
+        "source": "local"
+      },
+      {
+        "flag": "-n, --lines=N",
+        "description": "Show the last N journal lines (default 10)",
+        "source": "local"
+      },
+      {
+        "flag": "--since=DATE",
+        "description": "Show entries not older than the specified date",
+        "source": "local"
+      },
+      {
+        "flag": "-p, --priority=PRIORITY",
+        "description": "Filter by log level (err, warning, info, debug)",
+        "source": "local"
+      },
+      {
+        "flag": "-b",
+        "description": "Show messages from current boot only",
+        "source": "local"
+      },
+      {
+        "flag": "-o json-pretty",
+        "description": "Output in pretty-printed JSON format",
+        "source": "local"
+      }
+    ],
+    "example": "journalctl -p err -b --no-pager",
+    "output": "Mar 12 08:30:01 server kernel: EXT4-fs error (device sda1)\nMar 12 09:01:23 server sshd[1234]: error: PAM: Authentication failure for root\nMar 12 09:15:44 server systemd[1]: nginx.service: Failed with result 'exit-code'",
+    "tip": "Use journalctl --disk-usage to see how much space logs are using. Set retention in /etc/systemd/journald.conf with SystemMaxUse=500M.",
+    "tags": [
+      "logs",
+      "systemd",
+      "debugging",
+      "monitoring",
+      "service logs",
+      "errors",
+      "debug",
+      "audit"
+    ],
+    "manPage": "1",
+    "package": "systemd",
+    "os": [
+      "linux",
+      "wsl"
+    ]
+  },
+  {
+    "id": "dmesg",
+    "category": "linux",
+    "command": "dmesg -T --level=err,warn",
+    "title": "Kernel ring buffer messages",
+    "difficulty": "intermediate",
+    "description": "Display kernel messages filtered to errors and warnings, with human-readable timestamps.",
+    "breakdown": [
+      {
+        "part": "dmesg",
+        "meaning": "Print or control the kernel ring buffer"
+      },
+      {
+        "part": "-T",
+        "meaning": "Decode timestamp to human-readable date/time"
+      },
+      {
+        "part": "--level=err,warn",
+        "meaning": "Filter to only error and warning severity messages"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-T, --ctime",
+        "description": "Print human-readable timestamps",
+        "source": "local"
+      },
+      {
+        "flag": "--level=LIST",
+        "description": "Restrict output to given levels (err,warn,info,debug)",
+        "source": "local"
+      },
+      {
+        "flag": "-w, --follow",
+        "description": "Wait for new messages (like tail -f)",
+        "source": "local"
+      },
+      {
+        "flag": "-H, --human",
+        "description": "Enable human-readable output",
+        "source": "local"
+      },
+      {
+        "flag": "-c, --read-clear",
+        "description": "Read and clear all messages",
+        "source": "local"
+      }
+    ],
+    "example": "dmesg -T | grep -i 'out of memory'",
+    "output": "[Mar12 08:45:01] Out of memory: Kill process 9823 (java) score 892 or sacrifice child\n[Mar12 08:45:01] Killed process 9823 (java) total-vm:4096000kB, anon-rss:3200000kB",
+    "tip": "Check dmesg immediately after hardware issues or OOM kills. Use dmesg -w to watch for new kernel events in real time.",
+    "tags": [
+      "kernel",
+      "hardware",
+      "debugging",
+      "oom",
+      "kernel log",
+      "boot",
+      "errors",
+      "crash"
+    ],
+    "manPage": "8",
+    "package": "util-linux",
+    "os": [
+      "linux",
+      "wsl"
+    ]
+  },
+  {
+    "id": "uname",
+    "category": "linux",
+    "command": "uname -a",
+    "title": "Print system information",
+    "difficulty": "beginner",
+    "description": "Display all system information including kernel version, hostname, architecture, and OS.",
+    "breakdown": [
+      {
+        "part": "uname",
+        "meaning": "Print system information"
+      },
+      {
+        "part": "-a",
+        "meaning": "All — print all available system information"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-a, --all",
+        "description": "Print all information",
+        "source": "local"
+      },
+      {
+        "flag": "-s, --kernel-name",
+        "description": "Print the kernel name",
+        "source": "local"
+      },
+      {
+        "flag": "-r, --kernel-release",
+        "description": "Print the kernel release version",
+        "source": "local"
+      },
+      {
+        "flag": "-m, --machine",
+        "description": "Print the machine hardware name (x86_64, arm64, etc.)",
+        "source": "local"
+      },
+      {
+        "flag": "-n, --nodename",
+        "description": "Print the network node hostname",
+        "source": "local"
+      }
+    ],
+    "example": "uname -a",
+    "output": "Linux webserver-01 5.15.0-91-generic #101-Ubuntu SMP Tue Nov 14 13:30:08 UTC 2023 x86_64 x86_64 x86_64 GNU/Linux",
+    "tip": "Use uname -r to get just the kernel version — useful in scripts that need to check kernel compatibility.",
+    "tags": [
+      "system",
+      "kernel",
+      "info",
+      "version",
+      "os",
+      "architecture",
+      "system info"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "uptime",
+    "category": "linux",
+    "command": "uptime",
+    "title": "System uptime and load average",
+    "difficulty": "beginner",
+    "description": "Display how long the system has been running and the 1, 5, and 15-minute load averages.",
+    "breakdown": [
+      {
+        "part": "uptime",
+        "meaning": "Tell how long the system has been running and show load averages"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-p, --pretty",
+        "description": "Show uptime in human-readable format",
+        "source": "local"
+      },
+      {
+        "flag": "-s, --since",
+        "description": "Show the date and time when the system last booted",
+        "source": "local"
+      }
+    ],
+    "example": "uptime",
+    "output": " 14:32:10 up 45 days,  3:21,  2 users,  load average: 0.15, 0.10, 0.09",
+    "tip": "Load average should ideally stay below the number of CPU cores. Check with nproc to see core count. Load > cores means the system is overloaded.",
+    "tags": [
+      "system",
+      "monitoring",
+      "load",
+      "performance",
+      "how long",
+      "running time",
+      "availability"
+    ],
+    "manPage": "1",
+    "package": "procps",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "free",
+    "category": "linux",
+    "command": "free -h",
+    "title": "Display memory usage",
+    "difficulty": "beginner",
+    "description": "Show total, used, free, shared, buffer/cache, and available RAM in human-readable format.",
+    "breakdown": [
+      {
+        "part": "free",
+        "meaning": "Display amount of free and used memory in the system"
+      },
+      {
+        "part": "-h",
+        "meaning": "Human readable — sizes in MB/GB"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-h, --human",
+        "description": "Show output in human readable format",
+        "source": "local"
+      },
+      {
+        "flag": "-m",
+        "description": "Show output in megabytes",
+        "source": "local"
+      },
+      {
+        "flag": "-g",
+        "description": "Show output in gigabytes",
+        "source": "local"
+      },
+      {
+        "flag": "-s N",
+        "description": "Continuously display memory usage every N seconds",
+        "source": "local"
+      },
+      {
+        "flag": "-t, --total",
+        "description": "Show a line containing totals",
+        "source": "local"
+      }
+    ],
+    "example": "free -h",
+    "output": "               total        used        free      shared  buff/cache   available\nMem:            15Gi       5.2Gi       3.1Gi       512Mi       7.1Gi       9.6Gi\nSwap:          2.0Gi          0B       2.0Gi",
+    "tip": "The 'available' column is what matters — not 'free'. Linux uses spare RAM for caching, so 'free' looks low but the system isn't starved.",
+    "tags": [
+      "memory",
+      "ram",
+      "monitoring",
+      "system",
+      "available",
+      "used",
+      "swap"
+    ],
+    "manPage": "1",
+    "package": "procps",
+    "os": [
+      "linux",
+      "wsl"
+    ]
+  },
+  {
+    "id": "lscpu",
+    "category": "linux",
+    "command": "lscpu",
+    "title": "CPU architecture information",
+    "difficulty": "beginner",
+    "description": "Display detailed CPU architecture information including cores, threads, sockets, and cache sizes.",
+    "breakdown": [
+      {
+        "part": "lscpu",
+        "meaning": "Display information about the CPU architecture"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-e, --extended",
+        "description": "Display extended readable format with per-CPU info",
+        "source": "local"
+      },
+      {
+        "flag": "-p, --parse",
+        "description": "Optimize output for easy parsing by scripts",
+        "source": "local"
+      },
+      {
+        "flag": "-J, --json",
+        "description": "Output in JSON format",
+        "source": "local"
+      }
+    ],
+    "example": "lscpu | grep -E 'CPU\\(s\\)|Thread|Core|Socket|Model name'",
+    "output": "CPU(s):                          8\nOn-line CPU(s) list:             0-7\nThread(s) per core:              2\nCore(s) per socket:              4\nSocket(s):                       1\nModel name:                      Intel(R) Core(TM) i7-10700 CPU @ 2.90GHz",
+    "tip": "Total threads = Sockets × Cores per socket × Threads per core. Use nproc for a quick thread count in scripts.",
+    "tags": [
+      "cpu",
+      "hardware",
+      "system",
+      "info",
+      "processor",
+      "cores",
+      "threads",
+      "cpu info",
+      "architecture"
+    ],
+    "manPage": "1",
+    "package": "util-linux",
+    "os": [
+      "linux",
+      "wsl"
+    ]
+  },
+  {
+    "id": "lsblk",
+    "category": "linux",
+    "command": "lsblk -f",
+    "title": "List block devices",
+    "difficulty": "intermediate",
+    "description": "Display all block devices (disks, partitions) with filesystem type, label, UUID, and mount points.",
+    "breakdown": [
+      {
+        "part": "lsblk",
+        "meaning": "List information about block devices"
+      },
+      {
+        "part": "-f",
+        "meaning": "Filesystem info — show filesystem type, label, and UUID"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-f, --fs",
+        "description": "Output filesystem info (type, label, UUID)",
+        "source": "local"
+      },
+      {
+        "flag": "-o, --output LIST",
+        "description": "Specify which columns to display",
+        "source": "local"
+      },
+      {
+        "flag": "-J, --json",
+        "description": "Output in JSON format",
+        "source": "local"
+      },
+      {
+        "flag": "-d, --nodeps",
+        "description": "Do not print device holders or slaves",
+        "source": "local"
+      }
+    ],
+    "example": "lsblk -f",
+    "output": "NAME   FSTYPE FSVER LABEL UUID                                 FSAVAIL FSUSE% MOUNTPOINTS\nsda\n├─sda1 ext4   1.0         a1b2c3d4-e5f6-...                      18G    64% /\n├─sda2                                                                       [SWAP]\nsdb\n└─sdb1 ext4   1.0   data  f7e8d9c0-...                           142G    29% /data",
+    "tip": "Use lsblk -o NAME,SIZE,TYPE,MOUNTPOINT for a clean summary of all disks and their mounts.",
+    "tags": [
+      "disk",
+      "storage",
+      "filesystem",
+      "partitions",
+      "drives",
+      "volumes",
+      "disks",
+      "devices"
+    ],
+    "manPage": "8",
+    "package": "util-linux",
+    "os": [
+      "linux",
+      "wsl"
+    ]
+  },
+  {
+    "id": "vmstat",
+    "category": "linux",
+    "command": "vmstat 2 5",
+    "title": "Virtual memory and system stats",
+    "difficulty": "intermediate",
+    "description": "Report virtual memory, CPU activity, I/O, and system stats at regular intervals — essential for diagnosing bottlenecks.",
+    "breakdown": [
+      {
+        "part": "vmstat",
+        "meaning": "Report virtual memory statistics"
+      },
+      {
+        "part": "2",
+        "meaning": "Delay — update interval in seconds"
+      },
+      {
+        "part": "5",
+        "meaning": "Count — number of updates before exiting"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-a",
+        "description": "Show active and inactive memory",
+        "source": "local"
+      },
+      {
+        "flag": "-d",
+        "description": "Report disk statistics",
+        "source": "local"
+      },
+      {
+        "flag": "-s",
+        "description": "Display a table of various event counters and memory stats",
+        "source": "local"
+      },
+      {
+        "flag": "-S m",
+        "description": "Use megabytes as the unit",
+        "source": "local"
+      }
+    ],
+    "example": "vmstat 2 5",
+    "output": "procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----\n r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st\n 1  0      0 3145728 204800 7340032    0    0     2    15  120  450  3  1 96  0  0\n 0  0      0 3145600 204800 7340100    0    0     0    20  115  432  2  1 97  0  0",
+    "tip": "Watch the 'r' column (run queue) — if it consistently exceeds CPU count, you have a CPU bottleneck. Watch 'wa' for I/O wait issues.",
+    "tags": [
+      "performance",
+      "memory",
+      "cpu",
+      "monitoring",
+      "virtual memory",
+      "io",
+      "cpu usage"
+    ],
+    "manPage": "8",
+    "package": "procps",
+    "os": [
+      "linux",
+      "wsl"
+    ]
+  },
+  {
+    "id": "useradd",
+    "category": "linux",
+    "command": "useradd -m -s /bin/bash -G sudo username",
+    "title": "Add a new user",
+    "difficulty": "intermediate",
+    "description": "Create a new user account with configurable home directory, shell, and group membership — low-level tool that requires a follow-up passwd call.",
+    "breakdown": [
+      {
+        "part": "useradd",
+        "meaning": "Create a new user or update default new user information"
+      },
+      {
+        "part": "-m",
+        "meaning": "Create home directory at /home/username"
+      },
+      {
+        "part": "-s /bin/bash",
+        "meaning": "Set login shell to bash"
+      },
+      {
+        "part": "-G sudo",
+        "meaning": "Add to supplementary group 'sudo'"
+      },
+      {
+        "part": "username",
+        "meaning": "The new user's login name"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-m, --create-home",
+        "description": "Create the user's home directory",
+        "source": "local"
+      },
+      {
+        "flag": "-s, --shell SHELL",
+        "description": "Name of the user's login shell",
+        "source": "local"
+      },
+      {
+        "flag": "-G, --groups GROUPS",
+        "description": "A list of supplementary groups",
+        "source": "local"
+      },
+      {
+        "flag": "-u, --uid UID",
+        "description": "Numerical value of the user's ID",
+        "source": "local"
+      },
+      {
+        "flag": "-e, --expiredate DATE",
+        "description": "Date on which the account will be disabled",
+        "source": "local"
+      }
+    ],
+    "example": "useradd -m -s /bin/bash -G sudo,docker deploy\npasswd deploy",
+    "output": "New password:\nRetype new password:\npasswd: password updated successfully",
+    "tip": "After useradd, always run passwd to set a password. Use usermod -aG to add an existing user to additional groups.",
+    "tags": [
+      "users",
+      "security",
+      "admin",
+      "add user",
+      "new user",
+      "create user",
+      "account"
+    ],
+    "manPage": "8",
+    "package": "shadow-utils",
+    "os": [
+      "linux",
+      "wsl"
+    ]
+  },
+  {
+    "id": "id",
+    "category": "linux",
+    "command": "id username",
+    "title": "Print user and group IDs",
+    "difficulty": "beginner",
+    "description": "Display the user ID (UID), primary group ID (GID), and all supplementary groups for the current user or a named user.",
+    "breakdown": [
+      {
+        "part": "id",
+        "meaning": "Print real and effective UIDs and GIDs"
+      },
+      {
+        "part": "username",
+        "meaning": "User to query (omit for current user)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-u",
+        "description": "Print only the effective user ID",
+        "source": "local"
+      },
+      {
+        "flag": "-g",
+        "description": "Print only the effective group ID",
+        "source": "local"
+      },
+      {
+        "flag": "-G",
+        "description": "Print all group IDs",
+        "source": "local"
+      },
+      {
+        "flag": "-n",
+        "description": "Print a name instead of a number (with -u, -g, -G)",
+        "source": "local"
+      }
+    ],
+    "example": "id www-data",
+    "output": "uid=33(www-data) gid=33(www-data) groups=33(www-data)",
+    "tip": "Use id -nG to list all group names for the current user. Check with 'groups' command for a simpler output.",
+    "tags": [
+      "users",
+      "permissions",
+      "groups",
+      "user info",
+      "uid",
+      "gid",
+      "who am i"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "su",
+    "category": "linux",
+    "command": "su - username",
+    "title": "Switch user",
+    "difficulty": "beginner",
+    "description": "Switch to another user account, loading their full environment (shell, PATH, home directory).",
+    "breakdown": [
+      {
+        "part": "su",
+        "meaning": "Switch user — run a command with substitute user and group ID"
+      },
+      {
+        "part": "-",
+        "meaning": "Login shell — load the target user's full environment"
+      },
+      {
+        "part": "username",
+        "meaning": "User to switch to (omit to switch to root)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "- (dash)",
+        "description": "Start a login shell, loading the user's environment",
+        "source": "local"
+      },
+      {
+        "flag": "-c COMMAND",
+        "description": "Pass a single command to the shell",
+        "source": "local"
+      },
+      {
+        "flag": "-s SHELL",
+        "description": "Run the specified shell instead of the default",
+        "source": "local"
+      }
+    ],
+    "example": "su - postgres",
+    "output": "Password:\npostgres@server:~$ psql\npsql (14.5)\nType \"help\" for help.\npostgres=#",
+    "tip": "Prefer 'sudo -i -u username' over 'su -' when possible — it requires the sudoer's own password and leaves an audit trail.",
+    "tags": [
+      "users",
+      "security",
+      "admin",
+      "switch",
+      "become",
+      "login as",
+      "change user"
+    ],
+    "manPage": "1",
+    "package": "util-linux",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "sudo",
+    "category": "linux",
+    "command": "sudo -u www-data command",
+    "title": "Execute commands as another user",
+    "difficulty": "beginner",
+    "description": "Run a command as the www-data user without switching to that user's shell session.",
+    "breakdown": [
+      {
+        "part": "sudo",
+        "meaning": "Execute a command as another user (superuser do)"
+      },
+      {
+        "part": "-u www-data",
+        "meaning": "Run as the www-data user instead of root"
+      },
+      {
+        "part": "command",
+        "meaning": "The command to execute with elevated privileges"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-u USER",
+        "description": "Run command as the specified user instead of root",
+        "source": "local"
+      },
+      {
+        "flag": "-i",
+        "description": "Run shell as the target user (login shell)",
+        "source": "local"
+      },
+      {
+        "flag": "-s",
+        "description": "Run a shell as the target user",
+        "source": "local"
+      },
+      {
+        "flag": "-l",
+        "description": "List allowed commands for the invoking user",
+        "source": "local"
+      },
+      {
+        "flag": "-k",
+        "description": "Invalidate the credential cache (require password on next run)",
+        "source": "local"
+      }
+    ],
+    "example": "sudo -u postgres psql -c 'SELECT count(*) FROM users;'",
+    "output": " count\n-------\n  1523\n(1 row)",
+    "tip": "Use sudo -l to see what commands you're allowed to run. Configure in /etc/sudoers with visudo (never edit it directly).",
+    "tags": [
+      "users",
+      "security",
+      "admin",
+      "privileges",
+      "root",
+      "elevate",
+      "privilege",
+      "superuser"
+    ],
+    "manPage": "8",
+    "package": "sudo",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "ssh",
+    "category": "linux",
+    "command": "ssh -i ~/.ssh/key.pem user@host",
+    "title": "Secure Shell remote login",
+    "difficulty": "beginner",
+    "description": "Connect to a remote host over an encrypted SSH session — supports key-based auth, tunnelling, and proxying through bastion hosts.",
+    "breakdown": [
+      {
+        "part": "ssh",
+        "meaning": "Secure Shell — encrypted network protocol for remote login"
+      },
+      {
+        "part": "-i ~/.ssh/key.pem",
+        "meaning": "Identity file — path to the private key for authentication"
+      },
+      {
+        "part": "user@host",
+        "meaning": "Username and hostname/IP of the remote server"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-i IDENTITY",
+        "description": "Selects a file from which the identity (private key) is read",
+        "source": "local"
+      },
+      {
+        "flag": "-p PORT",
+        "description": "Port to connect to on the remote host (default 22)",
+        "source": "local"
+      },
+      {
+        "flag": "-L local:host:remote",
+        "description": "Local port forwarding",
+        "source": "local"
+      },
+      {
+        "flag": "-R remote:host:local",
+        "description": "Remote port forwarding",
+        "source": "local"
+      },
+      {
+        "flag": "-N",
+        "description": "Do not execute a remote command (useful for tunnels)",
+        "source": "local"
+      },
+      {
+        "flag": "-v",
+        "description": "Verbose mode for debugging connection issues",
+        "source": "local"
+      }
+    ],
+    "example": "ssh -i ~/.ssh/aws-key.pem ubuntu@ec2-54-123-45-67.compute-1.amazonaws.com",
+    "output": "Welcome to Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-91-generic x86_64)\n\n * Documentation:  https://help.ubuntu.com\n\nubuntu@ip-172-31-10-20:~$",
+    "tip": "Add frequently used hosts to ~/.ssh/config to avoid typing the full command: 'Host myserver\\n  Hostname 54.123.45.67\\n  User ubuntu\\n  IdentityFile ~/.ssh/key.pem'",
+    "tags": [
+      "remote",
+      "ssh",
+      "network",
+      "security",
+      "connect",
+      "login",
+      "secure shell",
+      "terminal"
+    ],
+    "manPage": "1",
+    "package": "openssh-client",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "scp",
+    "category": "linux",
+    "command": "scp -r user@host:/remote/path /local/path",
+    "title": "Secure copy over SSH",
+    "difficulty": "intermediate",
+    "description": "Recursively copy a directory from a remote server to the local machine over an encrypted SSH connection.",
+    "breakdown": [
+      {
+        "part": "scp",
+        "meaning": "Secure copy — copy files over a network using SSH"
+      },
+      {
+        "part": "-r",
+        "meaning": "Recursive — copy directories and their contents"
+      },
+      {
+        "part": "user@host:/remote/path",
+        "meaning": "Source: remote user, host, and path"
+      },
+      {
+        "part": "/local/path",
+        "meaning": "Local destination to copy files into"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-r",
+        "description": "Recursively copy entire directories",
+        "source": "local"
+      },
+      {
+        "flag": "-i IDENTITY",
+        "description": "Selects the private key file for authentication",
+        "source": "local"
+      },
+      {
+        "flag": "-P PORT",
+        "description": "Specifies the port to connect to (note: uppercase P)",
+        "source": "local"
+      },
+      {
+        "flag": "-C",
+        "description": "Compression — compress data during transfer",
+        "source": "local"
+      }
+    ],
+    "example": "scp -i ~/.ssh/key.pem ubuntu@10.0.1.5:/var/log/nginx/error.log ./",
+    "output": "error.log                         100%  124KB  12.4MB/s   00:00",
+    "tip": "For large or frequent transfers, rsync is more efficient than scp — it resumes interrupted transfers and skips unchanged files.",
+    "tags": [
+      "remote",
+      "copy",
+      "ssh",
+      "transfer",
+      "upload",
+      "download",
+      "copy file",
+      "remote copy"
+    ],
+    "manPage": "1",
+    "package": "openssh-client",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "curl",
+    "category": "linux",
+    "command": "curl -fsSL https://example.com/script.sh | bash",
+    "title": "Transfer data from URLs",
+    "difficulty": "intermediate",
+    "description": "Download and execute a remote script silently, failing on HTTP errors without partial output.",
+    "breakdown": [
+      {
+        "part": "curl",
+        "meaning": "Transfer data from or to a server"
+      },
+      {
+        "part": "-f",
+        "meaning": "Fail — exit with error if HTTP error status returned"
+      },
+      {
+        "part": "-s",
+        "meaning": "Silent — suppress progress meter and error messages"
+      },
+      {
+        "part": "-S",
+        "meaning": "Show error — show errors even when -s is used"
+      },
+      {
+        "part": "-L",
+        "meaning": "Location — follow HTTP redirects"
+      },
+      {
+        "part": "| bash",
+        "meaning": "Pipe the downloaded script directly into bash for execution"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-o FILE",
+        "description": "Write output to FILE instead of stdout",
+        "source": "local"
+      },
+      {
+        "flag": "-O",
+        "description": "Save file with the remote filename",
+        "source": "local"
+      },
+      {
+        "flag": "-H 'Header: value'",
+        "description": "Pass custom header(s) to the server",
+        "source": "local"
+      },
+      {
+        "flag": "-d DATA",
+        "description": "HTTP POST data",
+        "source": "local"
+      },
+      {
+        "flag": "-X METHOD",
+        "description": "HTTP method (GET, POST, PUT, DELETE)",
+        "source": "local"
+      },
+      {
+        "flag": "-u user:pass",
+        "description": "Server user and password",
+        "source": "local"
+      },
+      {
+        "flag": "-k",
+        "description": "Allow insecure connections (skip SSL verification)",
+        "source": "local"
+      }
+    ],
+    "example": "curl -s -o /dev/null -w '%{http_code}' https://api.example.com/health",
+    "output": "200",
+    "tip": "Use curl -v to debug request/response headers. Use -w for custom output format: curl -w '\\nTime: %{time_total}s\\n' url",
+    "tags": [
+      "network",
+      "http",
+      "download",
+      "api",
+      "request",
+      "get",
+      "post",
+      "fetch",
+      "rest"
+    ],
+    "manPage": "1",
+    "package": "curl",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "wget",
+    "category": "linux",
+    "command": "wget -q --show-progress -O /tmp/file.tar.gz URL",
+    "title": "Download files from the web",
+    "difficulty": "beginner",
+    "description": "Download a file quietly (suppressing verbose output) with a progress bar, saving to a specific path.",
+    "breakdown": [
+      {
+        "part": "wget",
+        "meaning": "Non-interactive network downloader"
+      },
+      {
+        "part": "-q",
+        "meaning": "Quiet — turn off wget output except for progress"
+      },
+      {
+        "part": "--show-progress",
+        "description": "Show progress bar even in quiet mode"
+      },
+      {
+        "part": "-O /tmp/file.tar.gz",
+        "meaning": "Output to this file path"
+      },
+      {
+        "part": "URL",
+        "meaning": "The URL to download from"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-O FILE",
+        "description": "Write documents to FILE instead of auto-named",
+        "source": "local"
+      },
+      {
+        "flag": "-q, --quiet",
+        "description": "Turn off wget's output",
+        "source": "local"
+      },
+      {
+        "flag": "-c, --continue",
+        "description": "Resume a partially-downloaded file",
+        "source": "local"
+      },
+      {
+        "flag": "-r, --recursive",
+        "description": "Turn on recursive retrieving",
+        "source": "local"
+      },
+      {
+        "flag": "--no-check-certificate",
+        "description": "Don't validate the server's certificate",
+        "source": "local"
+      },
+      {
+        "flag": "-P DIR",
+        "description": "Save files to DIR",
+        "source": "local"
+      }
+    ],
+    "example": "wget -c -P /opt/downloads https://releases.example.com/v2.0/app.tar.gz",
+    "output": "--2024-03-12 14:00:00--  https://releases.example.com/v2.0/app.tar.gz\nResolving releases.example.com... 93.184.216.34\nConnecting to releases.example.com... connected.\nHTTP request sent, awaiting response... 200 OK\nLength: 52428800 (50M) [application/x-gzip]\nSaving to: '/opt/downloads/app.tar.gz'\napp.tar.gz          100%[====================>]  50.00M  8.50MB/s    in 5.9s",
+    "tip": "Use wget -c to resume interrupted downloads — very useful for large files. curl -C - is the equivalent for curl.",
+    "tags": [
+      "network",
+      "download",
+      "http",
+      "fetch",
+      "get"
+    ],
+    "manPage": "1",
+    "package": "wget",
+    "os": [
+      "linux",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "ping",
+    "category": "linux",
+    "command": "ping -c 4 google.com",
+    "title": "Test network connectivity",
+    "difficulty": "beginner",
+    "description": "Send 4 ICMP echo requests to test whether a host is reachable and measure round-trip latency.",
+    "breakdown": [
+      {
+        "part": "ping",
+        "meaning": "Send ICMP ECHO_REQUEST packets to network hosts"
+      },
+      {
+        "part": "-c 4",
+        "meaning": "Count — send exactly 4 packets then stop"
+      },
+      {
+        "part": "google.com",
+        "meaning": "Target hostname or IP address"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-c COUNT",
+        "description": "Stop after sending COUNT packets",
+        "source": "local"
+      },
+      {
+        "flag": "-i INTERVAL",
+        "description": "Wait INTERVAL seconds between each packet (default 1)",
+        "source": "local"
+      },
+      {
+        "flag": "-s SIZE",
+        "description": "Specify the payload size of the packet in bytes",
+        "source": "local"
+      },
+      {
+        "flag": "-W TIMEOUT",
+        "description": "Time to wait for a response in seconds",
+        "source": "local"
+      },
+      {
+        "flag": "-q",
+        "description": "Quiet output — only show summary",
+        "source": "local"
+      }
+    ],
+    "example": "ping -c 4 8.8.8.8",
+    "output": "PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.\n64 bytes from 8.8.8.8: icmp_seq=1 ttl=116 time=12.3 ms\n64 bytes from 8.8.8.8: icmp_seq=2 ttl=116 time=11.9 ms\n64 bytes from 8.8.8.8: icmp_seq=3 ttl=116 time=12.1 ms\n64 bytes from 8.8.8.8: icmp_seq=4 ttl=116 time=12.2 ms\n\n--- 8.8.8.8 ping statistics ---\n4 packets transmitted, 4 received, 0% packet loss\nrtt min/avg/max/mdev = 11.9/12.1/12.3/0.1 ms",
+    "tip": "If ping to hostname fails but ping to IP works, it's a DNS problem. Use 'ping -c 1' in scripts with exit code check: ping -c 1 host &>/dev/null && echo up || echo down",
+    "tags": [
+      "network",
+      "connectivity",
+      "latency",
+      "icmp",
+      "reachable",
+      "alive",
+      "check",
+      "response"
+    ],
+    "manPage": "8",
+    "package": "iputils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "ss",
+    "category": "linux",
+    "command": "ss -tlnp",
+    "title": "Socket statistics",
+    "difficulty": "intermediate",
+    "description": "Display all listening TCP ports with the process names bound to them — the modern replacement for netstat.",
+    "breakdown": [
+      {
+        "part": "ss",
+        "meaning": "Socket statistics — investigate sockets (replaces netstat)"
+      },
+      {
+        "part": "-t",
+        "meaning": "TCP — show TCP sockets only"
+      },
+      {
+        "part": "-l",
+        "meaning": "Listening — show only listening sockets"
+      },
+      {
+        "part": "-n",
+        "meaning": "Numeric — show numerical addresses and ports"
+      },
+      {
+        "part": "-p",
+        "meaning": "Process — show process using the socket"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-t",
+        "description": "Display TCP sockets",
+        "source": "local"
+      },
+      {
+        "flag": "-u",
+        "description": "Display UDP sockets",
+        "source": "local"
+      },
+      {
+        "flag": "-l",
+        "description": "Display listening sockets only",
+        "source": "local"
+      },
+      {
+        "flag": "-n",
+        "description": "Do not resolve service names",
+        "source": "local"
+      },
+      {
+        "flag": "-p",
+        "description": "Show process using socket",
+        "source": "local"
+      },
+      {
+        "flag": "-a",
+        "description": "Display all sockets (listening + established)",
+        "source": "local"
+      },
+      {
+        "flag": "-4",
+        "description": "Display IPv4 sockets only",
+        "source": "local"
+      }
+    ],
+    "example": "ss -tlnp",
+    "output": "State    Recv-Q  Send-Q  Local Address:Port  Peer Address:Port  Process\nLISTEN   0       128     0.0.0.0:22         0.0.0.0:*          users:((\"sshd\",pid=1234,fd=3))\nLISTEN   0       511     0.0.0.0:80         0.0.0.0:*          users:((\"nginx\",pid=5678,fd=6))\nLISTEN   0       128     127.0.0.1:5432     0.0.0.0:*          users:((\"postgres\",pid=9012,fd=5))",
+    "tip": "Use ss -tlnp | grep LISTEN to quickly audit what ports are open. Much faster and more detailed than the deprecated netstat.",
+    "tags": [
+      "network",
+      "ports",
+      "sockets",
+      "monitoring",
+      "connections",
+      "listening",
+      "open ports"
+    ],
+    "manPage": "8",
+    "package": "iproute2",
+    "os": [
+      "linux",
+      "wsl"
+    ]
+  },
+  {
+    "id": "ip",
+    "category": "linux",
+    "command": "ip addr show",
+    "title": "Network interface configuration",
+    "difficulty": "intermediate",
+    "description": "Display all network interfaces with their IP addresses, subnet masks, and MAC addresses.",
+    "breakdown": [
+      {
+        "part": "ip",
+        "meaning": "Show / manipulate routing, network devices, interfaces"
+      },
+      {
+        "part": "addr",
+        "meaning": "Address — manage IP addresses on network interfaces"
+      },
+      {
+        "part": "show",
+        "meaning": "Display current state"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "addr show",
+        "description": "Show IP addresses for all interfaces",
+        "source": "local"
+      },
+      {
+        "flag": "addr add X.X.X.X/XX dev ethN",
+        "description": "Add an IP address to an interface",
+        "source": "local"
+      },
+      {
+        "flag": "link show",
+        "description": "Show network device state (up/down, MAC)",
+        "source": "local"
+      },
+      {
+        "flag": "route show",
+        "description": "Show the routing table",
+        "source": "local"
+      },
+      {
+        "flag": "link set ethN up/down",
+        "description": "Bring an interface up or down",
+        "source": "local"
+      }
+    ],
+    "example": "ip addr show eth0",
+    "output": "2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP\n    link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff\n    inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0\n       valid_lft forever preferred_lft forever",
+    "tip": "ip is the modern replacement for ifconfig. Use 'ip -br addr' for a compact summary of all interfaces and their IPs.",
+    "tags": [
+      "network",
+      "interfaces",
+      "ip",
+      "routing",
+      "address",
+      "interface",
+      "route",
+      "configure"
+    ],
+    "manPage": "8",
+    "package": "iproute2",
+    "os": [
+      "linux",
+      "wsl"
+    ]
+  },
+  {
+    "id": "watch",
+    "category": "linux",
+    "command": "watch -n 2 'df -h'",
+    "title": "Execute command periodically",
+    "difficulty": "beginner",
+    "description": "Run df -h every 2 seconds, refreshing the display each time — useful for monitoring changing values.",
+    "breakdown": [
+      {
+        "part": "watch",
+        "meaning": "Execute a program periodically, showing output fullscreen"
+      },
+      {
+        "part": "-n 2",
+        "meaning": "Interval — refresh every 2 seconds (default is 2)"
+      },
+      {
+        "part": "'df -h'",
+        "meaning": "The command to execute repeatedly (quoted to preserve as one arg)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-n SECS",
+        "description": "Update interval in seconds (default 2)",
+        "source": "local"
+      },
+      {
+        "flag": "-d",
+        "description": "Highlight differences between updates",
+        "source": "local"
+      },
+      {
+        "flag": "-t, --no-title",
+        "description": "Turn off the header showing time and command",
+        "source": "local"
+      },
+      {
+        "flag": "-e",
+        "description": "Freeze updates on command error, require keypress to resume",
+        "source": "local"
+      }
+    ],
+    "example": "watch -n 1 -d 'ss -s'",
+    "output": "Every 1.0s: ss -s                          (changes highlighted)\n\nTotal: 312\nTCP:   48 (estab 21, closed 12, orphaned 0, timewait 12)\nTransport Total     IP        IPv6\n*\t  372       -         -\nRAW\t  0         0         0\nUDP\t  12        8         4",
+    "tip": "Use -d to highlight what changed between refreshes — extremely useful for watching live metric changes.",
+    "tags": [
+      "monitoring",
+      "utility",
+      "automation",
+      "monitor",
+      "repeat",
+      "interval",
+      "refresh",
+      "live"
+    ],
+    "manPage": "1",
+    "package": "procps",
+    "os": [
+      "linux",
+      "wsl"
+    ]
+  },
+  {
+    "id": "alias",
+    "category": "linux",
+    "command": "alias ll='ls -lah --color=auto'",
+    "title": "Create command shortcuts",
+    "difficulty": "beginner",
+    "description": "Define a shorthand alias so that typing 'll' runs the full ls command with preferred flags.",
+    "breakdown": [
+      {
+        "part": "alias",
+        "meaning": "Define or display command aliases for the current shell"
+      },
+      {
+        "part": "ll=",
+        "meaning": "The alias name to create"
+      },
+      {
+        "part": "'ls -lah --color=auto'",
+        "meaning": "The command that ll will expand to"
+      }
+    ],
+    "flags": [],
+    "example": "alias k='kubectl'\nalias d='docker'\nalias tf='terraform'\nalias gs='git status'",
+    "output": "# After setting these aliases:\n$ k get pods    # runs: kubectl get pods\n$ d ps          # runs: docker ps\n$ tf plan       # runs: terraform plan",
+    "tip": "Add aliases to ~/.bashrc or ~/.zshrc to make them persistent. Use 'alias' with no arguments to list all current aliases.",
+    "tags": [
+      "shell",
+      "productivity",
+      "shortcuts",
+      "shortcut",
+      "abbreviation",
+      "custom command"
+    ],
+    "manPage": "1",
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "which",
+    "category": "linux",
+    "command": "which python3",
+    "title": "Locate a command's executable",
+    "difficulty": "beginner",
+    "description": "Show the full filesystem path of the executable that would run for a given command name, following PATH order.",
+    "breakdown": [
+      {
+        "part": "which",
+        "meaning": "Show the full path of shell commands"
+      },
+      {
+        "part": "python3",
+        "meaning": "The command to locate in PATH"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-a",
+        "description": "Print all matching pathnames, not just the first",
+        "source": "local"
+      }
+    ],
+    "example": "which python3 python pip3",
+    "output": "/usr/bin/python3\n/usr/bin/python\n/usr/bin/pip3",
+    "tip": "Use 'type command' for a more thorough check — it detects aliases, functions, builtins, and executables. 'command -v cmd' is POSIX-portable.",
+    "tags": [
+      "shell",
+      "path",
+      "commands",
+      "locate",
+      "where",
+      "find command"
+    ],
+    "manPage": "1",
+    "package": "which",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "env",
+    "category": "linux",
+    "command": "env | sort",
+    "title": "Show environment variables",
+    "difficulty": "beginner",
+    "description": "Print all current environment variables, or run a command with a modified environment without changing the current shell.",
+    "breakdown": [
+      {
+        "part": "env",
+        "meaning": "Print environment or run a program in a modified environment"
+      },
+      {
+        "part": "|",
+        "meaning": "Pipe to sort"
+      },
+      {
+        "part": "sort",
+        "meaning": "Sort alphabetically for readability"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-i, --ignore-environment",
+        "description": "Start with an empty environment",
+        "source": "local"
+      },
+      {
+        "flag": "-u NAME",
+        "description": "Remove variable from the environment",
+        "source": "local"
+      },
+      {
+        "flag": "NAME=VALUE",
+        "description": "Set environment variable for the command run",
+        "source": "local"
+      }
+    ],
+    "example": "env | grep -i path",
+    "output": "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\nMANPATH=/usr/local/man:/usr/man",
+    "tip": "Use 'env -i CLEAN=yes bash' to start a shell with a completely clean environment — useful for testing scripts that may behave differently depending on inherited variables.",
+    "tags": [
+      "shell",
+      "environment",
+      "variables",
+      "config",
+      "settings"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "export",
+    "category": "linux",
+    "command": "export VARIABLE=value",
+    "title": "Set environment variables",
+    "difficulty": "beginner",
+    "description": "Create or update an environment variable and export it so child processes can inherit it.",
+    "breakdown": [
+      {
+        "part": "export",
+        "meaning": "Mark variable as exported to child processes"
+      },
+      {
+        "part": "VARIABLE=value",
+        "meaning": "Variable name and its value to set"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-p",
+        "description": "Print all exported variables in a re-importable format",
+        "source": "local"
+      },
+      {
+        "flag": "-n",
+        "description": "Remove the export attribute from variables",
+        "source": "local"
+      }
+    ],
+    "example": "export KUBECONFIG=/home/user/.kube/config\nexport AWS_REGION=us-east-1\nexport PATH=\"$PATH:/usr/local/go/bin\"",
+    "output": "# Variables are now available to all child processes\n$ echo $AWS_REGION\nus-east-1",
+    "tip": "Put exports in ~/.bashrc for permanent availability. Use 'source .env' to load variables from a .env file (use 'set -a; source .env; set +a' to auto-export all).",
+    "tags": [
+      "shell",
+      "environment",
+      "variables",
+      "scripting",
+      "variable",
+      "env",
+      "set",
+      "path"
+    ],
+    "manPage": "1",
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "lsof",
+    "category": "linux",
+    "command": "lsof -i :8080",
+    "title": "List open files and sockets",
+    "difficulty": "intermediate",
+    "description": "Show all processes that have a file or socket open on port 8080 — useful for finding what's using a port.",
+    "breakdown": [
+      {
+        "part": "lsof",
+        "meaning": "List open files — every open resource in Unix is a file"
+      },
+      {
+        "part": "-i",
+        "description": "Internet — select internet address files"
+      },
+      {
+        "part": ":8080",
+        "meaning": "Filter to port 8080 specifically"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-i :PORT",
+        "description": "Show files related to the given port",
+        "source": "local"
+      },
+      {
+        "flag": "-u USER",
+        "description": "Show files opened by USER",
+        "source": "local"
+      },
+      {
+        "flag": "-p PID",
+        "description": "Show files opened by process PID",
+        "source": "local"
+      },
+      {
+        "flag": "-c NAME",
+        "description": "Show files opened by processes named NAME",
+        "source": "local"
+      },
+      {
+        "flag": "+D DIR",
+        "description": "Search recursively for all open files in DIR",
+        "source": "local"
+      },
+      {
+        "flag": "-n",
+        "description": "Do not resolve hostnames (faster)",
+        "source": "local"
+      }
+    ],
+    "example": "lsof -i :80 -i :443 -n",
+    "output": "COMMAND   PID     USER   FD   TYPE DEVICE SIZE/OFF NODE NAME\nnginx    1234     root   6u  IPv4  12345      0t0  TCP *:http (LISTEN)\nnginx    1235 www-data   6u  IPv4  12345      0t0  TCP *:http (LISTEN)\nnginx    1234     root   7u  IPv4  12346      0t0  TCP *:https (LISTEN)",
+    "tip": "Use 'lsof -p PID' to see all files a process has open, including sockets, pipes, and regular files — great for debugging file descriptor leaks.",
+    "tags": [
+      "processes",
+      "network",
+      "ports",
+      "debugging",
+      "open files",
+      "port",
+      "who is using",
+      "socket",
+      "process files"
+    ],
+    "manPage": "8",
+    "package": "lsof",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "mount",
+    "category": "linux",
+    "command": "mount /dev/sdb1 /mnt/data",
+    "title": "Mount a filesystem",
+    "difficulty": "intermediate",
+    "description": "Attach a block device or network filesystem to a directory in the filesystem tree.",
+    "breakdown": [
+      {
+        "part": "mount",
+        "meaning": "Mount a filesystem"
+      },
+      {
+        "part": "/dev/sdb1",
+        "meaning": "Block device or filesystem source to mount"
+      },
+      {
+        "part": "/mnt/data",
+        "meaning": "Mount point — directory where the filesystem will be accessible"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-t TYPE",
+        "description": "Filesystem type (ext4, xfs, nfs, tmpfs, etc.)",
+        "source": "local"
+      },
+      {
+        "flag": "-o OPTIONS",
+        "description": "Mount options (ro, rw, noexec, uid=, etc.)",
+        "source": "local"
+      },
+      {
+        "flag": "-a",
+        "description": "Mount all filesystems listed in /etc/fstab",
+        "source": "local"
+      },
+      {
+        "flag": "--bind",
+        "description": "Bind mount — attach a directory to another location",
+        "source": "local"
+      },
+      {
+        "flag": "-r, --read-only",
+        "description": "Mount the filesystem read-only",
+        "source": "local"
+      }
+    ],
+    "example": "mount -o ro,noexec /dev/sdb1 /mnt/backup",
+    "output": "# Verify with: df -hT | grep /mnt/backup\n/dev/sdb1      ext4  200G  142G   48G  75% /mnt/backup",
+    "tip": "Add persistent mounts to /etc/fstab. Use 'mount' with no arguments to list all currently mounted filesystems.",
+    "tags": [
+      "disk",
+      "storage",
+      "filesystem",
+      "mount",
+      "attach",
+      "nfs",
+      "volume",
+      "drive"
+    ],
+    "manPage": "8",
+    "package": "util-linux",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "tar",
+    "category": "linux",
+    "command": "tar -czvf archive.tar.gz /path",
+    "title": "Create/extract tar archives",
+    "difficulty": "intermediate",
+    "description": "Create and extract tape archive files, with optional compression — the standard tool for bundling files on Linux systems.",
+    "breakdown": [
+      {
+        "part": "tar",
+        "meaning": "Tape archive — create, extract, and manage archive files"
+      },
+      {
+        "part": "-c",
+        "meaning": "Create a new archive"
+      },
+      {
+        "part": "-z",
+        "meaning": "Compress the archive using gzip"
+      },
+      {
+        "part": "-v",
+        "meaning": "Verbose — list files being processed"
+      },
+      {
+        "part": "-f",
+        "meaning": "Filename — specify the archive file name"
+      },
+      {
+        "part": "archive.tar.gz",
+        "meaning": "The output archive file name"
+      },
+      {
+        "part": "/path",
+        "meaning": "The source directory or files to archive"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-c, --create",
+        "description": "Create a new archive",
+        "source": "local"
+      },
+      {
+        "flag": "-x, --extract",
+        "description": "Extract files from an archive",
+        "source": "local"
+      },
+      {
+        "flag": "-z, --gzip",
+        "description": "Filter the archive through gzip",
+        "source": "local"
+      },
+      {
+        "flag": "-j, --bzip2",
+        "description": "Filter the archive through bzip2 (better compression, slower)",
+        "source": "local"
+      },
+      {
+        "flag": "-J, --xz",
+        "description": "Filter the archive through xz (best compression, slowest)",
+        "source": "local"
+      },
+      {
+        "flag": "-v, --verbose",
+        "description": "Verbosely list files processed",
+        "source": "local"
+      },
+      {
+        "flag": "-f, --file",
+        "description": "Use given archive file or device",
+        "source": "local"
+      },
+      {
+        "flag": "-t, --list",
+        "description": "List the contents of an archive",
+        "source": "local"
+      },
+      {
+        "flag": "-C, --directory",
+        "description": "Change to directory before performing operations",
+        "source": "local"
+      }
+    ],
+    "example": "tar -czvf backup.tar.gz /etc/nginx/",
+    "output": "/etc/nginx/\n/etc/nginx/nginx.conf\n/etc/nginx/sites-available/\n/etc/nginx/sites-available/default\n/etc/nginx/sites-enabled/\n/etc/nginx/sites-enabled/default",
+    "tip": "Extract with tar -xzvf archive.tar.gz. Use -j instead of -z for bzip2 compression (smaller but slower).",
+    "tags": [
+      "archive",
+      "compression",
+      "backup",
+      "files",
+      "zip",
+      "unzip",
+      "compress",
+      "extract",
+      "pack",
+      "unpack",
+      "gz",
+      "gzip"
+    ],
+    "manPage": "1",
+    "package": "tar",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "sed",
+    "category": "linux",
+    "command": "sed -i 's/old/new/g' file.txt",
+    "title": "Stream editor for text substitution",
+    "difficulty": "intermediate",
+    "description": "Perform in-place find and replace across all occurrences in a file using regular expressions.",
+    "breakdown": [
+      {
+        "part": "sed",
+        "meaning": "Stream editor — filter and transform text"
+      },
+      {
+        "part": "-i",
+        "meaning": "In-place — edit the file directly instead of printing to stdout"
+      },
+      {
+        "part": "s/",
+        "meaning": "Substitute command"
+      },
+      {
+        "part": "old",
+        "meaning": "The pattern to search for (supports regex)"
+      },
+      {
+        "part": "/new",
+        "meaning": "The replacement string"
+      },
+      {
+        "part": "/g",
+        "meaning": "Global — replace all occurrences on each line, not just the first"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-i, --in-place",
+        "description": "Edit files in place (optionally create backup with suffix)",
+        "source": "local"
+      },
+      {
+        "flag": "-e, --expression",
+        "description": "Add the script commands to be executed",
+        "source": "local"
+      },
+      {
+        "flag": "-n, --quiet",
+        "description": "Suppress automatic printing of pattern space",
+        "source": "local"
+      },
+      {
+        "flag": "-r, --regexp-extended",
+        "description": "Use extended regular expressions",
+        "source": "local"
+      },
+      {
+        "flag": "-f, --file",
+        "description": "Read sed commands from a script file",
+        "source": "local"
+      }
+    ],
+    "example": "sed -i 's/localhost/192.168.1.100/g' config.yml",
+    "output": "(no output — file is modified in-place)\n\n# Verify with: grep '192.168.1.100' config.yml\nhost: 192.168.1.100\ndb_host: 192.168.1.100",
+    "tip": "Use sed -i.bak to create a backup before editing. On macOS, -i requires an argument: sed -i '' 's/old/new/g' file.",
+    "tags": [
+      "text",
+      "substitution",
+      "regex",
+      "editing",
+      "replace",
+      "find replace",
+      "substitute",
+      "edit",
+      "rewrite"
+    ],
+    "manPage": "1",
+    "package": "sed",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "awk",
+    "category": "linux",
+    "command": "awk '{print $1, $3}' file.txt",
+    "title": "Pattern scanning and processing",
+    "difficulty": "advanced",
+    "description": "Extract and print specific columns from structured text data, using whitespace as the default field separator.",
+    "breakdown": [
+      {
+        "part": "awk",
+        "meaning": "Pattern scanning and processing language (named after Aho, Weinberger, Kernighan)"
+      },
+      {
+        "part": "'{print $1, $3}'",
+        "meaning": "Print the 1st and 3rd fields of each line"
+      },
+      {
+        "part": "$1",
+        "meaning": "First field (column) in the current record"
+      },
+      {
+        "part": "$3",
+        "meaning": "Third field (column) in the current record"
+      },
+      {
+        "part": "file.txt",
+        "meaning": "Input file to process"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-F",
+        "description": "Set the field separator (e.g., -F',' for CSV)",
+        "source": "local"
+      },
+      {
+        "flag": "-v",
+        "description": "Assign a value to a variable before execution",
+        "source": "local"
+      },
+      {
+        "flag": "-f",
+        "description": "Read the awk program from a file",
+        "source": "local"
+      },
+      {
+        "flag": "NR",
+        "description": "Built-in variable: current record (line) number",
+        "source": "local"
+      },
+      {
+        "flag": "NF",
+        "description": "Built-in variable: number of fields in current record",
+        "source": "local"
+      }
+    ],
+    "example": "awk -F: '{print $1, $3}' /etc/passwd | head -5",
+    "output": "root 0\ndaemon 1\nbin 2\nsys 3\nsync 4",
+    "tip": "Use awk '/pattern/ {action}' to filter lines first. Example: awk '/error/ {print $0}' log.txt prints only lines containing 'error'.",
+    "tags": [
+      "text",
+      "processing",
+      "columns",
+      "data",
+      "scripting",
+      "parse",
+      "extract",
+      "report",
+      "csv"
+    ],
+    "manPage": "1",
+    "package": "gawk",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "top",
+    "category": "linux",
+    "command": "top -bn1",
+    "title": "Process monitoring",
+    "difficulty": "beginner",
+    "description": "Display a snapshot of running processes sorted by CPU usage in batch mode (non-interactive, single iteration).",
+    "breakdown": [
+      {
+        "part": "top",
+        "meaning": "Display real-time system process information"
+      },
+      {
+        "part": "-b",
+        "meaning": "Batch mode — output suitable for piping or logging"
+      },
+      {
+        "part": "-n1",
+        "meaning": "Number of iterations — run once then exit"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-b",
+        "description": "Batch mode — useful for sending output to a file or pipe",
+        "source": "local"
+      },
+      {
+        "flag": "-n",
+        "description": "Number of iterations before exiting",
+        "source": "local"
+      },
+      {
+        "flag": "-d",
+        "description": "Delay time interval between screen updates (seconds)",
+        "source": "local"
+      },
+      {
+        "flag": "-u",
+        "description": "Show only processes for a given user",
+        "source": "local"
+      },
+      {
+        "flag": "-p",
+        "description": "Monitor only specified process IDs",
+        "source": "local"
+      }
+    ],
+    "example": "top -bn1 | head -20",
+    "output": "top - 14:32:10 up 45 days,  3:21,  2 users,  load average: 0.15, 0.10, 0.09\nTasks: 187 total,   1 running, 186 sleeping,   0 stopped,   0 zombie\n%Cpu(s):  2.3 us,  0.8 sy,  0.0 ni, 96.7 id,  0.1 wa,  0.0 hi,  0.1 si\nMiB Mem :  7976.4 total,  2145.6 free,  3210.8 used,  2620.0 buff/cache\nMiB Swap:  2048.0 total,  2048.0 free,     0.0 used.  4412.3 avail Mem\n\n  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND\n 1234 www-data  20   0  456320  89200  12400 S   1.3   1.1   5:42.10 nginx\n 5678 mysql     20   0 1245600 324500  18200 S   0.7   4.0  12:15.33 mysqld",
+    "tip": "Use htop for a more user-friendly, colorized alternative with mouse support. Install with apt install htop.",
+    "tags": [
+      "processes",
+      "monitoring",
+      "cpu",
+      "memory",
+      "system",
+      "htop",
+      "running",
+      "tasks",
+      "usage",
+      "realtime",
+      "live"
+    ],
+    "manPage": "1",
+    "package": "procps",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "df",
+    "category": "linux",
+    "command": "df -hT",
+    "title": "Disk space usage",
+    "difficulty": "beginner",
+    "description": "Report filesystem disk space usage with human-readable sizes and filesystem type information.",
+    "breakdown": [
+      {
+        "part": "df",
+        "meaning": "Disk free — report filesystem disk space usage"
+      },
+      {
+        "part": "-h",
+        "meaning": "Human readable — print sizes in KB, MB, GB"
+      },
+      {
+        "part": "-T",
+        "meaning": "Type — show the filesystem type (ext4, xfs, tmpfs, etc.)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-h, --human-readable",
+        "description": "Print sizes in human readable format (e.g., 1K, 234M, 2G)",
+        "source": "local"
+      },
+      {
+        "flag": "-T, --print-type",
+        "description": "Print filesystem type",
+        "source": "local"
+      },
+      {
+        "flag": "-a, --all",
+        "description": "Include pseudo, duplicate, and inaccessible file systems",
+        "source": "local"
+      },
+      {
+        "flag": "-i, --inodes",
+        "description": "List inode information instead of block usage",
+        "source": "local"
+      },
+      {
+        "flag": "--total",
+        "description": "Produce a grand total at the bottom",
+        "source": "local"
+      }
+    ],
+    "example": "df -hT /",
+    "output": "Filesystem     Type  Size  Used Avail Use% Mounted on\n/dev/sda1      ext4   50G   32G   16G  67% /\ntmpfs          tmpfs 3.9G     0  3.9G   0% /dev/shm\n/dev/sdb1      ext4  200G  142G   48G  75% /data",
+    "tip": "Use df -hT --total to see a grand total. Watch disk usage in real-time with: watch -n 5 df -hT.",
+    "tags": [
+      "disk",
+      "storage",
+      "filesystem",
+      "monitoring",
+      "space",
+      "free space",
+      "usage",
+      "full",
+      "capacity"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "du",
+    "category": "linux",
+    "command": "du -sh /path/*",
+    "title": "Directory size estimation",
+    "difficulty": "beginner",
+    "description": "Report disk usage of files and directories with human-readable sizes — use to find what is consuming space in a filesystem.",
+    "breakdown": [
+      {
+        "part": "du",
+        "meaning": "Disk usage — estimate file and directory space usage"
+      },
+      {
+        "part": "-s",
+        "meaning": "Summary — display only a total for each argument"
+      },
+      {
+        "part": "-h",
+        "meaning": "Human readable — print sizes in KB, MB, GB"
+      },
+      {
+        "part": "/path/*",
+        "meaning": "All items in the specified directory"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-s, --summarize",
+        "description": "Display only a total for each argument",
+        "source": "local"
+      },
+      {
+        "flag": "-h, --human-readable",
+        "description": "Print sizes in human readable format",
+        "source": "local"
+      },
+      {
+        "flag": "-a, --all",
+        "description": "Show counts for all files, not just directories",
+        "source": "local"
+      },
+      {
+        "flag": "-c, --total",
+        "description": "Produce a grand total",
+        "source": "local"
+      },
+      {
+        "flag": "--max-depth=N",
+        "description": "Show totals for directories N or fewer levels deep",
+        "source": "local"
+      }
+    ],
+    "example": "du -sh /var/log/* | sort -rh | head -10",
+    "output": "42M\t/var/log/journal\n18M\t/var/log/syslog\n12M\t/var/log/auth.log\n8.5M\t/var/log/kern.log\n4.2M\t/var/log/dpkg.log\n1.1M\t/var/log/nginx",
+    "tip": "Pipe to sort -rh to find the biggest directories first. Use ncdu for an interactive disk usage browser.",
+    "tags": [
+      "disk",
+      "storage",
+      "files",
+      "monitoring",
+      "size",
+      "folder size",
+      "how big",
+      "usage",
+      "space used"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "tail",
+    "category": "linux",
+    "command": "tail -f /var/log/syslog",
+    "title": "View end of file / follow logs",
+    "difficulty": "beginner",
+    "description": "Output the last lines of a file, or follow it in real-time with -f — the standard tool for live log monitoring.",
+    "breakdown": [
+      {
+        "part": "tail",
+        "meaning": "Output the last part of a file"
+      },
+      {
+        "part": "-f",
+        "meaning": "Follow — output appended data as the file grows"
+      },
+      {
+        "part": "/var/log/syslog",
+        "meaning": "The log file to monitor"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-f, --follow",
+        "description": "Output appended data as the file grows",
+        "source": "local"
+      },
+      {
+        "flag": "-n, --lines",
+        "description": "Output the last N lines (default 10)",
+        "source": "local"
+      },
+      {
+        "flag": "-F",
+        "description": "Same as --follow=name --retry (follows log rotation)",
+        "source": "local"
+      },
+      {
+        "flag": "-c, --bytes",
+        "description": "Output the last N bytes",
+        "source": "local"
+      },
+      {
+        "flag": "--pid",
+        "description": "Terminate after process ID dies",
+        "source": "local"
+      }
+    ],
+    "example": "tail -n 50 -f /var/log/nginx/access.log",
+    "output": "192.168.1.10 - - [12/Mar/2024:14:30:01 +0000] \"GET /api/health HTTP/1.1\" 200 15\n192.168.1.11 - - [12/Mar/2024:14:30:02 +0000] \"POST /api/login HTTP/1.1\" 200 482\n192.168.1.12 - - [12/Mar/2024:14:30:03 +0000] \"GET /static/app.js HTTP/1.1\" 304 0\n(waiting for new lines...)",
+    "tip": "Use tail -F instead of -f to handle log rotation (file gets renamed and recreated). Combine with grep: tail -f log | grep error.",
+    "tags": [
+      "logs",
+      "monitoring",
+      "files",
+      "debugging"
+    ],
+    "manPage": "1",
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "rsync",
+    "category": "linux",
+    "command": "rsync -avz source/ user@host:/dest/",
+    "title": "Remote file sync",
+    "difficulty": "intermediate",
+    "description": "Synchronize files between local and remote locations efficiently, transferring only changed data over SSH.",
+    "breakdown": [
+      {
+        "part": "rsync",
+        "meaning": "Remote sync — fast, versatile file copying tool"
+      },
+      {
+        "part": "-a",
+        "meaning": "Archive mode — preserves permissions, timestamps, symlinks, etc."
+      },
+      {
+        "part": "-v",
+        "meaning": "Verbose — show files being transferred"
+      },
+      {
+        "part": "-z",
+        "meaning": "Compress — compress data during transfer"
+      },
+      {
+        "part": "source/",
+        "meaning": "Source directory (trailing slash means copy contents, not directory itself)"
+      },
+      {
+        "part": "user@host:/dest/",
+        "meaning": "Remote destination via SSH"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-a, --archive",
+        "description": "Archive mode (equals -rlptgoD)",
+        "source": "local"
+      },
+      {
+        "flag": "-v, --verbose",
+        "description": "Increase verbosity",
+        "source": "local"
+      },
+      {
+        "flag": "-z, --compress",
+        "description": "Compress file data during transfer",
+        "source": "local"
+      },
+      {
+        "flag": "--delete",
+        "description": "Delete extraneous files from destination",
+        "source": "local"
+      },
+      {
+        "flag": "--dry-run, -n",
+        "description": "Perform a trial run with no changes made",
+        "source": "local"
+      },
+      {
+        "flag": "--exclude",
+        "description": "Exclude files matching pattern",
+        "source": "local"
+      },
+      {
+        "flag": "--progress",
+        "description": "Show progress during transfer",
+        "source": "local"
+      }
+    ],
+    "example": "rsync -avz --progress --exclude='node_modules' ./project/ user@server:/var/www/project/",
+    "output": "sending incremental file list\nindex.html\n          2,048 100%    0.00kB/s    0:00:00 (xfr#1, to-chk=14/16)\nstyle.css\n          4,096 100%    3.91MB/s    0:00:00 (xfr#2, to-chk=13/16)\n\nsent 18,944 bytes  received 92 bytes  12,690.67 bytes/sec\ntotal size is 18,432  speedup is 0.97",
+    "tip": "Always do a --dry-run first to preview changes. Trailing slash on source matters: 'src/' copies contents, 'src' copies the directory itself.",
+    "tags": [
+      "sync",
+      "remote",
+      "backup",
+      "transfer",
+      "ssh",
+      "copy",
+      "mirror",
+      "upload",
+      "deploy"
+    ],
+    "manPage": "1",
+    "package": "rsync",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "ps",
+    "category": "linux",
+    "command": "ps aux --sort=-%mem",
+    "title": "Process status",
+    "difficulty": "beginner",
+    "description": "Report a snapshot of current running processes — combine flags to control output format and filter by user, PID, or resource usage.",
+    "breakdown": [
+      {
+        "part": "ps",
+        "meaning": "Process status — report a snapshot of current processes"
+      },
+      {
+        "part": "a",
+        "meaning": "Show processes for all users"
+      },
+      {
+        "part": "u",
+        "meaning": "User-oriented format — show user, CPU%, MEM%, etc."
+      },
+      {
+        "part": "x",
+        "meaning": "Include processes not attached to a terminal"
+      },
+      {
+        "part": "--sort=-%mem",
+        "meaning": "Sort by memory usage descending (- prefix for reverse)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "a",
+        "description": "Show processes for all users",
+        "source": "local"
+      },
+      {
+        "flag": "u",
+        "description": "Display user-oriented format",
+        "source": "local"
+      },
+      {
+        "flag": "x",
+        "description": "Show processes without controlling terminal",
+        "source": "local"
+      },
+      {
+        "flag": "--sort",
+        "description": "Sort output by specified field (e.g., -%cpu, -%mem, pid)",
+        "source": "local"
+      },
+      {
+        "flag": "-e, --everyone",
+        "description": "Select all processes (equivalent to -A)",
+        "source": "local"
+      },
+      {
+        "flag": "-f",
+        "description": "Full-format listing",
+        "source": "local"
+      }
+    ],
+    "example": "ps aux --sort=-%mem | head -10",
+    "output": "USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND\nmysql     5678  0.7  4.0 1245600 324500 ?      Ssl  Mar10  12:15 /usr/sbin/mysqld\nwww-data  1234  1.3  1.1  456320  89200 ?      S    Mar12   5:42 nginx: worker\nroot      1001  0.2  0.8  234560  65432 ?      Ss   Mar10   3:20 /usr/sbin/sshd\nroot         1  0.0  0.3  169432  28800 ?      Ss   Jan25   1:45 /sbin/init",
+    "tip": "Combine with grep to find specific processes: ps aux | grep nginx. Use pgrep for a cleaner alternative.",
+    "tags": [
+      "processes",
+      "monitoring",
+      "system",
+      "memory",
+      "list processes",
+      "running",
+      "tasks",
+      "jobs"
+    ],
+    "manPage": "1",
+    "package": "procps",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "xargs",
+    "category": "linux",
+    "command": "find . -name '*.log' | xargs rm",
+    "title": "Build commands from stdin",
+    "difficulty": "advanced",
+    "description": "Read items from standard input and execute a command with those items as arguments, enabling powerful command chaining.",
+    "breakdown": [
+      {
+        "part": "find . -name '*.log'",
+        "meaning": "Find all .log files in the current directory tree"
+      },
+      {
+        "part": "|",
+        "meaning": "Pipe — send output of find to xargs as input"
+      },
+      {
+        "part": "xargs",
+        "meaning": "Build and execute commands from standard input"
+      },
+      {
+        "part": "rm",
+        "meaning": "The command to execute with the piped input as arguments"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-I {}",
+        "description": "Replace {} in the command with each input item",
+        "source": "local"
+      },
+      {
+        "flag": "-n",
+        "description": "Use at most N arguments per command invocation",
+        "source": "local"
+      },
+      {
+        "flag": "-P, --max-procs",
+        "description": "Run up to N processes in parallel",
+        "source": "local"
+      },
+      {
+        "flag": "-0, --null",
+        "description": "Input items are separated by null character (use with find -print0)",
+        "source": "local"
+      },
+      {
+        "flag": "-p, --interactive",
+        "description": "Prompt before executing each command",
+        "source": "local"
+      },
+      {
+        "flag": "-t, --verbose",
+        "description": "Print the command before executing it",
+        "source": "local"
+      }
+    ],
+    "example": "find /var/log -name '*.gz' -mtime +30 | xargs -I {} mv {} /backup/old-logs/",
+    "output": "(moves each .gz file older than 30 days to /backup/old-logs/)\n\n# Verify with: ls /backup/old-logs/\nsyslog.2.gz  auth.log.3.gz  kern.log.4.gz",
+    "tip": "Use -print0 with find and -0 with xargs to handle filenames with spaces: find . -name '*.log' -print0 | xargs -0 rm. Use -P for parallel execution.",
+    "tags": [
+      "pipeline",
+      "scripting",
+      "automation",
+      "stdin",
+      "pipe",
+      "chain",
+      "batch",
+      "parallel"
+    ],
+    "manPage": "1",
+    "package": "findutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ]
+  },
+  {
+    "id": "echo",
+    "category": "linux",
+    "command": "echo $VARIABLE",
+    "title": "Print text and variables",
+    "difficulty": "beginner",
+    "description": "Print text or the value of environment variables to standard output. One of the most-used shell built-ins.",
+    "breakdown": [
+      {
+        "part": "echo",
+        "meaning": "Print arguments to standard output"
+      },
+      {
+        "part": "$VARIABLE",
+        "meaning": "Expand the value of the named environment variable"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-n",
+        "description": "Do not output a trailing newline",
+        "source": "local"
+      },
+      {
+        "flag": "-e",
+        "description": "Enable interpretation of backslash escapes (\\n, \\t, etc.)",
+        "source": "local"
+      }
+    ],
+    "example": "echo \"Deploying to $(hostname) at $(date)\"",
+    "output": "Deploying to webserver-01 at Tue Mar 12 14:30:00 UTC 2024",
+    "tip": "Use printf instead of echo for portable formatted output — echo behaviour differs between bash and sh.",
+    "tags": [
+      "shell",
+      "output",
+      "variables",
+      "scripting",
+      "print",
+      "display",
+      "show",
+      "write"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "date",
+    "category": "linux",
+    "command": "date +\"%Y-%m-%d %H:%M:%S\"",
+    "title": "Display or format date and time",
+    "difficulty": "beginner",
+    "description": "Print the current date/time with a custom format string — essential for log file names and script timestamps.",
+    "breakdown": [
+      {
+        "part": "date",
+        "meaning": "Print or set the system date and time"
+      },
+      {
+        "part": "+\"%Y-%m-%d %H:%M:%S\"",
+        "meaning": "Format: 4-digit year, month, day, hour, minute, second"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "+FORMAT",
+        "description": "Output date in specified format",
+        "source": "local"
+      },
+      {
+        "flag": "-u",
+        "description": "Print Coordinated Universal Time (UTC)",
+        "source": "local"
+      },
+      {
+        "flag": "-d STRING",
+        "description": "Display time described by STRING instead of now",
+        "source": "local"
+      }
+    ],
+    "example": "tar -czf backup-$(date +%F).tar.gz /etc/",
+    "output": "backup-2024-03-12.tar.gz",
+    "tip": "Common shortcuts: %F = %Y-%m-%d, %T = %H:%M:%S. Use date -u for UTC timestamps in distributed logs.",
+    "tags": [
+      "time",
+      "date",
+      "scripting",
+      "timestamps",
+      "timestamp",
+      "now",
+      "format",
+      "current date"
+    ],
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "whoami",
+    "category": "linux",
+    "command": "whoami",
+    "title": "Print current username",
+    "difficulty": "beginner",
+    "description": "Print the username of the currently active user — a quick identity check, useful in scripts to verify execution context.",
+    "breakdown": [
+      {
+        "part": "whoami",
+        "meaning": "Print the effective user name"
+      }
+    ],
+    "flags": [],
+    "example": "if [ \"$(whoami)\" != \"root\" ]; then echo \"Must run as root\"; exit 1; fi",
+    "output": "ubuntu",
+    "tip": "Use id for more detail (UID, GID, groups). Check root portably with [ \"$(id -u)\" -eq 0 ].",
+    "tags": [
+      "users",
+      "identity",
+      "shell",
+      "current user",
+      "who",
+      "me"
+    ],
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "hostname",
+    "category": "linux",
+    "command": "hostname -f",
+    "title": "Show or set system hostname",
+    "difficulty": "beginner",
+    "description": "Display or temporarily set the system hostname — the -f flag shows the fully-qualified domain name (FQDN).",
+    "breakdown": [
+      {
+        "part": "hostname",
+        "meaning": "Show or set the system hostname"
+      },
+      {
+        "part": "-f",
+        "meaning": "FQDN — full hostname including domain"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-f, --fqdn",
+        "description": "Display the FQDN",
+        "source": "local"
+      },
+      {
+        "flag": "-i",
+        "description": "Display all network addresses of the host",
+        "source": "local"
+      },
+      {
+        "flag": "-s",
+        "description": "Display the short hostname (up to first dot)",
+        "source": "local"
+      }
+    ],
+    "example": "hostname -f",
+    "output": "webserver-01.us-east-1.internal",
+    "tip": "Use hostnamectl set-hostname newname (systemd) to permanently change hostname. Editing /etc/hostname alone does not update the running system until reboot.",
+    "tags": [
+      "system",
+      "network",
+      "identity",
+      "server name",
+      "machine name",
+      "fqdn"
+    ],
+    "package": "hostname",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "history",
+    "category": "linux",
+    "command": "history | grep ssh",
+    "title": "Search command history",
+    "difficulty": "beginner",
+    "description": "Display a numbered list of previously executed shell commands — supports searching, re-execution, and manipulation of the history file.",
+    "breakdown": [
+      {
+        "part": "history",
+        "meaning": "Display the command history list"
+      },
+      {
+        "part": "| grep ssh",
+        "meaning": "Filter for lines containing ssh"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "N",
+        "description": "Show last N commands: history 20",
+        "source": "local"
+      },
+      {
+        "flag": "-c",
+        "description": "Clear the history list",
+        "source": "local"
+      },
+      {
+        "flag": "-w",
+        "description": "Write current history to the history file",
+        "source": "local"
+      }
+    ],
+    "example": "history 20",
+    "output": "  481  ssh -i key.pem ubuntu@10.0.1.5\n  482  kubectl get pods\n  483  docker ps\n  484  git status\n  485  history 20",
+    "tip": "Use Ctrl+R for interactive reverse history search. Add HISTTIMEFORMAT=\"%F %T \" to .bashrc to timestamp every entry.",
+    "tags": [
+      "shell",
+      "history",
+      "productivity",
+      "previous commands",
+      "past",
+      "recall",
+      "command history"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ],
+    "manPage": "3"
+  },
+  {
+    "id": "diff",
+    "category": "linux",
+    "command": "diff -u file1.txt file2.txt",
+    "title": "Compare files line by line",
+    "difficulty": "beginner",
+    "description": "Show differences between two files in unified format — the same format used by git diff and patch.",
+    "breakdown": [
+      {
+        "part": "diff",
+        "meaning": "Compare files line by line"
+      },
+      {
+        "part": "-u",
+        "meaning": "Unified format — shows context with +/- markers"
+      },
+      {
+        "part": "file1.txt",
+        "meaning": "Original (old) file"
+      },
+      {
+        "part": "file2.txt",
+        "meaning": "New file to compare against"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-u, --unified",
+        "description": "Output unified context diff",
+        "source": "local"
+      },
+      {
+        "flag": "-r, --recursive",
+        "description": "Recursively compare directories",
+        "source": "local"
+      },
+      {
+        "flag": "-i, --ignore-case",
+        "description": "Ignore case differences",
+        "source": "local"
+      },
+      {
+        "flag": "-w",
+        "description": "Ignore all whitespace",
+        "source": "local"
+      },
+      {
+        "flag": "--color",
+        "description": "Colorize the output",
+        "source": "local"
+      }
+    ],
+    "example": "diff -u /etc/nginx/nginx.conf.bak /etc/nginx/nginx.conf",
+    "output": "--- /etc/nginx/nginx.conf.bak\t2024-03-10\n+++ /etc/nginx/nginx.conf\t2024-03-12\n@@ -10,7 +10,7 @@\n-    worker_processes 2;\n+    worker_processes auto;",
+    "tip": "Use diff -r dir1/ dir2/ to compare whole directory trees. Pipe to patch to apply: diff -u old new | patch old",
+    "tags": [
+      "text",
+      "compare",
+      "files",
+      "patch",
+      "difference",
+      "changes",
+      "delta"
+    ],
+    "package": "diffutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "dig",
+    "category": "linux",
+    "command": "dig +short example.com A",
+    "title": "DNS lookup",
+    "difficulty": "intermediate",
+    "description": "Query DNS to resolve a domain name to its A records, printing only the IP addresses.",
+    "breakdown": [
+      {
+        "part": "dig",
+        "meaning": "Domain Information Groper — DNS lookup utility"
+      },
+      {
+        "part": "+short",
+        "meaning": "Terse output — print only the answer, no headers"
+      },
+      {
+        "part": "example.com",
+        "meaning": "Domain name to query"
+      },
+      {
+        "part": "A",
+        "meaning": "Query type — IPv4 address records"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "+short",
+        "description": "Show only the answer section",
+        "source": "local"
+      },
+      {
+        "flag": "+trace",
+        "description": "Trace full delegation from root servers",
+        "source": "local"
+      },
+      {
+        "flag": "@SERVER",
+        "description": "Use a specific DNS server (e.g. @8.8.8.8)",
+        "source": "local"
+      },
+      {
+        "flag": "MX",
+        "description": "Query MX (mail exchange) records",
+        "source": "local"
+      },
+      {
+        "flag": "TXT",
+        "description": "Query TXT records (SPF, DKIM, etc.)",
+        "source": "local"
+      }
+    ],
+    "example": "dig +short @8.8.8.8 github.com A",
+    "output": "140.82.121.3",
+    "tip": "Use dig +trace to follow the full DNS delegation chain — invaluable for debugging DNS propagation issues.",
+    "tags": [
+      "dns",
+      "network",
+      "lookup",
+      "troubleshooting",
+      "resolve",
+      "nslookup",
+      "domain",
+      "ip address"
+    ],
+    "package": "dnsutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "traceroute",
+    "category": "linux",
+    "command": "traceroute -n google.com",
+    "title": "Trace network path to host",
+    "difficulty": "intermediate",
+    "description": "Trace the network route packets take to a destination, showing each hop and round-trip latency — essential for diagnosing routing issues.",
+    "breakdown": [
+      {
+        "part": "traceroute",
+        "meaning": "Print the route packets take to a network host"
+      },
+      {
+        "part": "-n",
+        "meaning": "Numeric — do not resolve hop IPs to hostnames (faster)"
+      },
+      {
+        "part": "google.com",
+        "meaning": "Target hostname or IP"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-n",
+        "description": "Do not resolve hostnames",
+        "source": "local"
+      },
+      {
+        "flag": "-m MAX",
+        "description": "Set maximum hops (default 30)",
+        "source": "local"
+      },
+      {
+        "flag": "-w SEC",
+        "description": "Wait time per probe in seconds",
+        "source": "local"
+      },
+      {
+        "flag": "-T",
+        "description": "Use TCP SYN probes (bypasses some firewalls)",
+        "source": "local"
+      }
+    ],
+    "example": "traceroute -n 8.8.8.8",
+    "output": " 1  192.168.1.1    1.2 ms\n 2  10.0.0.1       5.4 ms\n 3  72.14.204.68  12.3 ms\n 4  8.8.8.8       11.9 ms",
+    "tip": "Hops showing * * * mean ICMP is blocked, not a failure. Use mtr for a live, combined ping+traceroute view.",
+    "tags": [
+      "network",
+      "routing",
+      "latency",
+      "troubleshooting",
+      "route",
+      "hops",
+      "path",
+      "network path",
+      "mtr"
+    ],
+    "package": "traceroute",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ],
+    "manPage": "8"
+  },
+  {
+    "id": "nc",
+    "category": "linux",
+    "command": "nc -zv host 80",
+    "title": "Netcat — test TCP/UDP connectivity",
+    "difficulty": "intermediate",
+    "description": "Test whether a TCP port is open on a remote host without needing a full application client.",
+    "breakdown": [
+      {
+        "part": "nc",
+        "meaning": "Netcat — TCP/UDP network utility"
+      },
+      {
+        "part": "-z",
+        "meaning": "Zero I/O — scan only, send no data"
+      },
+      {
+        "part": "-v",
+        "meaning": "Verbose — print connection status"
+      },
+      {
+        "part": "host 80",
+        "meaning": "Target hostname and port"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-z",
+        "description": "Scan without sending data",
+        "source": "local"
+      },
+      {
+        "flag": "-v",
+        "description": "Verbose output",
+        "source": "local"
+      },
+      {
+        "flag": "-u",
+        "description": "UDP mode instead of TCP",
+        "source": "local"
+      },
+      {
+        "flag": "-l",
+        "description": "Listen mode — accept incoming connections",
+        "source": "local"
+      },
+      {
+        "flag": "-w SEC",
+        "description": "Connection timeout in seconds",
+        "source": "local"
+      }
+    ],
+    "example": "nc -zv 10.0.1.5 22 443 8080",
+    "output": "Connection to 10.0.1.5 22 port [tcp/ssh] succeeded!\nConnection to 10.0.1.5 443 port [tcp/https] succeeded!\nnc: connect to 10.0.1.5 8080 failed: Connection refused",
+    "tip": "nc -l -p 4444 on a server then nc server 4444 on client gives a quick ad-hoc file transfer channel.",
+    "tags": [
+      "network",
+      "ports",
+      "tcp",
+      "connectivity",
+      "port",
+      "test",
+      "connect",
+      "listen",
+      "netcat",
+      "socket"
+    ],
+    "package": "netcat",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "pgrep",
+    "category": "linux",
+    "command": "pgrep -la nginx",
+    "title": "Find processes by name",
+    "difficulty": "beginner",
+    "description": "Search for processes by name or attribute and return their PIDs — safer than ps | grep because it avoids matching the grep process itself.",
+    "breakdown": [
+      {
+        "part": "pgrep",
+        "meaning": "Look up processes by name"
+      },
+      {
+        "part": "-l",
+        "meaning": "List process name with PID"
+      },
+      {
+        "part": "-a",
+        "meaning": "Show full command line arguments"
+      },
+      {
+        "part": "nginx",
+        "meaning": "Pattern to match"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-l",
+        "description": "List process name alongside PID",
+        "source": "local"
+      },
+      {
+        "flag": "-a",
+        "description": "Include full argument list",
+        "source": "local"
+      },
+      {
+        "flag": "-u USER",
+        "description": "Only match processes owned by USER",
+        "source": "local"
+      },
+      {
+        "flag": "-f",
+        "description": "Match against full command line",
+        "source": "local"
+      },
+      {
+        "flag": "-x",
+        "description": "Exact name match only",
+        "source": "local"
+      }
+    ],
+    "example": "pgrep -la python",
+    "output": "12345 python3 manage.py runserver 0.0.0.0:8000\n12401 python3 celery worker --loglevel=info",
+    "tip": "Use pgrep -f to match against full command lines, not just the binary name. Run pgrep before pkill to preview what will be killed.",
+    "tags": [
+      "processes",
+      "search",
+      "monitoring",
+      "find process",
+      "search process",
+      "lookup",
+      "pid"
+    ],
+    "package": "procps",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "pkill",
+    "category": "linux",
+    "command": "pkill -15 -f \"process name\"",
+    "title": "Kill processes by name pattern",
+    "difficulty": "beginner",
+    "description": "Send a signal (default SIGTERM) to all processes whose command name or full command line matches a pattern.",
+    "breakdown": [
+      {
+        "part": "pkill",
+        "meaning": "Send a signal to processes by name"
+      },
+      {
+        "part": "-15",
+        "meaning": "SIGTERM — graceful termination"
+      },
+      {
+        "part": "-f",
+        "meaning": "Match against the full command line"
+      },
+      {
+        "part": "\"process name\"",
+        "meaning": "Pattern to match"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-f",
+        "description": "Match full command line",
+        "source": "local"
+      },
+      {
+        "flag": "-9",
+        "description": "SIGKILL — force kill",
+        "source": "local"
+      },
+      {
+        "flag": "-u USER",
+        "description": "Only kill processes owned by USER",
+        "source": "local"
+      },
+      {
+        "flag": "-n",
+        "description": "Only kill the newest matching process",
+        "source": "local"
+      }
+    ],
+    "example": "pkill -f \"gunicorn master\"",
+    "output": "(gunicorn master process receives SIGTERM and shuts down gracefully)",
+    "tip": "Always test with 'pgrep -fl pattern' first to preview what would be killed. Use 'pkill -KILL' only if SIGTERM does not work — SIGKILL cannot be caught or ignored.",
+    "tags": [
+      "processes",
+      "signals",
+      "system",
+      "stop",
+      "terminate",
+      "end process"
+    ],
+    "package": "procps",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "tmux",
+    "category": "linux",
+    "command": "tmux new -s session-name",
+    "title": "Terminal multiplexer",
+    "difficulty": "intermediate",
+    "description": "Create a named tmux session that persists after SSH disconnects and supports split panes.",
+    "breakdown": [
+      {
+        "part": "tmux",
+        "meaning": "Terminal multiplexer"
+      },
+      {
+        "part": "new",
+        "meaning": "Create a new session"
+      },
+      {
+        "part": "-s session-name",
+        "meaning": "Assign a name for easy reattachment"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "new -s NAME",
+        "description": "Create a new named session",
+        "source": "local"
+      },
+      {
+        "flag": "attach -t NAME",
+        "description": "Attach to an existing session",
+        "source": "local"
+      },
+      {
+        "flag": "ls",
+        "description": "List all sessions",
+        "source": "local"
+      },
+      {
+        "flag": "kill-session -t NAME",
+        "description": "Destroy a session",
+        "source": "local"
+      }
+    ],
+    "example": "tmux new -s deploy\n# run long deployment\n# Ctrl+B then D to detach\ntmux attach -t deploy",
+    "output": "[detached (from session deploy)]\n\n# Reattach later — session state preserved exactly",
+    "tip": "Key bindings: Ctrl+B D=detach, Ctrl+B %=split vertical, Ctrl+B \"=split horizontal, Ctrl+B arrow=switch pane. Add 'set -g mouse on' to ~/.tmux.conf.",
+    "tags": [
+      "terminal",
+      "session",
+      "productivity",
+      "remote",
+      "screen",
+      "split",
+      "pane",
+      "multiplexer",
+      "detach",
+      "persistent"
+    ],
+    "package": "tmux",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "jq",
+    "category": "linux",
+    "command": "jq \".[] | select(.status == \"running\")\" data.json",
+    "title": "Parse and filter JSON",
+    "difficulty": "intermediate",
+    "description": "Filter a JSON array to objects where status equals running — essential for API responses in CI/CD pipelines.",
+    "breakdown": [
+      {
+        "part": "jq",
+        "meaning": "Command-line JSON processor"
+      },
+      {
+        "part": "\".[]\"",
+        "meaning": "Iterate over all elements of the input array"
+      },
+      {
+        "part": "| select(...)",
+        "meaning": "Filter: only pass through matching elements"
+      },
+      {
+        "part": ".status == \"running\"",
+        "meaning": "Condition: status field must equal running"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-r",
+        "description": "Raw output — print strings without JSON quotes",
+        "source": "local"
+      },
+      {
+        "flag": "-c",
+        "description": "Compact output — one object per line",
+        "source": "local"
+      },
+      {
+        "flag": "-e",
+        "description": "Exit status 1 if output was false or null",
+        "source": "local"
+      },
+      {
+        "flag": "--arg NAME VAL",
+        "description": "Pass a shell variable into the jq expression",
+        "source": "local"
+      },
+      {
+        "flag": "-s",
+        "description": "Slurp all inputs into a single array",
+        "source": "local"
+      }
+    ],
+    "example": "curl -s https://api.github.com/repos/cli/cli/releases | jq -r \".[0].tag_name\"",
+    "output": "v2.45.0",
+    "tip": "Use jq -r to strip quotes when piping to other commands. jq . with no filter just pretty-prints JSON.",
+    "tags": [
+      "json",
+      "parsing",
+      "api",
+      "scripting",
+      "devops",
+      "parse json",
+      "filter",
+      "query",
+      "rest",
+      "transform"
+    ],
+    "package": "jq",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "openssl",
+    "category": "linux",
+    "command": "openssl s_client -connect host:443 -brief",
+    "title": "Inspect TLS certificates",
+    "difficulty": "advanced",
+    "description": "Connect to a server and display TLS handshake details — certificate chain, protocol version, and cipher suite.",
+    "breakdown": [
+      {
+        "part": "openssl",
+        "meaning": "OpenSSL command-line cryptographic tool"
+      },
+      {
+        "part": "s_client",
+        "meaning": "Implements a generic SSL/TLS client"
+      },
+      {
+        "part": "-connect host:443",
+        "meaning": "Target host and port"
+      },
+      {
+        "part": "-brief",
+        "meaning": "Print only a summary of the connection"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "s_client -connect H:P",
+        "description": "Connect and inspect TLS certificate",
+        "source": "local"
+      },
+      {
+        "flag": "-brief",
+        "description": "Summary output only",
+        "source": "local"
+      },
+      {
+        "flag": "-servername HOST",
+        "description": "Set SNI hostname for virtual hosting",
+        "source": "local"
+      },
+      {
+        "flag": "x509 -in cert.pem -text -noout",
+        "description": "Inspect a certificate file",
+        "source": "local"
+      },
+      {
+        "flag": "genrsa -out key.pem 4096",
+        "description": "Generate an RSA private key",
+        "source": "local"
+      }
+    ],
+    "example": "echo | openssl s_client -connect github.com:443 2>/dev/null | openssl x509 -noout -dates",
+    "output": "notBefore=Mar 14 00:00:00 2024 GMT\nnotAfter=Mar 14 23:59:59 2025 GMT",
+    "tip": "Check cert expiry in a one-liner: echo | openssl s_client -connect host:443 2>/dev/null | openssl x509 -noout -enddate",
+    "tags": [
+      "ssl",
+      "tls",
+      "certificates",
+      "security",
+      "crypto",
+      "certificate",
+      "cert",
+      "https",
+      "encrypt",
+      "key",
+      "pem",
+      "expiry"
+    ],
+    "package": "openssl",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "base64",
+    "category": "linux",
+    "command": "echo -n \"text\" | base64",
+    "title": "Base64 encode / decode",
+    "difficulty": "beginner",
+    "description": "Encode text to Base64 — used for Kubernetes secrets, API auth headers, and embedding binary in text.",
+    "breakdown": [
+      {
+        "part": "echo -n \"text\"",
+        "meaning": "Print text without trailing newline (-n is critical)"
+      },
+      {
+        "part": "|",
+        "meaning": "Pipe to base64"
+      },
+      {
+        "part": "base64",
+        "meaning": "Encode stdin as Base64"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-d, --decode",
+        "description": "Decode Base64 input back to original",
+        "source": "local"
+      },
+      {
+        "flag": "-w 0",
+        "description": "Disable line wrapping (output on one line)",
+        "source": "local"
+      }
+    ],
+    "example": "echo -n \"admin:password\" | base64\necho \"YWRtaW46cGFzc3dvcmQ=\" | base64 -d",
+    "output": "YWRtaW46cGFzc3dvcmQ=\nadmin:password",
+    "tip": "Always -n with echo to avoid encoding a trailing newline. For Kubernetes secrets use kubectl create secret — don't manually base64.",
+    "tags": [
+      "encoding",
+      "secrets",
+      "kubernetes",
+      "api",
+      "encode",
+      "decode",
+      "secret",
+      "binary",
+      "text"
+    ],
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "sha256sum",
+    "category": "linux",
+    "command": "sha256sum file.tar.gz",
+    "title": "Verify file integrity with SHA-256",
+    "difficulty": "beginner",
+    "description": "Compute the SHA-256 hash of a file — used to verify downloads have not been tampered with.",
+    "breakdown": [
+      {
+        "part": "sha256sum",
+        "meaning": "Compute and check SHA256 message digest"
+      },
+      {
+        "part": "file.tar.gz",
+        "meaning": "File to hash"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-c, --check",
+        "description": "Read SHA256 sums from a file and verify them",
+        "source": "local"
+      },
+      {
+        "flag": "--quiet",
+        "description": "Do not print OK for each verified file",
+        "source": "local"
+      }
+    ],
+    "example": "echo \"abc123def456  kubectl\" | sha256sum -c",
+    "output": "kubectl: OK",
+    "tip": "On macOS use shasum -a 256 instead. Generate a checksum manifest: sha256sum *.rpm > checksums.txt then verify with sha256sum -c checksums.txt",
+    "tags": [
+      "security",
+      "integrity",
+      "hash",
+      "verification",
+      "checksum",
+      "verify",
+      "download",
+      "md5"
+    ],
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "wsl"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "iptables",
+    "category": "linux",
+    "command": "iptables -L -n -v",
+    "title": "Manage firewall rules (iptables)",
+    "difficulty": "advanced",
+    "description": "List all active iptables firewall rules with packet/byte counters and numeric addresses.",
+    "breakdown": [
+      {
+        "part": "iptables",
+        "meaning": "Administration tool for IPv4 packet filtering"
+      },
+      {
+        "part": "-L",
+        "meaning": "List all rules in the selected chain"
+      },
+      {
+        "part": "-n",
+        "meaning": "Numeric — skip DNS lookups for IPs/ports"
+      },
+      {
+        "part": "-v",
+        "meaning": "Verbose — include packet/byte counters"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-L",
+        "description": "List rules",
+        "source": "local"
+      },
+      {
+        "flag": "-A CHAIN RULE",
+        "description": "Append a rule to a chain",
+        "source": "local"
+      },
+      {
+        "flag": "-D CHAIN RULE",
+        "description": "Delete a rule from a chain",
+        "source": "local"
+      },
+      {
+        "flag": "-F",
+        "description": "Flush all rules from a chain",
+        "source": "local"
+      },
+      {
+        "flag": "-P CHAIN TARGET",
+        "description": "Set default policy (ACCEPT or DROP)",
+        "source": "local"
+      },
+      {
+        "flag": "-s IP",
+        "description": "Match source IP or network",
+        "source": "local"
+      },
+      {
+        "flag": "--dport N",
+        "description": "Match destination port",
+        "source": "local"
+      }
+    ],
+    "example": "iptables -A INPUT -p tcp --dport 443 -j ACCEPT\niptables -A INPUT -j DROP",
+    "output": "Chain INPUT (policy ACCEPT)\ntarget  prot  source       destination\nACCEPT  tcp   anywhere     anywhere    tcp dpt:https\nDROP    all   anywhere     anywhere",
+    "tip": "Use ufw on Ubuntu for simpler firewall management. On modern systems nftables replaces iptables.",
+    "tags": [
+      "firewall",
+      "security",
+      "network",
+      "iptables",
+      "block",
+      "allow",
+      "deny",
+      "rules",
+      "filter",
+      "nat"
+    ],
+    "package": "iptables",
+    "os": [
+      "linux",
+      "wsl"
+    ],
+    "manPage": "8"
+  },
+  {
+    "id": "ufw",
+    "category": "linux",
+    "command": "ufw status verbose",
+    "title": "Uncomplicated Firewall (ufw)",
+    "difficulty": "intermediate",
+    "description": "Manage the Uncomplicated Firewall — a simplified frontend to iptables for allowing, denying, and auditing network traffic rules on Ubuntu/Debian.",
+    "breakdown": [
+      {
+        "part": "ufw",
+        "meaning": "Uncomplicated Firewall — iptables frontend for Ubuntu/Debian"
+      },
+      {
+        "part": "status",
+        "meaning": "Display firewall status and rules"
+      },
+      {
+        "part": "verbose",
+        "meaning": "Include default policies in output"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "enable",
+        "description": "Enable the firewall",
+        "source": "local"
+      },
+      {
+        "flag": "disable",
+        "description": "Disable the firewall",
+        "source": "local"
+      },
+      {
+        "flag": "allow PORT/PROTO",
+        "description": "Allow connections (e.g. allow 22/tcp)",
+        "source": "local"
+      },
+      {
+        "flag": "deny PORT",
+        "description": "Block connections on a port",
+        "source": "local"
+      },
+      {
+        "flag": "allow from IP",
+        "description": "Allow all traffic from an IP",
+        "source": "local"
+      },
+      {
+        "flag": "delete RULE",
+        "description": "Remove a rule",
+        "source": "local"
+      }
+    ],
+    "example": "ufw allow 22/tcp && ufw allow 80/tcp && ufw allow 443/tcp && ufw enable",
+    "output": "Status: active\nTo          Action  From\n--          ------  ----\n22/tcp      ALLOW   Anywhere\n80/tcp      ALLOW   Anywhere\n443/tcp     ALLOW   Anywhere",
+    "tip": "Always allow SSH before enabling ufw to avoid locking yourself out. Use 'ufw allow from 10.0.0.0/8 to any port 5432' for scoped DB rules.",
+    "tags": [
+      "firewall",
+      "security",
+      "network",
+      "ubuntu",
+      "block",
+      "allow",
+      "deny",
+      "ports",
+      "rules"
+    ],
+    "package": "ufw",
+    "os": [
+      "linux",
+      "wsl"
+    ],
+    "manPage": "8"
+  },
+  {
+    "id": "dd",
+    "category": "linux",
+    "command": "dd if=/dev/sda of=disk.img bs=4M status=progress",
+    "title": "Raw disk copy / image creation",
+    "difficulty": "advanced",
+    "description": "Copy raw data between files or block devices with precise control over block size — used for disk imaging, wiping, and benchmarking I/O.",
+    "breakdown": [
+      {
+        "part": "dd",
+        "meaning": "Convert and copy files at a low level"
+      },
+      {
+        "part": "if=/dev/sda",
+        "meaning": "Input — source disk device"
+      },
+      {
+        "part": "of=disk.img",
+        "meaning": "Output — destination image file"
+      },
+      {
+        "part": "bs=4M",
+        "meaning": "Block size — read/write 4 MB at a time (faster than default 512B)"
+      },
+      {
+        "part": "status=progress",
+        "meaning": "Print transfer speed and progress to stderr"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "if=FILE",
+        "description": "Read from FILE",
+        "source": "local"
+      },
+      {
+        "flag": "of=FILE",
+        "description": "Write to FILE",
+        "source": "local"
+      },
+      {
+        "flag": "bs=N",
+        "description": "Block size in bytes (k/M/G suffixes accepted)",
+        "source": "local"
+      },
+      {
+        "flag": "count=N",
+        "description": "Copy only N input blocks",
+        "source": "local"
+      },
+      {
+        "flag": "status=progress",
+        "description": "Show periodic transfer stats",
+        "source": "local"
+      },
+      {
+        "flag": "conv=sync,noerror",
+        "description": "Pad blocks and continue on read errors",
+        "source": "local"
+      }
+    ],
+    "example": "dd if=/dev/zero of=/tmp/test bs=1M count=100 status=progress",
+    "output": "104857600 bytes (105 MB) copied, 1.23 s, 85.0 MB/s",
+    "tip": "DANGER — dd is called 'disk destroyer'. Double-check if= and of= before running. Use pv as a safer alternative with better progress display.",
+    "tags": [
+      "disk",
+      "imaging",
+      "clone",
+      "storage",
+      "disk image",
+      "copy disk",
+      "wipe",
+      "zero",
+      "burn",
+      "iso"
+    ],
+    "package": "coreutils",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "fdisk",
+    "category": "linux",
+    "command": "fdisk -l",
+    "title": "List disk partitions",
+    "difficulty": "advanced",
+    "description": "List all disks and their partition tables — shows disk size, partition layout, and type.",
+    "breakdown": [
+      {
+        "part": "fdisk",
+        "meaning": "Partition table manipulator"
+      },
+      {
+        "part": "-l",
+        "meaning": "List partition tables for all available devices"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-l",
+        "description": "List partition tables",
+        "source": "local"
+      },
+      {
+        "flag": "/dev/sdX",
+        "description": "Open a specific disk for interactive partitioning",
+        "source": "local"
+      },
+      {
+        "flag": "-b BYTES",
+        "description": "Specify sector size",
+        "source": "local"
+      }
+    ],
+    "example": "fdisk -l /dev/sda",
+    "output": "Disk /dev/sda: 50 GiB, 53687091200 bytes\n\nDevice     Boot  Start       End   Size  Type\n/dev/sda1  *      2048    999423  487M  Linux\n/dev/sda2       1001472 104855551 49.5G Linux",
+    "tip": "For GPT disks or >2TB drives use gdisk or parted. lsblk gives a cleaner partition overview for inspection.",
+    "tags": [
+      "disk",
+      "partitions",
+      "storage",
+      "partition",
+      "disk layout",
+      "format",
+      "table",
+      "disks"
+    ],
+    "package": "util-linux",
+    "os": [
+      "linux",
+      "wsl"
+    ],
+    "manPage": "8"
+  },
+  {
+    "id": "timedatectl",
+    "category": "linux",
+    "command": "timedatectl set-timezone America/New_York",
+    "title": "Manage system timezone",
+    "difficulty": "beginner",
+    "description": "Set the system timezone via systemd — the correct method on modern systemd-based Linux.",
+    "breakdown": [
+      {
+        "part": "timedatectl",
+        "meaning": "Control system time and date via systemd"
+      },
+      {
+        "part": "set-timezone",
+        "meaning": "Set the system timezone"
+      },
+      {
+        "part": "America/New_York",
+        "meaning": "IANA timezone name"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "status",
+        "description": "Show current time, timezone, and NTP sync status",
+        "source": "local"
+      },
+      {
+        "flag": "set-timezone TZ",
+        "description": "Set the system timezone",
+        "source": "local"
+      },
+      {
+        "flag": "list-timezones",
+        "description": "List all available timezone names",
+        "source": "local"
+      },
+      {
+        "flag": "set-ntp true",
+        "description": "Enable NTP time synchronisation",
+        "source": "local"
+      }
+    ],
+    "example": "timedatectl status",
+    "output": "               Local time: Tue 2024-03-12 14:30:00 EST\n           Universal time: Tue 2024-03-12 19:30:00 UTC\n                Time zone: America/New_York (EST, -0500)\nSystem clock synchronized: yes",
+    "tip": "Use timedatectl list-timezones | grep America to find timezone names. Production servers should use UTC to avoid DST surprises.",
+    "tags": [
+      "time",
+      "timezone",
+      "systemd",
+      "system",
+      "time zone",
+      "clock",
+      "ntp",
+      "sync",
+      "date"
+    ],
+    "package": "systemd",
+    "os": [
+      "linux",
+      "wsl"
+    ],
+    "manPage": "1"
+  }
+]

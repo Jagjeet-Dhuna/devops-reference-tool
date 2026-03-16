@@ -1,0 +1,1105 @@
+[
+  {
+    "id": "ansible-playbook",
+    "category": "ansible",
+    "command": "ansible-playbook -i inventory.yml playbook.yml --limit webservers",
+    "title": "Run a playbook",
+    "difficulty": "intermediate",
+    "description": "Execute an Ansible playbook against a specific host group from an inventory file.",
+    "breakdown": [
+      {
+        "part": "ansible-playbook",
+        "meaning": "Run Ansible playbooks"
+      },
+      {
+        "part": "-i inventory.yml",
+        "meaning": "Specify inventory file with host definitions"
+      },
+      {
+        "part": "playbook.yml",
+        "meaning": "The playbook file to execute"
+      },
+      {
+        "part": "--limit webservers",
+        "meaning": "Only target the 'webservers' host group"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-i, --inventory",
+        "description": "Specify inventory host path or comma-separated list",
+        "source": "local"
+      },
+      {
+        "flag": "--limit",
+        "description": "Limit selected hosts to a pattern",
+        "source": "local"
+      },
+      {
+        "flag": "--check",
+        "description": "Dry run — don't make any changes",
+        "source": "local"
+      },
+      {
+        "flag": "--diff",
+        "description": "Show differences in changed files",
+        "source": "local"
+      },
+      {
+        "flag": "-v, -vv, -vvv",
+        "description": "Increase verbosity level",
+        "source": "local"
+      },
+      {
+        "flag": "--tags",
+        "description": "Only run plays and tasks tagged with these values",
+        "source": "local"
+      }
+    ],
+    "example": "ansible-playbook -i inventory.yml deploy.yml --limit webservers --check",
+    "output": "PLAY [Deploy web application] ************************************\n\nTASK [Gathering Facts] ******************************************\nok: [web-1]\nok: [web-2]\n\nTASK [Install packages] *****************************************\nchanged: [web-1]\nchanged: [web-2]\n\nPLAY RECAP ******************************************************\nweb-1  : ok=5  changed=2  unreachable=0  failed=0\nweb-2  : ok=5  changed=2  unreachable=0  failed=0",
+    "tip": "Always run with --check --diff first to preview changes. Use --tags to run specific tasks only.",
+    "tags": [
+      "playbook",
+      "automation",
+      "deployment"
+    ],
+    "package": "ansible",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "ansible-ad-hoc",
+    "category": "ansible",
+    "command": "ansible all -m ping -i inventory.yml",
+    "title": "Ad-hoc ping all hosts",
+    "difficulty": "beginner",
+    "description": "Run a one-off module command against hosts without a playbook — ideal for quick checks, gathering facts, or making immediate changes.",
+    "breakdown": [
+      {
+        "part": "ansible",
+        "meaning": "Ansible ad-hoc command runner"
+      },
+      {
+        "part": "all",
+        "meaning": "Target all hosts in inventory"
+      },
+      {
+        "part": "-m ping",
+        "meaning": "Use the ping module (test connectivity)"
+      },
+      {
+        "part": "-i inventory.yml",
+        "meaning": "Specify inventory file"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-m, --module-name",
+        "description": "Module to execute",
+        "source": "local"
+      },
+      {
+        "flag": "-a, --args",
+        "description": "Module arguments",
+        "source": "local"
+      },
+      {
+        "flag": "-b, --become",
+        "description": "Run with privilege escalation (sudo)",
+        "source": "local"
+      },
+      {
+        "flag": "-u, --user",
+        "description": "Connect as this user",
+        "source": "local"
+      }
+    ],
+    "example": "ansible all -m ping -i inventory.yml",
+    "output": "web-1 | SUCCESS => {\n    \"changed\": false,\n    \"ping\": \"pong\"\n}\nweb-2 | SUCCESS => {\n    \"changed\": false,\n    \"ping\": \"pong\"\n}\ndb-1 | SUCCESS => {\n    \"changed\": false,\n    \"ping\": \"pong\"\n}",
+    "tip": "Use 'ansible all -m shell -a \"uptime\"' for quick system checks across all hosts.",
+    "tags": [
+      "ad-hoc",
+      "ping",
+      "connectivity"
+    ],
+    "package": "ansible",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "ansible-vault",
+    "category": "ansible",
+    "command": "ansible-vault encrypt secrets.yml",
+    "title": "Encrypt sensitive data",
+    "difficulty": "intermediate",
+    "description": "Encrypt, decrypt, view, and edit sensitive YAML files so secrets like passwords and API keys can be safely committed to version control.",
+    "breakdown": [
+      {
+        "part": "ansible-vault",
+        "meaning": "Ansible encryption tool for sensitive data"
+      },
+      {
+        "part": "encrypt",
+        "meaning": "Encrypt the specified file"
+      },
+      {
+        "part": "secrets.yml",
+        "meaning": "File containing sensitive variables"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "encrypt",
+        "description": "Encrypt a file",
+        "source": "local"
+      },
+      {
+        "flag": "decrypt",
+        "description": "Decrypt a file",
+        "source": "local"
+      },
+      {
+        "flag": "view",
+        "description": "View encrypted file without decrypting to disk",
+        "source": "local"
+      },
+      {
+        "flag": "edit",
+        "description": "Edit encrypted file in place",
+        "source": "local"
+      },
+      {
+        "flag": "--vault-password-file",
+        "description": "Specify vault password file",
+        "source": "local"
+      }
+    ],
+    "example": "ansible-vault encrypt secrets.yml",
+    "output": "New Vault password:\nConfirm New Vault password:\nEncryption successful",
+    "tip": "Use --vault-password-file in CI/CD pipelines. Store the vault password securely, never in version control.",
+    "tags": [
+      "security",
+      "encryption",
+      "secrets"
+    ],
+    "package": "ansible",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "ansible-galaxy",
+    "category": "ansible",
+    "command": "ansible-galaxy install geerlingguy.docker",
+    "title": "Install roles",
+    "difficulty": "beginner",
+    "description": "Install community or third-party roles from Ansible Galaxy, the public repository of pre-built Ansible roles.",
+    "breakdown": [
+      {
+        "part": "ansible-galaxy",
+        "meaning": "Ansible Galaxy CLI for managing roles and collections"
+      },
+      {
+        "part": "install",
+        "meaning": "Download and install the specified role"
+      },
+      {
+        "part": "geerlingguy.docker",
+        "meaning": "Role name in 'author.role' format from Galaxy"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "install",
+        "description": "Install a role or collection from Galaxy",
+        "source": "local"
+      },
+      {
+        "flag": "-r, --role-file",
+        "description": "Install roles listed in a requirements file",
+        "source": "local"
+      },
+      {
+        "flag": "-p, --roles-path",
+        "description": "Install roles to a specific directory",
+        "source": "local"
+      },
+      {
+        "flag": "--force",
+        "description": "Force overwrite of an existing role",
+        "source": "local"
+      },
+      {
+        "flag": "list",
+        "description": "List installed roles",
+        "source": "local"
+      },
+      {
+        "flag": "init",
+        "description": "Scaffold a new role directory structure",
+        "source": "local"
+      }
+    ],
+    "example": "ansible-galaxy install -r requirements.yml -p ./roles",
+    "output": "- downloading role 'docker', owned by geerlingguy\n- downloading role from https://github.com/geerlingguy/ansible-role-docker/archive/7.1.0.tar.gz\n- extracting geerlingguy.docker to ./roles/geerlingguy.docker\n- geerlingguy.docker (7.1.0) was installed successfully\n- downloading role 'nginx', owned by geerlingguy\n- extracting geerlingguy.nginx to ./roles/geerlingguy.nginx\n- geerlingguy.nginx (3.2.0) was installed successfully",
+    "tip": "Use a requirements.yml file to pin role versions for reproducible builds. Run 'ansible-galaxy init myrole' to scaffold a new custom role with best-practice directory structure.",
+    "tags": [
+      "galaxy",
+      "roles",
+      "dependencies",
+      "community"
+    ],
+    "package": "ansible",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "ansible-inventory",
+    "category": "ansible",
+    "command": "ansible-inventory -i inventory.yml --graph",
+    "title": "View inventory",
+    "difficulty": "beginner",
+    "description": "Display the inventory host tree showing groups, subgroups, and hosts in a readable hierarchical format.",
+    "breakdown": [
+      {
+        "part": "ansible-inventory",
+        "meaning": "Ansible inventory inspection tool"
+      },
+      {
+        "part": "-i inventory.yml",
+        "meaning": "Specify the inventory file to inspect"
+      },
+      {
+        "part": "--graph",
+        "meaning": "Display inventory as a tree/graph structure"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--graph",
+        "description": "Show inventory as a hierarchical tree",
+        "source": "local"
+      },
+      {
+        "flag": "--list",
+        "description": "Output full inventory data as JSON",
+        "source": "local"
+      },
+      {
+        "flag": "--host HOST",
+        "description": "Show variables for a specific host",
+        "source": "local"
+      },
+      {
+        "flag": "--vars",
+        "description": "Include variables in the graph output",
+        "source": "local"
+      },
+      {
+        "flag": "-y, --yaml",
+        "description": "Output in YAML format instead of JSON",
+        "source": "local"
+      }
+    ],
+    "example": "ansible-inventory -i inventory.yml --graph --vars",
+    "output": "@all:\n  |--@webservers:\n  |  |--web-1\n  |  |  |--{ansible_host = 192.168.1.10}\n  |  |  |--{http_port = 80}\n  |  |--web-2\n  |  |  |--{ansible_host = 192.168.1.11}\n  |  |  |--{http_port = 80}\n  |--@dbservers:\n  |  |--db-1\n  |  |  |--{ansible_host = 192.168.1.20}\n  |  |  |--{db_port = 5432}\n  |--@ungrouped:",
+    "tip": "Use --list to get machine-readable JSON output, useful for debugging dynamic inventories. Add --vars to --graph to see all host and group variables.",
+    "tags": [
+      "inventory",
+      "hosts",
+      "groups",
+      "debugging"
+    ],
+    "package": "ansible",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "ansible-lint",
+    "category": "ansible",
+    "command": "ansible-lint playbook.yml",
+    "title": "Lint playbooks",
+    "difficulty": "intermediate",
+    "description": "Analyze Ansible playbooks and roles for best practices, potential errors, and style violations before running them.",
+    "breakdown": [
+      {
+        "part": "ansible-lint",
+        "meaning": "Static analysis tool for Ansible content"
+      },
+      {
+        "part": "playbook.yml",
+        "meaning": "The playbook or directory to lint"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-p",
+        "description": "Parseable output format (filename:line:column:level:message)",
+        "source": "local"
+      },
+      {
+        "flag": "-x RULE",
+        "description": "Skip specific rules (e.g., -x yaml[truthy])",
+        "source": "local"
+      },
+      {
+        "flag": "--fix",
+        "description": "Automatically fix some violations where possible",
+        "source": "local"
+      },
+      {
+        "flag": "-f",
+        "description": "Output format: rich, plain, json, sarif, codeclimate",
+        "source": "local"
+      },
+      {
+        "flag": "--project-dir",
+        "description": "Set project root for relative path resolution",
+        "source": "local"
+      },
+      {
+        "flag": "-L, --list-rules",
+        "description": "List all available lint rules",
+        "source": "local"
+      }
+    ],
+    "example": "ansible-lint site.yml roles/",
+    "output": "WARNING  Listing 3 violation(s) that are fatal\nname[missing]: All tasks should be named.\nroles/webserver/tasks/main.yml:5 Task/Handler: apt install nginx\n\nrisky-shell-pipe: Piped shell commands should use pipefail.\nplaybook.yml:23 Task/Handler: Check disk usage\n\nyaml[truthy]: Truthy value should be one of [false, true]\nroles/webserver/defaults/main.yml:3\n\nFinished with 3 failure(s), 0 warning(s) on 8 files.",
+    "tip": "Add ansible-lint to your CI/CD pipeline as a quality gate. Create a .ansible-lint config file to customize rules and skip paths.",
+    "tags": [
+      "linting",
+      "best-practices",
+      "quality",
+      "ci-cd"
+    ],
+    "package": "ansible",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "ansible-copy",
+    "category": "ansible",
+    "command": "ansible webservers -m copy -a \"src=app.conf dest=/etc/app.conf\" -b",
+    "title": "Ad-hoc file copy",
+    "difficulty": "intermediate",
+    "description": "Copy a local file to remote hosts using an ad-hoc command with the copy module and privilege escalation.",
+    "breakdown": [
+      {
+        "part": "ansible webservers",
+        "meaning": "Target the 'webservers' host group"
+      },
+      {
+        "part": "-m copy",
+        "meaning": "Use the copy module to transfer files"
+      },
+      {
+        "part": "-a \"src=app.conf dest=/etc/app.conf\"",
+        "meaning": "Module arguments: source file and destination path"
+      },
+      {
+        "part": "-b",
+        "meaning": "Become root (sudo) for writing to /etc"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "src",
+        "description": "Local path to the file to copy",
+        "source": "local"
+      },
+      {
+        "flag": "dest",
+        "description": "Remote absolute path where the file is placed",
+        "source": "local"
+      },
+      {
+        "flag": "owner",
+        "description": "Set the owner of the remote file",
+        "source": "local"
+      },
+      {
+        "flag": "group",
+        "description": "Set the group of the remote file",
+        "source": "local"
+      },
+      {
+        "flag": "mode",
+        "description": "Set file permissions (e.g., '0644')",
+        "source": "local"
+      },
+      {
+        "flag": "backup",
+        "description": "Create a backup of the original file before overwriting (yes/no)",
+        "source": "local"
+      },
+      {
+        "flag": "content",
+        "description": "Write content directly instead of copying a file",
+        "source": "local"
+      }
+    ],
+    "example": "ansible webservers -m copy -a \"src=nginx.conf dest=/etc/nginx/nginx.conf owner=root group=root mode=0644 backup=yes\" -b -i inventory.yml",
+    "output": "web-1 | CHANGED => {\n    \"changed\": true,\n    \"checksum\": \"a3f2b8c1d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9\",\n    \"dest\": \"/etc/nginx/nginx.conf\",\n    \"gid\": 0,\n    \"group\": \"root\",\n    \"mode\": \"0644\",\n    \"owner\": \"root\",\n    \"size\": 2469,\n    \"state\": \"file\",\n    \"uid\": 0\n}\nweb-2 | CHANGED => {\n    \"changed\": true,\n    \"checksum\": \"a3f2b8c1d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9\",\n    \"dest\": \"/etc/nginx/nginx.conf\",\n    \"backup_file\": \"/etc/nginx/nginx.conf.48292.2025-03-15@10:30:42~\",\n    \"size\": 2469,\n    \"state\": \"file\"\n}",
+    "tip": "Always set backup=yes when overwriting config files so you can roll back. For templated configs with variables, use the template module instead of copy.",
+    "tags": [
+      "copy",
+      "files",
+      "ad-hoc",
+      "configuration"
+    ],
+    "package": "ansible",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "ansible-service",
+    "category": "ansible",
+    "command": "ansible webservers -m service -a \"name=nginx state=restarted\" -b",
+    "title": "Manage services",
+    "difficulty": "intermediate",
+    "description": "Start, stop, restart, or enable system services on remote hosts using an ad-hoc command with the service module.",
+    "breakdown": [
+      {
+        "part": "ansible webservers",
+        "meaning": "Target the 'webservers' host group"
+      },
+      {
+        "part": "-m service",
+        "meaning": "Use the service module to manage systemd/init services"
+      },
+      {
+        "part": "-a \"name=nginx state=restarted\"",
+        "meaning": "Restart the nginx service"
+      },
+      {
+        "part": "-b",
+        "meaning": "Become root (sudo) — required for service management"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "name",
+        "description": "Name of the service to manage",
+        "source": "local"
+      },
+      {
+        "flag": "state",
+        "description": "Desired state: started, stopped, restarted, reloaded",
+        "source": "local"
+      },
+      {
+        "flag": "enabled",
+        "description": "Whether the service starts on boot (yes/no)",
+        "source": "local"
+      },
+      {
+        "flag": "daemon_reload",
+        "description": "Reload systemd manager configuration before acting (yes/no)",
+        "source": "local"
+      }
+    ],
+    "example": "ansible webservers -m service -a \"name=nginx state=restarted enabled=yes\" -b -i inventory.yml",
+    "output": "web-1 | CHANGED => {\n    \"changed\": true,\n    \"name\": \"nginx\",\n    \"state\": \"started\",\n    \"status\": {\n        \"ActiveState\": \"active\",\n        \"SubState\": \"running\",\n        \"MainPID\": \"28451\",\n        \"UnitFileState\": \"enabled\"\n    }\n}\nweb-2 | CHANGED => {\n    \"changed\": true,\n    \"name\": \"nginx\",\n    \"state\": \"started\",\n    \"status\": {\n        \"ActiveState\": \"active\",\n        \"SubState\": \"running\",\n        \"MainPID\": \"31209\",\n        \"UnitFileState\": \"enabled\"\n    }\n}",
+    "tip": "Use 'state=reloaded' instead of 'state=restarted' when possible to avoid dropping active connections. In playbooks, use handlers to restart services only when config changes.",
+    "tags": [
+      "service",
+      "systemd",
+      "ad-hoc",
+      "infrastructure"
+    ],
+    "package": "ansible",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "ansible-facts",
+    "category": "ansible",
+    "command": "ansible all -m setup -a \"filter=ansible_os_family\"",
+    "title": "Gather facts",
+    "difficulty": "intermediate",
+    "description": "Collect system facts from remote hosts using the setup module, with optional filtering to retrieve specific facts like OS family, memory, or network info.",
+    "breakdown": [
+      {
+        "part": "ansible all",
+        "meaning": "Target all hosts in the inventory"
+      },
+      {
+        "part": "-m setup",
+        "meaning": "Use the setup module (fact gathering)"
+      },
+      {
+        "part": "-a \"filter=ansible_os_family\"",
+        "meaning": "Only return facts matching the filter pattern"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "filter",
+        "description": "Shell-style glob to filter fact names (e.g., ansible_eth*, ansible_mem*)",
+        "source": "local"
+      },
+      {
+        "flag": "gather_subset",
+        "description": "Limit facts to a subset: all, min, hardware, network, virtual, facter, ohai",
+        "source": "local"
+      },
+      {
+        "flag": "gather_timeout",
+        "description": "Timeout in seconds for fact gathering",
+        "source": "local"
+      }
+    ],
+    "example": "ansible all -m setup -a \"filter=ansible_distribution*\" -i inventory.yml",
+    "output": "web-1 | SUCCESS => {\n    \"ansible_facts\": {\n        \"ansible_distribution\": \"Ubuntu\",\n        \"ansible_distribution_file_variety\": \"Debian\",\n        \"ansible_distribution_major_version\": \"22\",\n        \"ansible_distribution_release\": \"jammy\",\n        \"ansible_distribution_version\": \"22.04\"\n    },\n    \"changed\": false\n}\ndb-1 | SUCCESS => {\n    \"ansible_facts\": {\n        \"ansible_distribution\": \"Rocky\",\n        \"ansible_distribution_file_variety\": \"RedHat\",\n        \"ansible_distribution_major_version\": \"9\",\n        \"ansible_distribution_release\": \"Blue Onyx\",\n        \"ansible_distribution_version\": \"9.3\"\n    },\n    \"changed\": false\n}",
+    "tip": "Use 'gather_subset=min' in playbooks to speed up execution when you only need basic facts. Filter with wildcards like 'ansible_mem*' to quickly find memory-related facts.",
+    "tags": [
+      "facts",
+      "setup",
+      "system-info",
+      "debugging"
+    ],
+    "package": "ansible",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "ansible-template",
+    "category": "ansible",
+    "command": "ansible-playbook -i inventory.yml template-deploy.yml",
+    "title": "Template module in playbook",
+    "difficulty": "intermediate",
+    "description": "Use the template module in a playbook to render Jinja2 templates with host-specific variables and deploy them as configuration files on remote hosts.",
+    "breakdown": [
+      {
+        "part": "template:",
+        "meaning": "Ansible module that processes Jinja2 templates"
+      },
+      {
+        "part": "src: templates/nginx.conf.j2",
+        "meaning": "Local Jinja2 template file"
+      },
+      {
+        "part": "dest: /etc/nginx/nginx.conf",
+        "meaning": "Remote destination path for the rendered file"
+      },
+      {
+        "part": "{{ variable }}",
+        "meaning": "Jinja2 syntax to insert variable values into the template"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "src",
+        "description": "Path to the local Jinja2 template file (.j2)",
+        "source": "local"
+      },
+      {
+        "flag": "dest",
+        "description": "Remote path where the rendered file is written",
+        "source": "local"
+      },
+      {
+        "flag": "owner",
+        "description": "Owner of the destination file",
+        "source": "local"
+      },
+      {
+        "flag": "group",
+        "description": "Group of the destination file",
+        "source": "local"
+      },
+      {
+        "flag": "mode",
+        "description": "File permissions (e.g., '0644')",
+        "source": "local"
+      },
+      {
+        "flag": "backup",
+        "description": "Create backup before overwriting (yes/no)",
+        "source": "local"
+      },
+      {
+        "flag": "validate",
+        "description": "Command to validate the file before putting it in place (e.g., 'nginx -t -c %s')",
+        "source": "local"
+      }
+    ],
+    "example": "# Playbook task:\n- name: Deploy nginx config from template\n  template:\n    src: templates/nginx.conf.j2\n    dest: /etc/nginx/nginx.conf\n    owner: root\n    group: root\n    mode: '0644'\n    backup: yes\n    validate: 'nginx -t -c %s'\n  notify: restart nginx\n\n# templates/nginx.conf.j2:\nserver {\n    listen {{ http_port }};\n    server_name {{ server_name }};\n    root {{ document_root }};\n}",
+    "output": "TASK [Deploy nginx config from template] ************************\nchanged: [web-1] => {\n    \"changed\": true,\n    \"checksum\": \"d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3\",\n    \"dest\": \"/etc/nginx/nginx.conf\",\n    \"owner\": \"root\",\n    \"group\": \"root\",\n    \"mode\": \"0644\",\n    \"state\": \"file\"\n}\nchanged: [web-2]\n\nRUNNING HANDLER [restart nginx] *********************************\nchanged: [web-1]\nchanged: [web-2]",
+    "tip": "Use the validate parameter to test configs before deploying (e.g., 'nginx -t -c %s' or 'visudo -cf %s'). This prevents deploying broken configs that could crash services.",
+    "tags": [
+      "template",
+      "jinja2",
+      "configuration",
+      "playbook"
+    ],
+    "package": "ansible",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "ansible-check",
+    "category": "ansible",
+    "command": "ansible-playbook -i inventory.yml playbook.yml --check --diff",
+    "title": "Dry-run with diff",
+    "difficulty": "intermediate",
+    "description": "Preview exactly what a playbook would change without applying anything. --diff shows line-by-line file diffs alongside the would-be task results.",
+    "breakdown": [
+      {
+        "part": "ansible-playbook",
+        "meaning": "Ansible playbook runner"
+      },
+      {
+        "part": "-i inventory.yml",
+        "meaning": "Specify inventory file"
+      },
+      {
+        "part": "playbook.yml",
+        "meaning": "Playbook to preview"
+      },
+      {
+        "part": "--check",
+        "meaning": "Dry-run mode — no changes are applied to remote hosts"
+      },
+      {
+        "part": "--diff",
+        "meaning": "Show line-by-line diff of any files that would be changed"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--check",
+        "description": "Dry-run: reports what would change without making changes",
+        "source": "local"
+      },
+      {
+        "flag": "--diff",
+        "description": "Show unified diff for changed file content",
+        "source": "local"
+      },
+      {
+        "flag": "--check --diff",
+        "description": "Combined: full preview including file content diffs",
+        "source": "local"
+      }
+    ],
+    "example": "ansible-playbook -i inventory.yml site.yml --check --diff --limit webservers",
+    "output": "TASK [Update nginx config] ***************************************\n--- before: /etc/nginx/nginx.conf\n+++ after: /tmp/ansible_template_xyz\n@@ -8,7 +8,7 @@\n     keepalive_timeout 65;\n-    worker_processes 2;\n+    worker_processes 4;\n \nchanged: [web-1] => (item changed)\n\nPLAY RECAP *******************************************************\nweb-1 : ok=4  changed=1  unreachable=0  failed=0",
+    "tip": "Run --check --diff in CI on every pull request to generate a change preview before any deployment. Not all modules support check mode — a task that fails in check mode does not guarantee failure in real mode either.",
+    "tags": [
+      "check-mode",
+      "dry-run",
+      "diff",
+      "safety"
+    ],
+    "package": "ansible",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "ansible-tags",
+    "category": "ansible",
+    "command": "ansible-playbook -i inventory.yml playbook.yml --tags deploy",
+    "title": "Run tasks by tag",
+    "difficulty": "intermediate",
+    "description": "Execute only the tasks in a playbook that match a specific tag, enabling targeted runs without re-running the full play.",
+    "breakdown": [
+      {
+        "part": "ansible-playbook",
+        "meaning": "Ansible playbook runner"
+      },
+      {
+        "part": "-i inventory.yml",
+        "meaning": "Specify inventory file"
+      },
+      {
+        "part": "playbook.yml",
+        "meaning": "Playbook containing tagged tasks"
+      },
+      {
+        "part": "--tags deploy",
+        "meaning": "Only run tasks and plays tagged with \"deploy\""
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--tags TAG[,TAG...]",
+        "description": "Run only tasks matching these tag(s)",
+        "source": "local"
+      },
+      {
+        "flag": "--skip-tags TAG[,TAG...]",
+        "description": "Skip tasks matching these tag(s)",
+        "source": "local"
+      },
+      {
+        "flag": "--list-tags",
+        "description": "List all tags defined in the playbook without running it",
+        "source": "local"
+      },
+      {
+        "flag": "--tags all",
+        "description": "Run all tasks including those tagged always (default)",
+        "source": "local"
+      }
+    ],
+    "example": "ansible-playbook -i inventory.yml site.yml --skip-tags setup,packages --tags config,restart",
+    "output": "PLAY [Deploy web application] ************************************\n\nTASK [Deploy application config] ********************************\nchanged: [web-1]\nchanged: [web-2]\n\nTASK [Restart nginx service] ************************************\nchanged: [web-1]\nchanged: [web-2]\n\nPLAY RECAP *******************************************************\nweb-1 : ok=2  changed=2  unreachable=0  failed=0",
+    "tip": "Tag tasks at multiple granularities (e.g., tags: [packages, setup]) so callers can target broad or narrow subsets. Use --list-tags to discover available tags before running a playbook you did not write.",
+    "tags": [
+      "tags",
+      "selective-run",
+      "playbook",
+      "workflow"
+    ],
+    "package": "ansible",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "ansible-become",
+    "category": "ansible",
+    "command": "ansible-playbook -i inventory.yml playbook.yml --become --become-user root",
+    "title": "Privilege escalation",
+    "difficulty": "intermediate",
+    "description": "Run playbook tasks as a different user (typically root) using privilege escalation, equivalent to sudo on the remote host.",
+    "breakdown": [
+      {
+        "part": "ansible-playbook",
+        "meaning": "Ansible playbook runner"
+      },
+      {
+        "part": "-i inventory.yml",
+        "meaning": "Specify inventory file"
+      },
+      {
+        "part": "playbook.yml",
+        "meaning": "Playbook to run with elevated privileges"
+      },
+      {
+        "part": "--become",
+        "meaning": "Enable privilege escalation on remote hosts"
+      },
+      {
+        "part": "--become-user root",
+        "meaning": "Switch to this user on the remote host (default: root)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--become, -b",
+        "description": "Enable privilege escalation",
+        "source": "local"
+      },
+      {
+        "flag": "--become-user USER",
+        "description": "User to escalate to (default: root)",
+        "source": "local"
+      },
+      {
+        "flag": "--become-method METHOD",
+        "description": "Escalation method: sudo (default), su, pbrun, pfexec, doas",
+        "source": "local"
+      },
+      {
+        "flag": "--ask-become-pass, -K",
+        "description": "Prompt for the escalation password interactively",
+        "source": "local"
+      }
+    ],
+    "example": "ansible webservers -m apt -a \"name=nginx state=present\" -b -i inventory.yml",
+    "output": "web-1 | CHANGED => {\n    \"changed\": true,\n    \"cache_update_time\": 1710508800,\n    \"stdout_lines\": [\n        \"Reading package lists...\",\n        \"Building dependency tree...\",\n        \"The following NEW packages will be installed:\",\n        \"  nginx\",\n        \"Setting up nginx (1.24.0-1) ...\"\n    ]\n}",
+    "tip": "Set become: true at the play level rather than per-task to avoid inconsistency. Configure passwordless sudo for the ansible service account in /etc/sudoers.d/ — using --ask-become-pass is not viable in automated pipelines.",
+    "tags": [
+      "become",
+      "sudo",
+      "privilege-escalation",
+      "security"
+    ],
+    "package": "ansible",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "ansible-vault-string",
+    "category": "ansible",
+    "command": "ansible-vault encrypt_string 'mypassword' --name db_password",
+    "title": "Encrypt inline string",
+    "difficulty": "intermediate",
+    "description": "Encrypt a single string value for embedding directly in a playbook or vars file, without encrypting the whole file.",
+    "breakdown": [
+      {
+        "part": "ansible-vault",
+        "meaning": "Ansible encryption tool"
+      },
+      {
+        "part": "encrypt_string",
+        "meaning": "Encrypt a single string (not a whole file)"
+      },
+      {
+        "part": "'mypassword'",
+        "meaning": "The plaintext string to encrypt"
+      },
+      {
+        "part": "--name db_password",
+        "meaning": "Variable name to wrap around the encrypted output in YAML"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "encrypt_string",
+        "description": "Encrypt a single string for inline use in YAML",
+        "source": "local"
+      },
+      {
+        "flag": "--name VAR",
+        "description": "Variable name to wrap the encrypted value in",
+        "source": "local"
+      },
+      {
+        "flag": "--vault-id LABEL@SOURCE",
+        "description": "Use a labelled vault ID for multiple vault passwords",
+        "source": "local"
+      },
+      {
+        "flag": "--stdin-name VAR",
+        "description": "Read the string from stdin rather than the command line",
+        "source": "local"
+      }
+    ],
+    "example": "ansible-vault encrypt_string --stdin-name api_token",
+    "output": "Reading plaintext input from stdin. (ctrl-d to end input)\napi_token: !vault |\n          $ANSIBLE_VAULT;1.1;AES256\n          36393966623861623036336539306565653734356465363\n          36333763323535353839343361373364623230633464613\n          3065623739393762643062313532316436616164653038\nEncryption successful",
+    "tip": "Prefer encrypt_string over full-file encryption for individual credentials — the rest of your vars file stays readable in git. Always pass the value via stdin (--stdin-name) rather than as a command argument to avoid it appearing in shell history.",
+    "tags": [
+      "vault",
+      "encryption",
+      "secrets",
+      "security"
+    ],
+    "package": "ansible",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "ansible-register",
+    "category": "ansible",
+    "command": "ansible-playbook -i inventory.yml playbook.yml",
+    "title": "Capture task output",
+    "difficulty": "intermediate",
+    "description": "Store a task's return value in a variable using register, then use it in subsequent tasks for conditionals, debug output, or further processing.",
+    "breakdown": [
+      {
+        "part": "register: result",
+        "meaning": "Capture the full return value of the task into a variable named result"
+      },
+      {
+        "part": "result.stdout",
+        "meaning": "Standard output from the command as a string"
+      },
+      {
+        "part": "result.rc",
+        "meaning": "Return code of the command (0 = success)"
+      },
+      {
+        "part": "result.stdout_lines",
+        "meaning": "stdout split into a list of lines for easy iteration"
+      },
+      {
+        "part": "when: result.rc == 0",
+        "meaning": "Conditional that runs this task only if the previous command succeeded"
+      }
+    ],
+    "example": "- name: Check disk usage\n  command: df -h /\n  register: disk_result\n\n- name: Show disk output\n  debug:\n    msg: \"{{ disk_result.stdout }}\"\n  when: disk_result.rc == 0",
+    "output": "TASK [Check disk usage] ******************************************\nok: [web-1]\n\nTASK [Show disk output] ******************************************\nok: [web-1] => {\n    \"msg\": \"Filesystem  Size  Used Avail Use% Mounted on\\n/dev/sda1    50G   38G   12G  77% /\"\n}",
+    "tip": "Register captures the full module return dict — use result.stdout for command output, result.stat for stat module, result.json for uri module. Always check result.failed before acting on output to handle partial failures gracefully.",
+    "tags": [
+      "register",
+      "variables",
+      "output",
+      "conditionals"
+    ],
+    "package": "ansible",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "ansible-loop",
+    "category": "ansible",
+    "command": "ansible-playbook -i inventory.yml install-packages.yml",
+    "title": "Loop over a list",
+    "difficulty": "intermediate",
+    "description": "Repeat a task for each item in a list using the loop directive — the modern replacement for the older with_items syntax.",
+    "breakdown": [
+      {
+        "part": "loop:",
+        "meaning": "Iterate over each item in the list — modern replacement for with_items"
+      },
+      {
+        "part": "- nginx",
+        "meaning": "First item in the loop list"
+      },
+      {
+        "part": "- postgresql",
+        "meaning": "Second item in the loop list"
+      },
+      {
+        "part": "{{ item }}",
+        "meaning": "Jinja2 placeholder for the current loop value"
+      },
+      {
+        "part": "loop_control:",
+        "meaning": "Optional block to customise loop variable name or label output"
+      }
+    ],
+    "example": "- name: Install required packages\n  apt:\n    name: \"{{ item }}\"\n    state: present\n  loop:\n    - nginx\n    - postgresql\n    - redis-server\n  become: true",
+    "output": "TASK [Install required packages] ********************************\nok: [web-1] => (item=nginx)\nchanged: [web-1] => (item=postgresql)\nchanged: [web-1] => (item=redis-server)",
+    "tip": "Define the list in group_vars or defaults rather than inline to keep tasks clean: loop: \"{{ required_packages }}\". For complex objects, loop over a list of dicts and reference fields with item.name, item.version etc.",
+    "tags": [
+      "loop",
+      "iteration",
+      "packages",
+      "playbook"
+    ],
+    "package": "ansible",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "ansible-when",
+    "category": "ansible",
+    "command": "ansible-playbook -i inventory.yml playbook.yml",
+    "title": "Conditional task execution",
+    "difficulty": "intermediate",
+    "description": "Use the when directive to run or skip tasks based on facts, registered variables, or inventory variables — conditions are Jinja2 expressions evaluated per host.",
+    "breakdown": [
+      {
+        "part": "when:",
+        "meaning": "Only run this task if the Jinja2 expression evaluates to true"
+      },
+      {
+        "part": "ansible_os_family == \"Debian\"",
+        "meaning": "True on Ubuntu and Debian hosts (from gathered facts)"
+      },
+      {
+        "part": "ansible_os_family == \"RedHat\"",
+        "meaning": "True on RHEL, CentOS, and Rocky Linux hosts"
+      },
+      {
+        "part": "result.rc != 0",
+        "meaning": "Condition based on a previously registered task result"
+      },
+      {
+        "part": "not ansible_check_mode",
+        "meaning": "Skip this task when running in --check dry-run mode"
+      }
+    ],
+    "example": "- name: Install nginx (Debian)\n  apt:\n    name: nginx\n    state: present\n  when: ansible_os_family == \"Debian\"\n\n- name: Install nginx (RedHat)\n  yum:\n    name: nginx\n    state: present\n  when: ansible_os_family == \"RedHat\"",
+    "output": "TASK [Install nginx (Debian)] ************************************\nok: [ubuntu-web-1]\nskipping: [centos-web-1]\n\nTASK [Install nginx (RedHat)] ************************************\nskipping: [ubuntu-web-1]\nchanged: [centos-web-1]",
+    "tip": "When conditions as a list act as implicit AND — each line must be true. Use 'or' and 'and' for compound expressions: when: ansible_memtotal_mb > 2048 and ansible_os_family == \"Debian\". Undefined variables are falsy, so guard with is defined: when: my_var is defined.",
+    "tags": [
+      "when",
+      "conditionals",
+      "facts",
+      "playbook"
+    ],
+    "package": "ansible",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "ansible-handlers",
+    "category": "ansible",
+    "command": "ansible-playbook -i inventory.yml playbook.yml",
+    "title": "Notify handlers",
+    "difficulty": "intermediate",
+    "description": "Handlers are tasks triggered by notify at the end of a play — they run once regardless of how many tasks notify them, making them ideal for service restarts triggered by config changes.",
+    "breakdown": [
+      {
+        "part": "notify: restart nginx",
+        "meaning": "Queue the named handler to run at end of play, but only if this task reported changed"
+      },
+      {
+        "part": "handlers:",
+        "meaning": "Play section defining handler task definitions"
+      },
+      {
+        "part": "name: restart nginx",
+        "meaning": "Handler name — must exactly match the string used in notify"
+      },
+      {
+        "part": "service:",
+        "meaning": "Any Ansible module can be used in a handler task"
+      },
+      {
+        "part": "meta: flush_handlers",
+        "meaning": "Force all queued handlers to run immediately at this point in the play"
+      }
+    ],
+    "example": "- name: Deploy nginx config\n  template:\n    src: nginx.conf.j2\n    dest: /etc/nginx/nginx.conf\n  notify: restart nginx\n\nhandlers:\n  - name: restart nginx\n    service:\n      name: nginx\n      state: restarted",
+    "output": "TASK [Deploy nginx config] ***************************************\nchanged: [web-1]\n\nRUNNING HANDLER [restart nginx] *********************************\nchanged: [web-1]\n\nPLAY RECAP *******************************************************\nweb-1 : ok=2  changed=2  unreachable=0  failed=0",
+    "tip": "Handlers run once per play regardless of how many tasks notify them — three tasks notifying restart nginx produces one restart. Use meta: flush_handlers when a subsequent task depends on the service already being restarted before the play ends.",
+    "tags": [
+      "handlers",
+      "notify",
+      "service",
+      "playbook"
+    ],
+    "package": "ansible",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  }
+]

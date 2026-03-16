@@ -1,0 +1,1217 @@
+[
+  {
+    "id": "git-log-oneline",
+    "category": "git",
+    "command": "git log --oneline --graph --all",
+    "title": "Visual commit history",
+    "difficulty": "beginner",
+    "description": "Display the commit history as a compact one-line-per-commit list — combine with --graph and --all for a full branch visualisation.",
+    "breakdown": [
+      {
+        "part": "git log",
+        "meaning": "Show commit history"
+      },
+      {
+        "part": "--oneline",
+        "meaning": "Show each commit on one line (short hash + message)"
+      },
+      {
+        "part": "--graph",
+        "meaning": "Draw ASCII graph of branch structure"
+      },
+      {
+        "part": "--all",
+        "meaning": "Show all branches, not just current"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--oneline",
+        "description": "Compact output: short hash and subject line",
+        "source": "local"
+      },
+      {
+        "flag": "--graph",
+        "description": "Draw text-based graph of commit history",
+        "source": "local"
+      },
+      {
+        "flag": "--all",
+        "description": "Show all refs (branches, tags)",
+        "source": "local"
+      },
+      {
+        "flag": "-n",
+        "description": "Limit number of commits shown",
+        "source": "local"
+      },
+      {
+        "flag": "--author",
+        "description": "Filter by author name or email",
+        "source": "local"
+      }
+    ],
+    "example": "git log --oneline --graph --all -10",
+    "output": "* a1b2c3d (HEAD -> main) fix: resolve login bug\n* d4e5f6g feat: add user dashboard\n| * h7i8j9k (feature/api) feat: REST API endpoints\n|/\n* k1l2m3n chore: update dependencies\n* n4o5p6q initial commit",
+    "tip": "Alias this: git config --global alias.lg \"log --oneline --graph --all --decorate\"",
+    "tags": [
+      "history",
+      "branches",
+      "visualization"
+    ],
+    "manPage": "1",
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "git-rebase-interactive",
+    "category": "git",
+    "command": "git rebase -i HEAD~3",
+    "title": "Interactive rebase",
+    "difficulty": "advanced",
+    "description": "Rewrite, squash, reorder, or drop commits in your local history before pushing — the cleanest way to prepare a branch for code review.",
+    "breakdown": [
+      {
+        "part": "git rebase",
+        "meaning": "Reapply commits on top of another base"
+      },
+      {
+        "part": "-i",
+        "meaning": "Interactive mode — opens editor to modify commits"
+      },
+      {
+        "part": "HEAD~3",
+        "meaning": "Go back 3 commits from current HEAD"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-i, --interactive",
+        "description": "Make a list of commits to be rebased and open in editor",
+        "source": "local"
+      },
+      {
+        "flag": "--onto",
+        "description": "Rebase onto a specific branch/commit",
+        "source": "local"
+      },
+      {
+        "flag": "--abort",
+        "description": "Abort and return to pre-rebase state",
+        "source": "local"
+      },
+      {
+        "flag": "--continue",
+        "description": "Continue after resolving conflicts",
+        "source": "local"
+      }
+    ],
+    "example": "git rebase -i HEAD~3",
+    "output": "pick a1b2c3d feat: add login form\npick d4e5f6g fix: typo in login\npick h7i8j9k feat: add validation\n\n# Commands:\n# p, pick = use commit\n# s, squash = meld into previous commit\n# d, drop = remove commit",
+    "tip": "Squash fixup commits before merging: change 'pick' to 'squash' or 'fixup'. Never rebase commits already pushed to shared branches.",
+    "tags": [
+      "rebase",
+      "history",
+      "cleanup"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "git-stash",
+    "category": "git",
+    "command": "git stash push -m 'WIP: feature work'",
+    "title": "Stash changes temporarily",
+    "difficulty": "intermediate",
+    "description": "Save uncommitted changes to a stack so you can switch branches without committing.",
+    "breakdown": [
+      {
+        "part": "git stash",
+        "meaning": "Stash away changes in working directory"
+      },
+      {
+        "part": "push",
+        "meaning": "Push a new stash entry (default action)"
+      },
+      {
+        "part": "-m 'WIP: feature work'",
+        "meaning": "Add a descriptive message to the stash"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "push",
+        "description": "Save local modifications to a new stash entry",
+        "source": "local"
+      },
+      {
+        "flag": "pop",
+        "description": "Apply stashed changes and remove from stash list",
+        "source": "local"
+      },
+      {
+        "flag": "list",
+        "description": "List all stash entries",
+        "source": "local"
+      },
+      {
+        "flag": "apply",
+        "description": "Apply stashed changes but keep in stash list",
+        "source": "local"
+      },
+      {
+        "flag": "drop",
+        "description": "Remove a single stash entry",
+        "source": "local"
+      }
+    ],
+    "example": "git stash push -m 'WIP: feature work' && git stash list",
+    "output": "Saved working directory and index state On main: WIP: feature work\nstash@{0}: On main: WIP: feature work\nstash@{1}: On main: debugging auth issue",
+    "tip": "Use 'git stash pop' to apply and remove. Use 'git stash apply stash@{1}' to apply a specific stash without removing it.",
+    "tags": [
+      "stash",
+      "temporary",
+      "workflow"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "git-cherry-pick",
+    "category": "git",
+    "command": "git cherry-pick abc1234",
+    "title": "Cherry-pick a commit",
+    "difficulty": "intermediate",
+    "description": "Apply the changes from a specific commit onto the current branch — copies the commit without moving the original branch pointer.",
+    "breakdown": [
+      {
+        "part": "git cherry-pick",
+        "meaning": "Apply changes from an existing commit"
+      },
+      {
+        "part": "abc1234",
+        "meaning": "The commit hash to cherry-pick"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-n, --no-commit",
+        "description": "Apply changes without creating a commit",
+        "source": "local"
+      },
+      {
+        "flag": "-x",
+        "description": "Append '(cherry picked from commit ...)' to message",
+        "source": "local"
+      },
+      {
+        "flag": "--abort",
+        "description": "Cancel cherry-pick and restore original state",
+        "source": "local"
+      }
+    ],
+    "example": "git cherry-pick abc1234",
+    "output": "[main def5678] feat: add error handling\n Date: Tue Mar 12 10:00:00 2024 +0000\n 1 file changed, 15 insertions(+), 3 deletions(-)",
+    "tip": "Use -x flag to include the source commit reference in the message. This helps track where cherry-picked commits came from.",
+    "tags": [
+      "cherry-pick",
+      "commits",
+      "branches"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "git-bisect",
+    "category": "git",
+    "command": "git bisect start && git bisect bad && git bisect good v1.0",
+    "title": "Find bug-introducing commit",
+    "difficulty": "advanced",
+    "description": "Use binary search to find the exact commit that introduced a bug by marking known good and bad commits.",
+    "breakdown": [
+      {
+        "part": "git bisect start",
+        "meaning": "Begin the bisect session"
+      },
+      {
+        "part": "&&",
+        "meaning": "Run the next command only if the previous one succeeds"
+      },
+      {
+        "part": "git bisect bad",
+        "meaning": "Mark the current commit (HEAD) as containing the bug"
+      },
+      {
+        "part": "git bisect good v1.0",
+        "meaning": "Mark tag v1.0 as a known good commit without the bug"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "start",
+        "description": "Start a bisect session",
+        "source": "local"
+      },
+      {
+        "flag": "bad",
+        "description": "Mark a commit as containing the bug",
+        "source": "local"
+      },
+      {
+        "flag": "good",
+        "description": "Mark a commit as not containing the bug",
+        "source": "local"
+      },
+      {
+        "flag": "reset",
+        "description": "End the bisect session and return to the original HEAD",
+        "source": "local"
+      },
+      {
+        "flag": "run",
+        "description": "Automatically bisect using a script that returns 0 for good",
+        "source": "local"
+      }
+    ],
+    "example": "git bisect start && git bisect bad && git bisect good v1.0",
+    "output": "Bisecting: 12 revisions left to test after this (roughly 4 steps)\n[e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3] feat: refactor auth module\n\n(after testing and marking each commit)\n\ne4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3 is the first bad commit\ncommit e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3\nAuthor: dev@example.com\nDate:   Mon Mar 10 14:22:00 2024 +0000\n\n    feat: refactor auth module",
+    "tip": "Automate bisecting with 'git bisect run ./test.sh' where the script exits 0 for good and non-zero for bad. Always run 'git bisect reset' when done to return to your original branch.",
+    "tags": [
+      "bisect",
+      "debugging",
+      "binary-search"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "git-reset",
+    "category": "git",
+    "command": "git reset --soft HEAD~1",
+    "title": "Reset HEAD",
+    "difficulty": "intermediate",
+    "description": "Move the HEAD pointer back one commit while keeping changes staged, allowing you to recommit with a different message or combine commits.",
+    "breakdown": [
+      {
+        "part": "git reset",
+        "meaning": "Reset the current HEAD to a specified state"
+      },
+      {
+        "part": "--soft",
+        "meaning": "Keep changes staged (in the index) — ready to recommit"
+      },
+      {
+        "part": "HEAD~1",
+        "meaning": "One commit before the current HEAD"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--soft",
+        "description": "Reset HEAD only; keep index and working tree unchanged",
+        "source": "local"
+      },
+      {
+        "flag": "--mixed",
+        "description": "Reset HEAD and index; keep working tree unchanged (default)",
+        "source": "local"
+      },
+      {
+        "flag": "--hard",
+        "description": "Reset HEAD, index, and working tree — discards all changes",
+        "source": "local"
+      },
+      {
+        "flag": "--merge",
+        "description": "Reset index and update working tree files that differ between commit and HEAD",
+        "source": "local"
+      }
+    ],
+    "example": "git reset --soft HEAD~1",
+    "output": "(no output on success — changes are now staged)\n\n$ git status\nOn branch main\nChanges to be committed:\n  (use \"git restore --staged <file>...\" to unstage)\n        modified:   src/auth.js\n        new file:   src/auth.test.js",
+    "tip": "Use --soft to undo a commit but keep your changes staged. Use --mixed (default) to unstage as well. Only use --hard when you truly want to discard all changes — it cannot be undone without reflog.",
+    "tags": [
+      "reset",
+      "undo",
+      "HEAD"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "git-diff",
+    "category": "git",
+    "command": "git diff --staged",
+    "title": "Show changes",
+    "difficulty": "beginner",
+    "description": "Show the differences between staged changes and the last commit, letting you review exactly what will be committed.",
+    "breakdown": [
+      {
+        "part": "git diff",
+        "meaning": "Show changes between commits, working tree, and index"
+      },
+      {
+        "part": "--staged",
+        "meaning": "Compare staged changes against the last commit (same as --cached)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--staged",
+        "description": "Show changes staged for the next commit",
+        "source": "local"
+      },
+      {
+        "flag": "--stat",
+        "description": "Show a summary of changes (files changed, insertions, deletions)",
+        "source": "local"
+      },
+      {
+        "flag": "--name-only",
+        "description": "Show only names of changed files",
+        "source": "local"
+      },
+      {
+        "flag": "--color-words",
+        "description": "Show word-level diff with color highlighting",
+        "source": "local"
+      },
+      {
+        "flag": "-w",
+        "description": "Ignore all whitespace changes",
+        "source": "local"
+      }
+    ],
+    "example": "git diff --staged",
+    "output": "diff --git a/src/auth.js b/src/auth.js\nindex 3a4b5c6..d7e8f9a 100644\n--- a/src/auth.js\n+++ b/src/auth.js\n@@ -12,7 +12,9 @@ function login(username, password) {\n   const user = findUser(username);\n-  if (user.password === password) {\n+  const hashedPassword = hashPassword(password);\n+  if (user.password === hashedPassword) {\n+    logLoginAttempt(username, true);\n     return generateToken(user);\n   }",
+    "tip": "Use 'git diff' (no flags) to see unstaged changes. Use 'git diff HEAD' to see all changes (staged and unstaged) compared to the last commit.",
+    "tags": [
+      "diff",
+      "changes",
+      "review"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "git-branch",
+    "category": "git",
+    "command": "git branch -a --sort=-committerdate",
+    "title": "Branch management",
+    "difficulty": "beginner",
+    "description": "List all local and remote branches, sorted by most recent commit date to quickly find active branches.",
+    "breakdown": [
+      {
+        "part": "git branch",
+        "meaning": "List, create, or delete branches"
+      },
+      {
+        "part": "-a",
+        "meaning": "Show both local and remote-tracking branches"
+      },
+      {
+        "part": "--sort=-committerdate",
+        "meaning": "Sort by committer date, newest first (- prefix = descending)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-a, --all",
+        "description": "List both local and remote-tracking branches",
+        "source": "local"
+      },
+      {
+        "flag": "-d",
+        "description": "Delete a fully merged branch",
+        "source": "local"
+      },
+      {
+        "flag": "-D",
+        "description": "Force delete a branch even if not merged",
+        "source": "local"
+      },
+      {
+        "flag": "-m",
+        "description": "Rename the current branch",
+        "source": "local"
+      },
+      {
+        "flag": "--sort",
+        "description": "Sort branches by a given key (e.g., committerdate, authordate)",
+        "source": "local"
+      },
+      {
+        "flag": "-v, --verbose",
+        "description": "Show the last commit hash and message for each branch",
+        "source": "local"
+      }
+    ],
+    "example": "git branch -a --sort=-committerdate",
+    "output": "* main                           a1b2c3d fix: resolve login bug\n  feature/dashboard                d4e5f6g feat: add user dashboard\n  bugfix/auth-token                h7i8j9k fix: token expiry handling\n  remotes/origin/main              a1b2c3d fix: resolve login bug\n  remotes/origin/feature/api       k1l2m3n feat: REST API endpoints\n  remotes/origin/release/v2.0      n4o5p6q chore: bump version",
+    "tip": "Use 'git branch -d feature/done' to delete merged branches. Run 'git remote prune origin' to clean up stale remote-tracking branches that no longer exist on the remote.",
+    "tags": [
+      "branch",
+      "list",
+      "management"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "git-remote",
+    "category": "git",
+    "command": "git remote -v",
+    "title": "Manage remotes",
+    "difficulty": "beginner",
+    "description": "View, add, rename, and remove remote repository connections — remotes are named references to URLs for pushing and pulling.",
+    "breakdown": [
+      {
+        "part": "git remote",
+        "meaning": "Manage set of tracked repositories"
+      },
+      {
+        "part": "-v",
+        "meaning": "Verbose — show remote URLs alongside names"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-v, --verbose",
+        "description": "Show remote URLs after each name",
+        "source": "local"
+      },
+      {
+        "flag": "add",
+        "description": "Add a new remote: git remote add <name> <url>",
+        "source": "local"
+      },
+      {
+        "flag": "remove",
+        "description": "Remove a remote and its tracking branches",
+        "source": "local"
+      },
+      {
+        "flag": "rename",
+        "description": "Rename a remote: git remote rename <old> <new>",
+        "source": "local"
+      },
+      {
+        "flag": "set-url",
+        "description": "Change the URL for an existing remote",
+        "source": "local"
+      }
+    ],
+    "example": "git remote -v",
+    "output": "origin  git@github.com:myorg/myapp.git (fetch)\norigin  git@github.com:myorg/myapp.git (push)\nupstream  git@github.com:upstream/myapp.git (fetch)\nupstream  git@github.com:upstream/myapp.git (push)",
+    "tip": "Add an upstream remote for forked repos: 'git remote add upstream <original-repo-url>'. Then sync with 'git fetch upstream && git merge upstream/main'.",
+    "tags": [
+      "remote",
+      "origin",
+      "upstream"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "git-merge",
+    "category": "git",
+    "command": "git merge --no-ff feature/login",
+    "title": "Merge branches",
+    "difficulty": "intermediate",
+    "description": "Merge a feature branch into the current branch with a merge commit, preserving the branch history in the commit graph.",
+    "breakdown": [
+      {
+        "part": "git merge",
+        "meaning": "Join two or more development histories together"
+      },
+      {
+        "part": "--no-ff",
+        "meaning": "Always create a merge commit, even if fast-forward is possible"
+      },
+      {
+        "part": "feature/login",
+        "meaning": "The branch to merge into the current branch"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--no-ff",
+        "description": "Create a merge commit even when fast-forward is possible",
+        "source": "local"
+      },
+      {
+        "flag": "--ff-only",
+        "description": "Only merge if fast-forward is possible, otherwise abort",
+        "source": "local"
+      },
+      {
+        "flag": "--squash",
+        "description": "Squash all commits into a single change set without committing",
+        "source": "local"
+      },
+      {
+        "flag": "--abort",
+        "description": "Abort the current merge and restore pre-merge state",
+        "source": "local"
+      },
+      {
+        "flag": "-m",
+        "description": "Set the commit message for the merge commit",
+        "source": "local"
+      }
+    ],
+    "example": "git merge --no-ff feature/login",
+    "output": "Merge made by the 'ort' strategy.\n src/login.js      | 45 +++++++++++++++++++++++++++++++++++++++++++++\n src/login.test.js | 32 ++++++++++++++++++++++++++++++++\n src/auth.js       |  8 ++++++--\n 3 files changed, 83 insertions(+), 2 deletions(-)\n create mode 100644 src/login.js\n create mode 100644 src/login.test.js",
+    "tip": "Use --no-ff to preserve feature branch history in the graph. Use --squash for a clean single commit when you don't need individual commit history from the branch.",
+    "tags": [
+      "merge",
+      "branches",
+      "integration"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "git-tag",
+    "category": "git",
+    "command": "git tag -a v1.0.0 -m \"Release 1.0\"",
+    "title": "Create tags",
+    "difficulty": "beginner",
+    "description": "Create an annotated tag to mark a specific point in history, typically used for release versions.",
+    "breakdown": [
+      {
+        "part": "git tag",
+        "meaning": "Create, list, or delete tags"
+      },
+      {
+        "part": "-a",
+        "meaning": "Create an annotated tag (stores tagger info, date, and message)"
+      },
+      {
+        "part": "v1.0.0",
+        "meaning": "The tag name — follows semantic versioning"
+      },
+      {
+        "part": "-m \"Release 1.0\"",
+        "meaning": "The tag message describing the release"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-a",
+        "description": "Create an annotated tag object",
+        "source": "local"
+      },
+      {
+        "flag": "-m",
+        "description": "Set the tag message",
+        "source": "local"
+      },
+      {
+        "flag": "-d",
+        "description": "Delete a tag",
+        "source": "local"
+      },
+      {
+        "flag": "-l",
+        "description": "List tags matching a pattern: git tag -l 'v1.*'",
+        "source": "local"
+      },
+      {
+        "flag": "-n",
+        "description": "Show tag message lines when listing",
+        "source": "local"
+      }
+    ],
+    "example": "git tag -a v1.0.0 -m \"Release 1.0\"",
+    "output": "(no output on success)\n\n$ git tag -l -n1\nv0.9.0  Beta release\nv1.0.0  Release 1.0\n\n$ git show v1.0.0\ntag v1.0.0\nTagger: Dev User <dev@example.com>\nDate:   Fri Mar 14 10:00:00 2025 +0000\n\nRelease 1.0\n\ncommit a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0\nAuthor: Dev User <dev@example.com>\nDate:   Fri Mar 14 09:55:00 2025 +0000\n\n    feat: finalize v1.0 features",
+    "tip": "Tags are not pushed by default. Use 'git push origin v1.0.0' to push a specific tag or 'git push origin --tags' to push all tags. Prefer annotated tags (-a) over lightweight tags for releases.",
+    "tags": [
+      "tag",
+      "release",
+      "versioning"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "git-reflog",
+    "category": "git",
+    "command": "git reflog show --date=relative",
+    "title": "Reference log",
+    "difficulty": "advanced",
+    "description": "Show the reference log — a history of where HEAD has pointed, including commits, resets, rebases, and other operations. Essential for recovering lost commits.",
+    "breakdown": [
+      {
+        "part": "git reflog",
+        "meaning": "Manage reference log entries recording when branch tips were updated"
+      },
+      {
+        "part": "show",
+        "meaning": "Show the log of reference updates (default action)"
+      },
+      {
+        "part": "--date=relative",
+        "meaning": "Show timestamps as relative time (e.g., '2 hours ago')"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "show",
+        "description": "Show the reflog for a given ref (defaults to HEAD)",
+        "source": "local"
+      },
+      {
+        "flag": "--date",
+        "description": "Format dates: relative, local, iso, short",
+        "source": "local"
+      },
+      {
+        "flag": "-n",
+        "description": "Limit the number of entries shown",
+        "source": "local"
+      },
+      {
+        "flag": "expire",
+        "description": "Prune older reflog entries",
+        "source": "local"
+      },
+      {
+        "flag": "delete",
+        "description": "Delete single reflog entries",
+        "source": "local"
+      }
+    ],
+    "example": "git reflog show --date=relative",
+    "output": "a1b2c3d HEAD@{5 minutes ago}: commit: fix: resolve login bug\nd4e5f6g HEAD@{2 hours ago}: merge feature/dashboard: Merge made by the 'ort' strategy.\nh7i8j9k HEAD@{3 hours ago}: rebase (finish): returning to refs/heads/main\nk1l2m3n HEAD@{3 hours ago}: rebase (pick): feat: add validation\nn4o5p6q HEAD@{yesterday}: reset: moving to HEAD~2\nq7r8s9t HEAD@{yesterday}: commit: feat: add user settings\nu1v2w3x HEAD@{2 days ago}: checkout: moving from feature/api to main",
+    "tip": "The reflog is your safety net. If you accidentally reset or delete a branch, find the lost commit hash in reflog and recover with 'git checkout -b recovered <hash>'. Reflog entries expire after 90 days by default.",
+    "tags": [
+      "reflog",
+      "recovery",
+      "history"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "git-clone",
+    "category": "git",
+    "title": "Clone a repository",
+    "difficulty": "beginner",
+    "description": "Create a local copy of a remote repository, including all branches, commits, and tags.",
+    "command": "git clone https://github.com/user/repo.git",
+    "breakdown": [
+      {
+        "part": "git clone",
+        "meaning": "Download a repository from a URL"
+      },
+      {
+        "part": "https://...",
+        "meaning": "The remote repository URL"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--depth 1",
+        "description": "Shallow clone — only the latest snapshot",
+        "source": "local"
+      },
+      {
+        "flag": "--branch <name>",
+        "description": "Clone a specific branch",
+        "source": "local"
+      },
+      {
+        "flag": "--recurse-submodules",
+        "description": "Also clone any submodules",
+        "source": "local"
+      }
+    ],
+    "example": "git clone https://github.com/user/repo.git\ngit clone --depth 1 https://github.com/user/repo.git",
+    "output": "Cloning into 'repo'...\nremote: Counting objects: 1234, done.\nChecking out files: 100%, done.",
+    "tip": "Use '--depth 1' for a shallow clone that skips history — much faster for CI pipelines. Add '--single-branch -b main' to clone only one branch.",
+    "tags": [
+      "clone",
+      "download",
+      "remote",
+      "checkout",
+      "init repo"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "git-init",
+    "category": "git",
+    "title": "Initialise a repository",
+    "difficulty": "beginner",
+    "description": "Create a new, empty Git repository in the current directory or a specified path, setting up the .git directory.",
+    "command": "git init -b main",
+    "breakdown": [
+      {
+        "part": "git init",
+        "meaning": "Create a .git directory and set up a new repo"
+      },
+      {
+        "part": "-b main",
+        "meaning": "Set the initial branch name to main"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--bare",
+        "description": "Create a bare repository (no working tree)",
+        "source": "local"
+      },
+      {
+        "flag": "-b <branch>",
+        "description": "Set the initial branch name",
+        "source": "local"
+      }
+    ],
+    "example": "git init\ngit init -b main",
+    "output": "Initialized empty Git repository in /path/to/project/.git/",
+    "tip": "Use 'git init -b main' to set the default branch name. Run 'git init --bare' to create a remote-style repo without a working tree, suitable for servers.",
+    "tags": [
+      "new repo",
+      "start",
+      "create",
+      "initialise",
+      "setup"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "git-status",
+    "category": "git",
+    "title": "Check working tree status",
+    "difficulty": "beginner",
+    "description": "Show the working tree status — which files are staged, unstaged, untracked, or in conflict after a merge.",
+    "command": "git status",
+    "breakdown": [
+      {
+        "part": "git status",
+        "meaning": "Show the state of the working directory and staging area"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-s, --short",
+        "description": "Compact output",
+        "source": "local"
+      },
+      {
+        "flag": "-b",
+        "description": "Show branch info in short format",
+        "source": "local"
+      }
+    ],
+    "example": "git status\ngit status -s",
+    "output": "On branch main\nChanges not staged for commit:\n  modified:   src/app.ts\nUntracked files:\n  newfile.txt",
+    "tip": "Use 'git status -s' for a compact two-column output. Pair with 'git diff --cached' to see exactly what is staged before committing.",
+    "tags": [
+      "status",
+      "changes",
+      "modified",
+      "untracked",
+      "staged",
+      "check"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "git-add",
+    "category": "git",
+    "title": "Stage changes",
+    "difficulty": "beginner",
+    "description": "Stage file changes for inclusion in the next commit — supports whole files, directories, or interactive partial staging with -p.",
+    "command": "git add .",
+    "breakdown": [
+      {
+        "part": "git add",
+        "meaning": "Stage changes for the next commit"
+      },
+      {
+        "part": ".",
+        "meaning": "Stage all changes in the current directory"
+      }
+    ],
+    "flags": [
+      {
+        "flag": ".",
+        "description": "Stage all changes",
+        "source": "local"
+      },
+      {
+        "flag": "-p, --patch",
+        "description": "Interactively stage chunks of changes",
+        "source": "local"
+      },
+      {
+        "flag": "-u",
+        "description": "Stage only tracked files (no new files)",
+        "source": "local"
+      }
+    ],
+    "example": "git add .\ngit add src/components/\ngit add -p",
+    "output": "",
+    "tip": "Use 'git add -p' to stage changes in hunks — review each diff fragment individually to build cleaner, atomic commits.",
+    "tags": [
+      "stage",
+      "add",
+      "track",
+      "prepare",
+      "commit prep"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "git-commit",
+    "category": "git",
+    "title": "Commit staged changes",
+    "difficulty": "beginner",
+    "description": "Record staged changes to the repository history with a descriptive message — the basic unit of version control.",
+    "command": "git commit -m \"feat: add login page\"",
+    "breakdown": [
+      {
+        "part": "git commit",
+        "meaning": "Save the staged snapshot to the repo history"
+      },
+      {
+        "part": "-m \"...\"",
+        "meaning": "Inline commit message"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-m \"<msg>\"",
+        "description": "Set commit message inline",
+        "source": "local"
+      },
+      {
+        "flag": "--amend",
+        "description": "Modify the most recent commit",
+        "source": "local"
+      },
+      {
+        "flag": "-a",
+        "description": "Auto-stage tracked modified files before committing",
+        "source": "local"
+      }
+    ],
+    "example": "git commit -m \"feat: add search bar\"\ngit commit --amend --no-edit",
+    "output": "[main 3a2f1b4] feat: add search bar\n 2 files changed, 45 insertions(+)",
+    "tip": "Write commit messages in the imperative mood: 'Add feature' not 'Added feature'. Keep the subject line under 72 chars and add detail in the body.",
+    "tags": [
+      "commit",
+      "save",
+      "record",
+      "message",
+      "history"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "git-push",
+    "category": "git",
+    "title": "Push commits to remote",
+    "difficulty": "beginner",
+    "description": "Upload local commits on a branch to a remote repository, making them available to collaborators.",
+    "command": "git push origin main",
+    "breakdown": [
+      {
+        "part": "git push",
+        "meaning": "Upload commits to the remote"
+      },
+      {
+        "part": "origin",
+        "meaning": "The name of the remote (default)"
+      },
+      {
+        "part": "main",
+        "meaning": "The branch to push"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-u, --set-upstream",
+        "description": "Set the upstream for this branch",
+        "source": "local"
+      },
+      {
+        "flag": "--force-with-lease",
+        "description": "Safe force push — fails if remote has new commits",
+        "source": "local"
+      },
+      {
+        "flag": "--tags",
+        "description": "Push all tags",
+        "source": "local"
+      }
+    ],
+    "example": "git push origin main\ngit push -u origin feature/my-branch\ngit push --force-with-lease",
+    "output": "To https://github.com/user/repo.git\n   3a2f1b4..9c8d2e1  main -> main",
+    "tip": "Use '--force-with-lease' instead of '--force' when pushing rebased branches — it checks nobody else pushed since you last fetched, preventing accidental overwrites.",
+    "tags": [
+      "push",
+      "upload",
+      "remote",
+      "publish",
+      "sync"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "git-pull",
+    "category": "git",
+    "title": "Pull latest from remote",
+    "difficulty": "beginner",
+    "description": "Fetch changes from a remote branch and merge (or rebase) them into the current local branch in one step.",
+    "command": "git pull origin main",
+    "breakdown": [
+      {
+        "part": "git pull",
+        "meaning": "Fetch + merge from remote"
+      },
+      {
+        "part": "origin main",
+        "meaning": "Remote name and branch to pull from"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--rebase",
+        "description": "Rebase instead of merge when pulling",
+        "source": "local"
+      },
+      {
+        "flag": "--ff-only",
+        "description": "Only fast-forward, never create a merge commit",
+        "source": "local"
+      }
+    ],
+    "example": "git pull origin main\ngit pull --rebase origin main",
+    "output": "From https://github.com/user/repo\n * branch  main -> FETCH_HEAD\nUpdating 3a2f1b4..9c8d2e1",
+    "tip": "Use 'git pull --rebase' to avoid creating merge commits for routine syncs. Configure as default with 'git config pull.rebase true'.",
+    "tags": [
+      "pull",
+      "download",
+      "sync",
+      "update",
+      "fetch merge"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "git-fetch",
+    "category": "git",
+    "title": "Fetch remote changes",
+    "difficulty": "beginner",
+    "description": "Download commits, branches, and tags from a remote without merging anything into the current working branch.",
+    "command": "git fetch --all --prune",
+    "breakdown": [
+      {
+        "part": "git fetch",
+        "meaning": "Download objects and refs from remote"
+      },
+      {
+        "part": "--all",
+        "meaning": "Fetch from all remotes"
+      },
+      {
+        "part": "--prune",
+        "meaning": "Remove remote-tracking refs that no longer exist"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--all",
+        "description": "Fetch from all configured remotes",
+        "source": "local"
+      },
+      {
+        "flag": "--prune",
+        "description": "Delete stale remote-tracking branches",
+        "source": "local"
+      }
+    ],
+    "example": "git fetch origin\ngit fetch --all --prune",
+    "output": "From https://github.com/user/repo\n   3a2f1b4..9c8d2e1  main -> origin/main",
+    "tip": "Prefer fetch + explicit merge/rebase over git pull for more control. Use 'git fetch --prune' to remove local refs to deleted remote branches.",
+    "tags": [
+      "fetch",
+      "download",
+      "remote",
+      "sync",
+      "update"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "git-checkout-branch",
+    "category": "git",
+    "title": "Create and switch branch",
+    "difficulty": "beginner",
+    "description": "Switch to an existing branch, updating the working tree to match it — use 'git switch' in Git 2.23+ for a clearer intent.",
+    "command": "git checkout -b feature/my-feature",
+    "breakdown": [
+      {
+        "part": "git checkout",
+        "meaning": "Switch branches or restore files"
+      },
+      {
+        "part": "-b",
+        "meaning": "Create the branch if it does not exist"
+      },
+      {
+        "part": "feature/my-feature",
+        "meaning": "Name of the new branch"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-b <name>",
+        "description": "Create and switch to a new branch",
+        "source": "local"
+      },
+      {
+        "flag": "-",
+        "description": "Switch to the previously checked-out branch",
+        "source": "local"
+      }
+    ],
+    "example": "git checkout -b feature/search\ngit checkout main\ngit checkout -",
+    "output": "Switched to a new branch 'feature/search'",
+    "tip": "Use 'git checkout -b newbranch' to create and switch in one step. In modern Git, prefer 'git switch branchname' and 'git switch -c newbranch' for clarity.",
+    "tags": [
+      "branch",
+      "switch",
+      "create branch",
+      "checkout",
+      "new branch"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  }
+]

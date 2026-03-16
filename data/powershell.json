@@ -1,0 +1,1027 @@
+[
+  {
+    "id": "ps-get-help",
+    "category": "powershell",
+    "command": "Get-Help Get-Process -Full",
+    "title": "Get command help",
+    "difficulty": "beginner",
+    "description": "Display full documentation for any PowerShell cmdlet, including parameter details, examples, and notes.",
+    "breakdown": [
+      {
+        "part": "Get-Help",
+        "meaning": "Display help for a cmdlet, function, or topic"
+      },
+      {
+        "part": "Get-Process",
+        "meaning": "The cmdlet to get help for"
+      },
+      {
+        "part": "-Full",
+        "meaning": "Show complete help including all parameters and examples"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-Full",
+        "description": "Display full help including detailed parameter info and examples",
+        "source": "local"
+      },
+      {
+        "flag": "-Examples",
+        "description": "Show only the usage examples section",
+        "source": "local"
+      },
+      {
+        "flag": "-Online",
+        "description": "Open the online version of the help page in a browser",
+        "source": "local"
+      },
+      {
+        "flag": "-Parameter <name>",
+        "description": "Show help for a specific parameter only",
+        "source": "local"
+      }
+    ],
+    "example": "Get-Help Get-Process -Examples",
+    "output": "NAME\n    Get-Process\n\nSYNOPSIS\n    Gets the processes that are running on the local computer.\n\nEXAMPLE 1\n    PS> Get-Process\n    Lists all running processes with CPU and memory info.\n\nEXAMPLE 2\n    PS> Get-Process -Name notepad\n    Gets only processes named notepad.",
+    "tip": "Run 'Update-Help' once after installing PowerShell to download the latest help files. Use 'Get-Command *process*' to discover cmdlets matching a keyword.",
+    "tags": [
+      "help",
+      "documentation",
+      "learning"
+    ],
+    "package": "powershell",
+    "os": [
+      "windows",
+      "linux",
+      "macos"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "ps-get-process",
+    "category": "powershell",
+    "command": "Get-Process | Sort-Object CPU -Descending | Select-Object -First 10",
+    "title": "Top CPU processes",
+    "difficulty": "beginner",
+    "description": "List running processes sorted by CPU usage — the PowerShell equivalent of ps aux | sort. Returns objects with properties like CPU, WorkingSet, Id, and ProcessName.",
+    "breakdown": [
+      {
+        "part": "Get-Process",
+        "meaning": "Retrieve all running processes with their stats"
+      },
+      {
+        "part": "|",
+        "meaning": "Pipe output to the next cmdlet"
+      },
+      {
+        "part": "Sort-Object CPU -Descending",
+        "meaning": "Sort by CPU column, highest first"
+      },
+      {
+        "part": "Select-Object -First 10",
+        "meaning": "Take only the first 10 results"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-Name <name>",
+        "description": "Filter by process name (wildcards supported: *chrome*)",
+        "source": "local"
+      },
+      {
+        "flag": "-Id <pid>",
+        "description": "Get process by ID",
+        "source": "local"
+      },
+      {
+        "flag": "-IncludeUserName",
+        "description": "Include the username of the process owner (requires elevation)",
+        "source": "local"
+      }
+    ],
+    "example": "Get-Process -Name chrome | Select-Object Name, CPU, WorkingSet",
+    "output": "Name           CPU    WorkingSet\n----           ---    ----------\nchrome       45.23   524288000\nchrome       32.11   314572800\nchrome        8.45   125829120",
+    "tip": "Pipe to 'Stop-Process' to kill matching processes: 'Get-Process -Name notepad | Stop-Process'. Use 'Get-Process | Out-GridView' for an interactive sortable table.",
+    "tags": [
+      "processes",
+      "cpu",
+      "monitoring",
+      "system"
+    ],
+    "package": "powershell",
+    "os": [
+      "windows",
+      "linux",
+      "macos"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "ps-get-service",
+    "category": "powershell",
+    "command": "Get-Service | Where-Object Status -eq Running",
+    "title": "List running services",
+    "difficulty": "beginner",
+    "description": "List Windows services and their current status (Running, Stopped, Paused) — use to audit running services or check whether a specific service is active.",
+    "breakdown": [
+      {
+        "part": "Get-Service",
+        "meaning": "Retrieve all Windows services and their status"
+      },
+      {
+        "part": "|",
+        "meaning": "Pipe output to the next cmdlet"
+      },
+      {
+        "part": "Where-Object Status -eq Running",
+        "meaning": "Filter to only services with Status equal to 'Running'"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-Name <name>",
+        "description": "Filter by service name (wildcards: *sql*)",
+        "source": "local"
+      },
+      {
+        "flag": "-DisplayName <name>",
+        "description": "Filter by display name",
+        "source": "local"
+      },
+      {
+        "flag": "-DependentServices",
+        "description": "Show services that depend on this one",
+        "source": "local"
+      }
+    ],
+    "example": "Get-Service -Name wuauserv | Select-Object Name, Status, StartType",
+    "output": "Name     Status  StartType\n----     ------  ---------\nwuauserv Running Automatic",
+    "tip": "Start/stop services with 'Start-Service wuauserv' and 'Stop-Service wuauserv' (requires admin). Use 'Set-Service -StartupType Disabled' to disable auto-start.",
+    "tags": [
+      "services",
+      "windows",
+      "status",
+      "management"
+    ],
+    "package": "powershell",
+    "os": [
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "ps-get-childitem",
+    "category": "powershell",
+    "command": "Get-ChildItem -Path C:\\Users -Recurse -Filter *.log -File",
+    "title": "Find files recursively",
+    "difficulty": "beginner",
+    "description": "Search for all .log files recursively under a directory, returning only files (not directories).",
+    "breakdown": [
+      {
+        "part": "Get-ChildItem",
+        "meaning": "List items in a location (like ls/dir). Alias: gci, ls, dir"
+      },
+      {
+        "part": "-Path C:\\Users",
+        "meaning": "Start search from this directory"
+      },
+      {
+        "part": "-Recurse",
+        "meaning": "Search all subdirectories recursively"
+      },
+      {
+        "part": "-Filter *.log",
+        "meaning": "Match only files ending in .log"
+      },
+      {
+        "part": "-File",
+        "meaning": "Return only files, not directories"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-Recurse",
+        "description": "Search subdirectories recursively",
+        "source": "local"
+      },
+      {
+        "flag": "-Filter <pattern>",
+        "description": "Wildcard filter applied at the provider level (faster than -Include)",
+        "source": "local"
+      },
+      {
+        "flag": "-Include <pattern>",
+        "description": "Include items matching pattern (requires -Recurse or path ending in \\*)",
+        "source": "local"
+      },
+      {
+        "flag": "-Exclude <pattern>",
+        "description": "Exclude items matching pattern",
+        "source": "local"
+      },
+      {
+        "flag": "-File",
+        "description": "Return only files",
+        "source": "local"
+      },
+      {
+        "flag": "-Directory",
+        "description": "Return only directories",
+        "source": "local"
+      },
+      {
+        "flag": "-Hidden",
+        "description": "Include hidden files",
+        "source": "local"
+      }
+    ],
+    "example": "Get-ChildItem -Path . -Recurse -Filter *.json | Select-Object FullName, Length",
+    "output": "FullName                              Length\n--------                              ------\nC:\\project\\package.json               2048\nC:\\project\\src\\config.json             512\nC:\\project\\data\\settings.json         1024",
+    "tip": "Alias 'ls' works in PowerShell too. Use '-Filter' instead of '-Include' for better performance on large directories. Pipe to 'Remove-Item' to delete matched files.",
+    "tags": [
+      "files",
+      "search",
+      "filesystem",
+      "find"
+    ],
+    "package": "powershell",
+    "os": [
+      "windows",
+      "linux",
+      "macos"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "ps-select-string",
+    "category": "powershell",
+    "command": "Select-String -Path .\\*.log -Pattern 'ERROR' -CaseSensitive",
+    "title": "Search file contents (grep)",
+    "difficulty": "beginner",
+    "description": "Search for a text pattern across files — the PowerShell equivalent of grep. Returns matching lines with file name and line number.",
+    "breakdown": [
+      {
+        "part": "Select-String",
+        "meaning": "Search for text in strings and files. Alias: sls"
+      },
+      {
+        "part": "-Path .\\*.log",
+        "meaning": "Search all .log files in the current directory"
+      },
+      {
+        "part": "-Pattern 'ERROR'",
+        "meaning": "The regex pattern to search for"
+      },
+      {
+        "part": "-CaseSensitive",
+        "meaning": "Match case exactly (default is case-insensitive)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-Pattern <regex>",
+        "description": "Regular expression pattern to match",
+        "source": "local"
+      },
+      {
+        "flag": "-Path <path>",
+        "description": "Files to search (supports wildcards)",
+        "source": "local"
+      },
+      {
+        "flag": "-CaseSensitive",
+        "description": "Enable case-sensitive matching",
+        "source": "local"
+      },
+      {
+        "flag": "-NotMatch",
+        "description": "Return lines that do NOT match the pattern",
+        "source": "local"
+      },
+      {
+        "flag": "-List",
+        "description": "Return only the filename for each file that has a match",
+        "source": "local"
+      },
+      {
+        "flag": "-Context <N>",
+        "description": "Show N lines before and after each match",
+        "source": "local"
+      }
+    ],
+    "example": "Select-String -Path .\\*.log -Pattern 'WARN|ERROR' | Select-Object Filename, LineNumber, Line",
+    "output": "Filename     LineNumber Line\n--------     ---------- ----\napp.log      42         2025-03-15 ERROR: Database connection failed\napp.log      87         2025-03-15 WARN: Retry attempt 3 of 5",
+    "tip": "Use '-Context 2' to show 2 lines before and after each match. Pipe 'Get-Content file.log' into 'Select-String' to search stdin.",
+    "tags": [
+      "search",
+      "grep",
+      "text",
+      "logs"
+    ],
+    "package": "powershell",
+    "os": [
+      "windows",
+      "linux",
+      "macos"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "ps-set-executionpolicy",
+    "category": "powershell",
+    "command": "Set-ExecutionPolicy RemoteSigned -Scope CurrentUser",
+    "title": "Set script execution policy",
+    "difficulty": "intermediate",
+    "description": "Allow locally created scripts to run while requiring remote scripts to be signed. Scoped to the current user to avoid needing admin rights.",
+    "breakdown": [
+      {
+        "part": "Set-ExecutionPolicy",
+        "meaning": "Change the PowerShell script execution policy"
+      },
+      {
+        "part": "RemoteSigned",
+        "meaning": "Allow local scripts; require signatures for scripts downloaded from the internet"
+      },
+      {
+        "part": "-Scope CurrentUser",
+        "meaning": "Apply only to the current user, no admin privileges needed"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "Restricted",
+        "description": "No scripts allowed (default on Windows)",
+        "source": "local"
+      },
+      {
+        "flag": "AllSigned",
+        "description": "All scripts must be signed by a trusted publisher",
+        "source": "local"
+      },
+      {
+        "flag": "RemoteSigned",
+        "description": "Local scripts run freely; downloaded scripts must be signed",
+        "source": "local"
+      },
+      {
+        "flag": "Unrestricted",
+        "description": "All scripts run, with a prompt for downloaded scripts",
+        "source": "local"
+      },
+      {
+        "flag": "-Scope CurrentUser",
+        "description": "Apply to current user only (no admin needed)",
+        "source": "local"
+      },
+      {
+        "flag": "-Scope LocalMachine",
+        "description": "Apply to all users on this machine (requires admin)",
+        "source": "local"
+      }
+    ],
+    "example": "Get-ExecutionPolicy -List",
+    "output": "        Scope ExecutionPolicy\n        ----- ---------------\nMachinePolicy       Undefined\n   UserPolicy       Undefined\n      Process       Undefined\n  CurrentUser    RemoteSigned\n  LocalMachine      Restricted",
+    "tip": "Use 'Get-ExecutionPolicy -List' to see all scopes. For CI/CD, bypass per-invocation with 'powershell -ExecutionPolicy Bypass -File script.ps1' rather than changing the system policy.",
+    "tags": [
+      "security",
+      "scripts",
+      "policy",
+      "windows"
+    ],
+    "package": "powershell",
+    "os": [
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "ps-invoke-webrequest",
+    "category": "powershell",
+    "command": "Invoke-WebRequest -Uri https://api.example.com/data -Method GET",
+    "title": "HTTP request (curl)",
+    "difficulty": "intermediate",
+    "description": "Send HTTP requests and receive responses — the PowerShell equivalent of curl. Returns a response object with StatusCode, Headers, and Content.",
+    "breakdown": [
+      {
+        "part": "Invoke-WebRequest",
+        "meaning": "Send HTTP/HTTPS requests and return responses. Alias: iwr, curl, wget"
+      },
+      {
+        "part": "-Uri https://...",
+        "meaning": "The target URL"
+      },
+      {
+        "part": "-Method GET",
+        "meaning": "HTTP method to use (GET, POST, PUT, DELETE, PATCH)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-Uri <url>",
+        "description": "The URL to request",
+        "source": "local"
+      },
+      {
+        "flag": "-Method <verb>",
+        "description": "HTTP method: GET, POST, PUT, DELETE, PATCH",
+        "source": "local"
+      },
+      {
+        "flag": "-Body <data>",
+        "description": "Request body (string or hashtable)",
+        "source": "local"
+      },
+      {
+        "flag": "-ContentType <type>",
+        "description": "Set Content-Type header (e.g., application/json)",
+        "source": "local"
+      },
+      {
+        "flag": "-Headers <hashtable>",
+        "description": "Custom headers as a hashtable",
+        "source": "local"
+      },
+      {
+        "flag": "-OutFile <path>",
+        "description": "Save response body to a file (for file downloads)",
+        "source": "local"
+      },
+      {
+        "flag": "-UseBasicParsing",
+        "description": "Skip HTML parsing (faster, no IE engine required)",
+        "source": "local"
+      }
+    ],
+    "example": "$response = Invoke-WebRequest -Uri https://httpbin.org/ip -UseBasicParsing\n$response.Content | ConvertFrom-Json",
+    "output": "origin\n------\n203.0.113.42",
+    "tip": "Use 'Invoke-RestMethod' (irm) instead for JSON APIs — it automatically parses the JSON response into a PowerShell object, so you can access properties directly.",
+    "tags": [
+      "http",
+      "api",
+      "web",
+      "download"
+    ],
+    "package": "powershell",
+    "os": [
+      "windows",
+      "linux",
+      "macos"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "ps-invoke-restmethod",
+    "category": "powershell",
+    "command": "Invoke-RestMethod -Uri https://api.example.com/users -Method POST -Body ($body | ConvertTo-Json) -ContentType 'application/json'",
+    "title": "REST API call",
+    "difficulty": "intermediate",
+    "description": "Send a JSON POST request to a REST API and automatically parse the JSON response into a PowerShell object.",
+    "breakdown": [
+      {
+        "part": "Invoke-RestMethod",
+        "meaning": "Send HTTP request and parse JSON/XML response automatically. Alias: irm"
+      },
+      {
+        "part": "-Uri https://...",
+        "meaning": "The API endpoint URL"
+      },
+      {
+        "part": "-Method POST",
+        "meaning": "HTTP method"
+      },
+      {
+        "part": "-Body ($body | ConvertTo-Json)",
+        "meaning": "Convert hashtable to JSON string for the request body"
+      },
+      {
+        "part": "-ContentType 'application/json'",
+        "meaning": "Tell the API we're sending JSON"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-Uri",
+        "description": "The endpoint URL",
+        "source": "local"
+      },
+      {
+        "flag": "-Method",
+        "description": "HTTP verb: GET, POST, PUT, DELETE, PATCH",
+        "source": "local"
+      },
+      {
+        "flag": "-Body",
+        "description": "Request body — use ConvertTo-Json for objects",
+        "source": "local"
+      },
+      {
+        "flag": "-ContentType",
+        "description": "Content-Type header value",
+        "source": "local"
+      },
+      {
+        "flag": "-Headers",
+        "description": "Additional headers as a hashtable",
+        "source": "local"
+      },
+      {
+        "flag": "-Authentication Bearer -Token",
+        "description": "Add Bearer token authentication",
+        "source": "local"
+      }
+    ],
+    "example": "$body = @{ name = 'Alice'; role = 'admin' }\n$result = Invoke-RestMethod -Uri https://api.example.com/users -Method POST -Body ($body | ConvertTo-Json) -ContentType 'application/json'\n$result.id",
+    "output": "42",
+    "tip": "Prefer 'Invoke-RestMethod' over 'Invoke-WebRequest' for JSON APIs — the response is auto-parsed. Store tokens in '$env:API_TOKEN' and pass with '-Headers @{Authorization=\"Bearer $env:API_TOKEN\"}'.",
+    "tags": [
+      "api",
+      "rest",
+      "json",
+      "http"
+    ],
+    "package": "powershell",
+    "os": [
+      "windows",
+      "linux",
+      "macos"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "ps-get-content",
+    "category": "powershell",
+    "command": "Get-Content -Path .\\app.log -Tail 50 -Wait",
+    "title": "Read file / tail log",
+    "difficulty": "beginner",
+    "description": "Read a file's contents and follow new lines as they are written — the PowerShell equivalent of 'tail -f'.",
+    "breakdown": [
+      {
+        "part": "Get-Content",
+        "meaning": "Read the content of a file. Alias: gc, cat, type"
+      },
+      {
+        "part": "-Path .\\app.log",
+        "meaning": "The file to read"
+      },
+      {
+        "part": "-Tail 50",
+        "meaning": "Show only the last 50 lines"
+      },
+      {
+        "part": "-Wait",
+        "meaning": "Stay open and print new lines as they are written (like tail -f)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-Tail <N>",
+        "description": "Read the last N lines of the file",
+        "source": "local"
+      },
+      {
+        "flag": "-Wait",
+        "description": "Continuously watch for new content (tail -f equivalent)",
+        "source": "local"
+      },
+      {
+        "flag": "-TotalCount <N>",
+        "description": "Read only the first N lines (head equivalent)",
+        "source": "local"
+      },
+      {
+        "flag": "-Raw",
+        "description": "Read the entire file as a single string (preserves newlines)",
+        "source": "local"
+      },
+      {
+        "flag": "-Encoding <enc>",
+        "description": "Specify file encoding: UTF8, ASCII, Unicode, etc.",
+        "source": "local"
+      }
+    ],
+    "example": "Get-Content -Path C:\\Windows\\Logs\\CBS\\CBS.log -Tail 20",
+    "output": "2025-03-15 10:30:01, Info CBS Starting TrustedInstaller initialization.\n2025-03-15 10:30:02, Info CBS Loaded Servicing Stack v10.0.26200.0...\n2025-03-15 10:30:03, Info CBS Startup complete.",
+    "tip": "Combine '-Tail' and '-Wait' to follow a live log. Use 'Set-Content' to write and 'Add-Content' to append to files.",
+    "tags": [
+      "files",
+      "logs",
+      "read",
+      "tail"
+    ],
+    "package": "powershell",
+    "os": [
+      "windows",
+      "linux",
+      "macos"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "ps-where-object",
+    "category": "powershell",
+    "command": "Get-Process | Where-Object { $_.WorkingSet -gt 100MB }",
+    "title": "Filter objects in pipeline",
+    "difficulty": "intermediate",
+    "description": "Filter pipeline objects using Where-Object — the PowerShell equivalent of 'grep' for objects. Access each object's properties via the automatic variable $_.",
+    "breakdown": [
+      {
+        "part": "Get-Process",
+        "meaning": "Source of objects in the pipeline"
+      },
+      {
+        "part": "|",
+        "meaning": "Pipe objects to the next cmdlet"
+      },
+      {
+        "part": "Where-Object { ... }",
+        "meaning": "Filter: pass only objects where the script block returns true. Alias: where, ?"
+      },
+      {
+        "part": "$_",
+        "meaning": "The current pipeline object (like 'item' in a for-each loop)"
+      },
+      {
+        "part": ".WorkingSet -gt 100MB",
+        "meaning": "Property access: WorkingSet is greater than 100 megabytes"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-eq",
+        "description": "Equal to",
+        "source": "local"
+      },
+      {
+        "flag": "-ne",
+        "description": "Not equal to",
+        "source": "local"
+      },
+      {
+        "flag": "-gt / -lt",
+        "description": "Greater than / less than",
+        "source": "local"
+      },
+      {
+        "flag": "-like <wildcard>",
+        "description": "Wildcard string match (e.g., -like '*sql*')",
+        "source": "local"
+      },
+      {
+        "flag": "-match <regex>",
+        "description": "Regular expression match",
+        "source": "local"
+      },
+      {
+        "flag": "-not / !",
+        "description": "Negate a condition",
+        "source": "local"
+      }
+    ],
+    "example": "Get-Service | Where-Object { $_.Status -eq 'Stopped' -and $_.StartType -eq 'Automatic' }",
+    "output": "Status   Name               DisplayName\n------   ----               -----------\nStopped  wuauserv           Windows Update\nStopped  BITS               Background Intelligent Transfer",
+    "tip": "For simple property comparisons use the simplified syntax: 'Where-Object Status -eq Stopped'. The full script block '{ $_.X -eq Y }' is needed for complex conditions with -and/-or.",
+    "tags": [
+      "filter",
+      "pipeline",
+      "objects",
+      "scripting"
+    ],
+    "package": "powershell",
+    "os": [
+      "windows",
+      "linux",
+      "macos"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "ps-foreach-object",
+    "category": "powershell",
+    "command": "1..5 | ForEach-Object { Write-Output \"Server-$_\" }",
+    "title": "Loop over pipeline objects",
+    "difficulty": "beginner",
+    "description": "Process each object in a pipeline with a script block — the PowerShell equivalent of a for-each loop inline.",
+    "breakdown": [
+      {
+        "part": "1..5",
+        "meaning": "Range expression generating integers 1 through 5"
+      },
+      {
+        "part": "|",
+        "meaning": "Pipe each integer to ForEach-Object"
+      },
+      {
+        "part": "ForEach-Object { ... }",
+        "meaning": "Execute the script block once for each input object. Alias: foreach, %"
+      },
+      {
+        "part": "$_",
+        "meaning": "The current object being processed"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-Begin { }",
+        "description": "Run once before processing (setup)",
+        "source": "local"
+      },
+      {
+        "flag": "-Process { }",
+        "description": "Run for each object (the default block)",
+        "source": "local"
+      },
+      {
+        "flag": "-End { }",
+        "description": "Run once after all objects are processed (teardown)",
+        "source": "local"
+      },
+      {
+        "flag": "-Parallel { }",
+        "description": "Run script blocks in parallel (PowerShell 7+)",
+        "source": "local"
+      },
+      {
+        "flag": "-ThrottleLimit N",
+        "description": "Max parallel threads when using -Parallel",
+        "source": "local"
+      }
+    ],
+    "example": "Get-ChildItem .\\data -Filter *.json | ForEach-Object {\n  $content = Get-Content $_.FullName | ConvertFrom-Json\n  Write-Output \"$($_.Name): $($content.Count) items\"\n}",
+    "output": "commands.json: 83 items\nconfig.json: 12 items\nschema.json: 1 items",
+    "tip": "In PowerShell 7+, use '-Parallel' for concurrent execution: '1..10 | ForEach-Object -Parallel { Start-Sleep 1 } -ThrottleLimit 5' processes 5 at a time.",
+    "tags": [
+      "loop",
+      "pipeline",
+      "iteration",
+      "scripting"
+    ],
+    "package": "powershell",
+    "os": [
+      "windows",
+      "linux",
+      "macos"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "ps-test-path",
+    "category": "powershell",
+    "command": "if (Test-Path -Path 'C:\\config\\app.json') { Get-Content 'C:\\config\\app.json' }",
+    "title": "Test if path exists",
+    "difficulty": "beginner",
+    "description": "Check whether a file or directory exists before trying to access it — prevents errors from missing files in scripts.",
+    "breakdown": [
+      {
+        "part": "Test-Path",
+        "meaning": "Returns $true if the path exists, $false otherwise"
+      },
+      {
+        "part": "-Path 'C:\\config\\app.json'",
+        "meaning": "The path to check (file or directory)"
+      },
+      {
+        "part": "if (...) { ... }",
+        "meaning": "Execute the block only if Test-Path returns true"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-Path <path>",
+        "description": "File or directory path to test",
+        "source": "local"
+      },
+      {
+        "flag": "-PathType Leaf",
+        "description": "Only match files (not directories)",
+        "source": "local"
+      },
+      {
+        "flag": "-PathType Container",
+        "description": "Only match directories (not files)",
+        "source": "local"
+      },
+      {
+        "flag": "-IsValid",
+        "description": "Test if the path syntax is valid (doesn't check existence)",
+        "source": "local"
+      }
+    ],
+    "example": "$logDir = 'C:\\Logs\\MyApp'\nif (-not (Test-Path $logDir)) {\n  New-Item -ItemType Directory -Path $logDir | Out-Null\n  Write-Output \"Created $logDir\"\n}",
+    "output": "Created C:\\Logs\\MyApp",
+    "tip": "Use '-PathType Leaf' to distinguish files from directories. Combine with 'New-Item -ItemType Directory -Force' to create directories only if they don't exist.",
+    "tags": [
+      "filesystem",
+      "exists",
+      "check",
+      "conditional"
+    ],
+    "package": "powershell",
+    "os": [
+      "windows",
+      "linux",
+      "macos"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "ps-get-eventlog",
+    "category": "powershell",
+    "command": "Get-WinEvent -LogName System -MaxEvents 50 | Where-Object { $_.LevelDisplayName -eq 'Error' }",
+    "title": "Query Windows Event Log",
+    "difficulty": "intermediate",
+    "description": "Retrieve recent error events from the Windows System event log — the primary tool for diagnosing Windows system issues.",
+    "breakdown": [
+      {
+        "part": "Get-WinEvent",
+        "meaning": "Read events from Windows event logs"
+      },
+      {
+        "part": "-LogName System",
+        "meaning": "Query the System log (also: Application, Security)"
+      },
+      {
+        "part": "-MaxEvents 50",
+        "meaning": "Limit to the 50 most recent events"
+      },
+      {
+        "part": "Where-Object { $_.LevelDisplayName -eq 'Error' }",
+        "meaning": "Filter to only Error-level events"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-LogName <name>",
+        "description": "Log name: System, Application, Security, or a custom log",
+        "source": "local"
+      },
+      {
+        "flag": "-MaxEvents <N>",
+        "description": "Maximum number of events to retrieve (newest first)",
+        "source": "local"
+      },
+      {
+        "flag": "-FilterHashtable",
+        "description": "Efficient filter: @{LogName='System'; Level=2; StartTime='2025-01-01'}",
+        "source": "local"
+      },
+      {
+        "flag": "-ComputerName <host>",
+        "description": "Query event log on a remote computer",
+        "source": "local"
+      }
+    ],
+    "example": "Get-WinEvent -FilterHashtable @{LogName='Application'; Level=2; StartTime=(Get-Date).AddHours(-24)} | Select-Object TimeCreated, ProviderName, Message -First 10",
+    "output": "TimeCreated          ProviderName       Message\n-----------          ------------       -------\n2025-03-15 09:15:02  MSSQLSERVER        SQL Server failed to start\n2025-03-15 08:30:45  Application Error  Faulting application nginx.exe",
+    "tip": "Use '-FilterHashtable' instead of piping to Where-Object — it filters at the source and is significantly faster on large logs. Level 1=Critical, 2=Error, 3=Warning, 4=Info.",
+    "tags": [
+      "events",
+      "logs",
+      "windows",
+      "debugging"
+    ],
+    "package": "powershell",
+    "os": [
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "ps-export-csv",
+    "category": "powershell",
+    "command": "Get-Process | Select-Object Name, CPU, WorkingSet | Export-Csv -Path .\\processes.csv -NoTypeInformation",
+    "title": "Export data to CSV",
+    "difficulty": "beginner",
+    "description": "Select specific properties from pipeline objects and export them to a CSV file — useful for reporting and further analysis in Excel.",
+    "breakdown": [
+      {
+        "part": "Get-Process",
+        "meaning": "Source objects with many properties"
+      },
+      {
+        "part": "Select-Object Name, CPU, WorkingSet",
+        "meaning": "Pick only the columns we want in the CSV"
+      },
+      {
+        "part": "Export-Csv -Path .\\processes.csv",
+        "meaning": "Write objects to a CSV file"
+      },
+      {
+        "part": "-NoTypeInformation",
+        "meaning": "Suppress the #TYPE header row that PowerShell adds by default"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-Path <file>",
+        "description": "Output file path",
+        "source": "local"
+      },
+      {
+        "flag": "-NoTypeInformation",
+        "description": "Remove the #TYPE metadata line from the CSV header",
+        "source": "local"
+      },
+      {
+        "flag": "-Append",
+        "description": "Add to an existing CSV instead of overwriting",
+        "source": "local"
+      },
+      {
+        "flag": "-Delimiter <char>",
+        "description": "Use a custom delimiter (default is comma)",
+        "source": "local"
+      },
+      {
+        "flag": "-Encoding UTF8",
+        "description": "Specify output encoding",
+        "source": "local"
+      }
+    ],
+    "example": "Get-Service | Select-Object Name, Status, StartType | Export-Csv -Path .\\services.csv -NoTypeInformation\nImport-Csv .\\services.csv | Where-Object Status -eq Stopped",
+    "output": "Name       Status  StartType\n----       ------  ---------\nwuauserv   Stopped Automatic\nBITS       Stopped Automatic",
+    "tip": "Use 'Import-Csv' to read back the file as PowerShell objects. For JSON output, pipe to 'ConvertTo-Json | Out-File data.json' instead.",
+    "tags": [
+      "csv",
+      "export",
+      "reporting",
+      "data"
+    ],
+    "package": "powershell",
+    "os": [
+      "windows",
+      "linux",
+      "macos"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "ps-new-item",
+    "category": "powershell",
+    "command": "New-Item -ItemType Directory -Path .\\logs\\app -Force",
+    "title": "Create files and directories",
+    "difficulty": "beginner",
+    "description": "Create new files, directories, or symbolic links. The -Force flag prevents errors if the path already exists.",
+    "breakdown": [
+      {
+        "part": "New-Item",
+        "meaning": "Create a new file, directory, or other item. Alias: ni, mkdir, md"
+      },
+      {
+        "part": "-ItemType Directory",
+        "meaning": "Type of item to create (Directory, File, SymbolicLink, HardLink)"
+      },
+      {
+        "part": "-Path .\\logs\\app",
+        "meaning": "Path where the item should be created"
+      },
+      {
+        "part": "-Force",
+        "meaning": "Create parent directories if needed; don't error if it already exists"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-ItemType Directory",
+        "description": "Create a directory (folder)",
+        "source": "local"
+      },
+      {
+        "flag": "-ItemType File",
+        "description": "Create an empty file",
+        "source": "local"
+      },
+      {
+        "flag": "-ItemType SymbolicLink",
+        "description": "Create a symbolic link (requires -Target)",
+        "source": "local"
+      },
+      {
+        "flag": "-Force",
+        "description": "Overwrite existing items; create parent directories",
+        "source": "local"
+      },
+      {
+        "flag": "-Value <content>",
+        "description": "Initial content for a new file",
+        "source": "local"
+      }
+    ],
+    "example": "# Create directory\nNew-Item -ItemType Directory -Path .\\output -Force\n\n# Create file with content\nNew-Item -ItemType File -Path .\\config.json -Value '{\"version\":1}' -Force",
+    "output": "    Directory: C:\\project\n\nMode  LastWriteTime  Length  Name\n----  -------------  ------  ----\nd---- 15/03/2025     10:30           output",
+    "tip": "Pipe to Out-Null to suppress the output: 'New-Item -ItemType Directory -Path .\\logs -Force | Out-Null'. Use 'Remove-Item -Recurse -Force' to delete directories.",
+    "tags": [
+      "files",
+      "directories",
+      "create",
+      "filesystem"
+    ],
+    "package": "powershell",
+    "os": [
+      "windows",
+      "linux",
+      "macos"
+    ],
+    "manPage": "1"
+  }
+]

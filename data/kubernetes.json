@@ -1,0 +1,1051 @@
+[
+  {
+    "id": "kubectl-get-pods",
+    "category": "kubernetes",
+    "command": "kubectl get pods -n namespace -o wide",
+    "title": "List pods in namespace",
+    "difficulty": "beginner",
+    "description": "List all pods in a specific namespace with extended information including node and IP.",
+    "breakdown": [
+      {
+        "part": "kubectl",
+        "meaning": "Kubernetes command-line tool"
+      },
+      {
+        "part": "get pods",
+        "meaning": "List pod resources"
+      },
+      {
+        "part": "-n namespace",
+        "meaning": "Specify the namespace"
+      },
+      {
+        "part": "-o wide",
+        "meaning": "Output additional info (IP, node, etc.)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-n, --namespace",
+        "description": "Specify the namespace scope for this request",
+        "source": "local"
+      },
+      {
+        "flag": "-o, --output",
+        "description": "Output format: wide, json, yaml, name",
+        "source": "local"
+      },
+      {
+        "flag": "-l, --selector",
+        "description": "Filter by label selector",
+        "source": "local"
+      },
+      {
+        "flag": "--all-namespaces, -A",
+        "description": "List across all namespaces",
+        "source": "local"
+      },
+      {
+        "flag": "-w, --watch",
+        "description": "Watch for changes",
+        "source": "local"
+      }
+    ],
+    "example": "kubectl get pods -n production -o wide",
+    "output": "NAME                     READY   STATUS    RESTARTS   AGE   IP           NODE\nweb-7d9f5b4c6-abc12     1/1     Running   0          2d    10.0.1.15    node-1\nweb-7d9f5b4c6-def34     1/1     Running   0          2d    10.0.2.22    node-2\napi-6b8c4d5e7-ghi56     1/1     Running   1          5d    10.0.1.18    node-1",
+    "tip": "Use 'kubectl get pods -A' to see pods across ALL namespaces. Add '-w' to watch pods in real-time.",
+    "tags": [
+      "pods",
+      "list",
+      "namespace"
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "kubectl-apply",
+    "category": "kubernetes",
+    "command": "kubectl apply -f deployment.yaml",
+    "title": "Apply configuration",
+    "difficulty": "beginner",
+    "description": "Apply a configuration file to create or update Kubernetes resources declaratively.",
+    "breakdown": [
+      {
+        "part": "kubectl apply",
+        "meaning": "Apply a configuration to a resource"
+      },
+      {
+        "part": "-f deployment.yaml",
+        "meaning": "Specify the file containing the configuration"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-f, --filename",
+        "description": "Filename, directory, or URL to files to apply",
+        "source": "local"
+      },
+      {
+        "flag": "--dry-run=client",
+        "description": "Preview changes without applying",
+        "source": "local"
+      },
+      {
+        "flag": "-k, --kustomize",
+        "description": "Process a kustomization directory",
+        "source": "local"
+      },
+      {
+        "flag": "--force",
+        "description": "Force apply, delete and re-create if needed",
+        "source": "local"
+      }
+    ],
+    "example": "kubectl apply -f deployment.yaml",
+    "output": "deployment.apps/web created\nservice/web-service created",
+    "tip": "Always use 'kubectl apply' over 'kubectl create' for reproducible, declarative deployments. Use '--dry-run=client -o yaml' to preview.",
+    "tags": [
+      "deploy",
+      "declarative",
+      "yaml"
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "kubectl-logs",
+    "category": "kubernetes",
+    "command": "kubectl logs -f pod-name -c container --tail=100",
+    "title": "Stream pod logs",
+    "difficulty": "intermediate",
+    "description": "Follow log output from a specific container in a pod, starting from the last 100 lines.",
+    "breakdown": [
+      {
+        "part": "kubectl logs",
+        "meaning": "Print logs for a container in a pod"
+      },
+      {
+        "part": "-f",
+        "meaning": "Follow — stream new log entries"
+      },
+      {
+        "part": "pod-name",
+        "meaning": "Name of the pod"
+      },
+      {
+        "part": "-c container",
+        "meaning": "Specify which container (for multi-container pods)"
+      },
+      {
+        "part": "--tail=100",
+        "meaning": "Only show the last 100 lines"
+      }
+    ],
+    "example": "kubectl logs -f web-7d9f5b4c6-abc12 --tail=50",
+    "output": "2024-03-12T09:00:00Z INFO  Starting server on :8080\n2024-03-12T09:00:01Z INFO  Connected to database\n2024-03-12T09:00:05Z INFO  GET /health 200 2ms",
+    "tip": "Use 'kubectl logs -l app=web' to get logs from all pods matching a label. Add '--previous' to see logs from a crashed container.",
+    "tags": [
+      "logs",
+      "debug",
+      "monitoring"
+    ],
+    "flags": [
+      {
+        "flag": "-f, --follow",
+        "description": "Stream new log entries in real time",
+        "source": "local"
+      },
+      {
+        "flag": "--tail",
+        "description": "Number of lines to show from the end of the logs",
+        "source": "local"
+      },
+      {
+        "flag": "-c, --container",
+        "description": "Specify container name in multi-container pods",
+        "source": "local"
+      },
+      {
+        "flag": "--previous",
+        "description": "Show logs from the previously terminated container instance",
+        "source": "local"
+      },
+      {
+        "flag": "--since",
+        "description": "Only return logs newer than a relative duration (e.g. 5m, 1h)",
+        "source": "local"
+      },
+      {
+        "flag": "-l, --selector",
+        "description": "Show logs for all pods matching a label selector",
+        "source": "local"
+      }
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "kubectl-scale",
+    "category": "kubernetes",
+    "command": "kubectl scale deployment web --replicas=5",
+    "title": "Scale a deployment",
+    "difficulty": "intermediate",
+    "description": "Change the number of replicas for a Deployment, ReplicaSet, or StatefulSet — the primary way to scale workloads up or down.",
+    "breakdown": [
+      {
+        "part": "kubectl scale",
+        "meaning": "Set a new size for a resource"
+      },
+      {
+        "part": "deployment web",
+        "meaning": "Target the deployment named 'web'"
+      },
+      {
+        "part": "--replicas=5",
+        "meaning": "Scale to 5 pod replicas"
+      }
+    ],
+    "example": "kubectl scale deployment web --replicas=5 && kubectl get pods -l app=web",
+    "output": "deployment.apps/web scaled\nNAME                   READY   STATUS    AGE\nweb-7d9f5b4c6-abc12   1/1     Running   2d\nweb-7d9f5b4c6-def34   1/1     Running   2d\nweb-7d9f5b4c6-ghi56   1/1     Running   5s\nweb-7d9f5b4c6-jkl78   1/1     Running   5s\nweb-7d9f5b4c6-mno90   0/1     Pending   2s",
+    "tip": "Use HPA (Horizontal Pod Autoscaler) for automatic scaling based on CPU/memory metrics.",
+    "tags": [
+      "scale",
+      "replicas",
+      "deployment"
+    ],
+    "flags": [
+      {
+        "flag": "--replicas",
+        "description": "The new desired number of replicas",
+        "source": "local"
+      },
+      {
+        "flag": "-n, --namespace",
+        "description": "Specify the namespace scope for this request",
+        "source": "local"
+      },
+      {
+        "flag": "--current-replicas",
+        "description": "Only scale if current replicas match this value",
+        "source": "local"
+      },
+      {
+        "flag": "--timeout",
+        "description": "Wait this long for the operation to complete",
+        "source": "local"
+      }
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "kubectl-describe",
+    "category": "kubernetes",
+    "command": "kubectl describe pod pod-name -n namespace",
+    "title": "Describe pod details",
+    "difficulty": "beginner",
+    "description": "Show detailed information about a specific pod including events, conditions, volumes, and container status.",
+    "breakdown": [
+      {
+        "part": "kubectl describe",
+        "meaning": "Show detailed information about a resource"
+      },
+      {
+        "part": "pod",
+        "meaning": "The resource type to describe"
+      },
+      {
+        "part": "pod-name",
+        "meaning": "Name of the specific pod"
+      },
+      {
+        "part": "-n namespace",
+        "meaning": "Specify the namespace where the pod lives"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-n, --namespace",
+        "description": "Specify the namespace scope for this request",
+        "source": "local"
+      },
+      {
+        "flag": "-l, --selector",
+        "description": "Filter resources by label selector",
+        "source": "local"
+      },
+      {
+        "flag": "--all-namespaces, -A",
+        "description": "Describe resources across all namespaces",
+        "source": "local"
+      },
+      {
+        "flag": "--show-events",
+        "description": "Show events associated with the resource (default true)",
+        "source": "local"
+      }
+    ],
+    "example": "kubectl describe pod web-7d9f5b4c6-abc12 -n production",
+    "output": "Name:         web-7d9f5b4c6-abc12\nNamespace:    production\nNode:         node-1/10.0.0.5\nStatus:       Running\nIP:           10.0.1.15\nContainers:\n  web:\n    Image:        nginx:1.25\n    State:        Running\n      Started:    Mon, 10 Mar 2024 08:00:00 +0000\n    Ready:        True\n    Restart Count: 0\nConditions:\n  Ready:          True\nEvents:\n  Type    Reason   Age   Message\n  ----    ------   ---   -------\n  Normal  Pulled   2d    Container image \"nginx:1.25\" already present\n  Normal  Created  2d    Created container web\n  Normal  Started  2d    Started container web",
+    "tip": "When a pod is stuck in CrashLoopBackOff or Pending, 'kubectl describe' is your first debugging step -- check the Events section at the bottom for clues.",
+    "tags": [
+      "describe",
+      "debug",
+      "pod",
+      "details"
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "kubectl-exec",
+    "category": "kubernetes",
+    "command": "kubectl exec -it pod-name -- /bin/sh",
+    "title": "Execute command in pod",
+    "difficulty": "beginner",
+    "description": "Open an interactive shell session inside a running pod container for debugging or inspection.",
+    "breakdown": [
+      {
+        "part": "kubectl exec",
+        "meaning": "Execute a command in a container"
+      },
+      {
+        "part": "-i",
+        "meaning": "Pass stdin to the container (interactive)"
+      },
+      {
+        "part": "-t",
+        "meaning": "Allocate a TTY (terminal)"
+      },
+      {
+        "part": "pod-name",
+        "meaning": "Name of the target pod"
+      },
+      {
+        "part": "--",
+        "meaning": "Separator between kubectl args and the command to run"
+      },
+      {
+        "part": "/bin/sh",
+        "meaning": "The shell command to execute inside the container"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-i, --stdin",
+        "description": "Pass stdin to the container",
+        "source": "local"
+      },
+      {
+        "flag": "-t, --tty",
+        "description": "Allocate a TTY for the container",
+        "source": "local"
+      },
+      {
+        "flag": "-c, --container",
+        "description": "Specify which container in multi-container pods",
+        "source": "local"
+      },
+      {
+        "flag": "-n, --namespace",
+        "description": "Specify the namespace scope for this request",
+        "source": "local"
+      }
+    ],
+    "example": "kubectl exec -it web-7d9f5b4c6-abc12 -- /bin/sh",
+    "output": "Defaulted container \"web\" out of: web, sidecar\n/ # ls\nbin   dev   etc   home  proc  root  sys   tmp   usr   var\n/ # whoami\nroot\n/ # exit",
+    "tip": "Use '/bin/bash' instead of '/bin/sh' if the container has bash installed. For a quick one-off command, skip '-it' and just run: 'kubectl exec pod-name -- cat /etc/config'.",
+    "tags": [
+      "exec",
+      "shell",
+      "debug",
+      "interactive"
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "kubectl-delete",
+    "category": "kubernetes",
+    "command": "kubectl delete -f deployment.yaml",
+    "title": "Delete resources",
+    "difficulty": "intermediate",
+    "description": "Delete Kubernetes resources defined in a configuration file, removing pods, services, and other objects.",
+    "breakdown": [
+      {
+        "part": "kubectl delete",
+        "meaning": "Delete resources from the cluster"
+      },
+      {
+        "part": "-f deployment.yaml",
+        "meaning": "Specify the file that defines the resources to delete"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-f, --filename",
+        "description": "Filename, directory, or URL to files containing resources to delete",
+        "source": "local"
+      },
+      {
+        "flag": "--grace-period",
+        "description": "Seconds to wait before force deletion (-1 for default, 0 for immediate)",
+        "source": "local"
+      },
+      {
+        "flag": "--force",
+        "description": "Immediately remove resources from API and bypass graceful deletion",
+        "source": "local"
+      },
+      {
+        "flag": "-l, --selector",
+        "description": "Filter resources by label selector",
+        "source": "local"
+      },
+      {
+        "flag": "--all",
+        "description": "Delete all resources of the specified type in the namespace",
+        "source": "local"
+      },
+      {
+        "flag": "--cascade",
+        "description": "Cascade deletion to dependents (default true)",
+        "source": "local"
+      }
+    ],
+    "example": "kubectl delete -f deployment.yaml",
+    "output": "deployment.apps \"web\" deleted\nservice \"web-service\" deleted",
+    "tip": "Use '--dry-run=client' to preview what would be deleted before actually deleting. To delete a stuck resource, try '--grace-period=0 --force'. Be careful with '--all' in production namespaces.",
+    "tags": [
+      "delete",
+      "remove",
+      "cleanup",
+      "resources"
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "kubectl-rollout",
+    "category": "kubernetes",
+    "command": "kubectl rollout status deployment/web && kubectl rollout undo deployment/web",
+    "title": "Manage rollouts",
+    "difficulty": "intermediate",
+    "description": "Check the status of a deployment rollout, and if needed, undo it to roll back to the previous revision.",
+    "breakdown": [
+      {
+        "part": "kubectl rollout status",
+        "meaning": "Watch the rollout progress of a resource"
+      },
+      {
+        "part": "deployment/web",
+        "meaning": "Target the deployment named 'web'"
+      },
+      {
+        "part": "&&",
+        "meaning": "Run next command only if the first succeeds"
+      },
+      {
+        "part": "kubectl rollout undo",
+        "meaning": "Roll back to the previous deployment revision"
+      },
+      {
+        "part": "deployment/web",
+        "meaning": "Target the same deployment for rollback"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--to-revision",
+        "description": "Roll back to a specific revision number",
+        "source": "local"
+      },
+      {
+        "flag": "-w, --watch",
+        "description": "Watch the status of the rollout until complete (default true for status)",
+        "source": "local"
+      },
+      {
+        "flag": "--timeout",
+        "description": "Timeout for waiting on rollout status (e.g. 5m0s)",
+        "source": "local"
+      },
+      {
+        "flag": "-n, --namespace",
+        "description": "Specify the namespace scope for this request",
+        "source": "local"
+      }
+    ],
+    "example": "kubectl rollout status deployment/web && kubectl rollout undo deployment/web",
+    "output": "deployment \"web\" successfully rolled out\ndeployment.apps/web rolled back",
+    "tip": "Use 'kubectl rollout history deployment/web' to see all revisions. Roll back to a specific version with '--to-revision=2'. Combine with 'kubectl rollout pause' and 'kubectl rollout resume' for canary-style deployments.",
+    "tags": [
+      "rollout",
+      "rollback",
+      "deployment",
+      "undo"
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "kubectl-port-forward",
+    "category": "kubernetes",
+    "command": "kubectl port-forward pod/web-abc 8080:80",
+    "title": "Port forward to pod",
+    "difficulty": "intermediate",
+    "description": "Forward a local port to a port on a pod, allowing you to access pod services from your local machine.",
+    "breakdown": [
+      {
+        "part": "kubectl port-forward",
+        "meaning": "Forward local ports to a pod"
+      },
+      {
+        "part": "pod/web-abc",
+        "meaning": "Target pod resource named 'web-abc'"
+      },
+      {
+        "part": "8080:80",
+        "meaning": "Map local port 8080 to pod port 80"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--address",
+        "description": "Addresses to listen on (default localhost, use 0.0.0.0 for all interfaces)",
+        "source": "local"
+      },
+      {
+        "flag": "-n, --namespace",
+        "description": "Specify the namespace scope for this request",
+        "source": "local"
+      },
+      {
+        "flag": "--pod-running-timeout",
+        "description": "Timeout for waiting for at least one pod to be running",
+        "source": "local"
+      }
+    ],
+    "example": "kubectl port-forward pod/web-abc 8080:80",
+    "output": "Forwarding from 127.0.0.1:8080 -> 80\nForwarding from [::1]:8080 -> 80\nHandling connection for 8080",
+    "tip": "You can also port-forward to a service with 'kubectl port-forward svc/web-service 8080:80'. Use '&' to run in the background. To listen on all interfaces, add '--address 0.0.0.0'.",
+    "tags": [
+      "port-forward",
+      "debug",
+      "networking",
+      "local"
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "kubectl-config",
+    "category": "kubernetes",
+    "command": "kubectl config use-context production",
+    "title": "Switch context/namespace",
+    "difficulty": "intermediate",
+    "description": "Switch the active Kubernetes context to target a different cluster or environment.",
+    "breakdown": [
+      {
+        "part": "kubectl config",
+        "meaning": "Modify or view kubeconfig settings"
+      },
+      {
+        "part": "use-context",
+        "meaning": "Set the current context in kubeconfig"
+      },
+      {
+        "part": "production",
+        "meaning": "Name of the context to switch to"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--kubeconfig",
+        "description": "Path to a specific kubeconfig file to use",
+        "source": "local"
+      },
+      {
+        "flag": "--namespace",
+        "description": "Set the default namespace for the context (with set-context)",
+        "source": "local"
+      },
+      {
+        "flag": "--cluster",
+        "description": "Set the cluster for the context (with set-context)",
+        "source": "local"
+      },
+      {
+        "flag": "--user",
+        "description": "Set the user for the context (with set-context)",
+        "source": "local"
+      }
+    ],
+    "example": "kubectl config use-context production",
+    "output": "Switched to context \"production\".",
+    "tip": "Use 'kubectl config get-contexts' to list all available contexts. Set a default namespace with 'kubectl config set-context --current --namespace=my-namespace' to avoid typing '-n' every time. Consider using 'kubectx' and 'kubens' tools for faster switching.",
+    "tags": [
+      "config",
+      "context",
+      "namespace",
+      "cluster"
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "kubectl-top",
+    "category": "kubernetes",
+    "command": "kubectl top pods -n production --sort-by=memory",
+    "title": "Resource usage",
+    "difficulty": "intermediate",
+    "description": "Display CPU and memory usage metrics for pods in a namespace, sorted by memory consumption.",
+    "breakdown": [
+      {
+        "part": "kubectl top",
+        "meaning": "Display resource usage statistics"
+      },
+      {
+        "part": "pods",
+        "meaning": "Show metrics for pod resources"
+      },
+      {
+        "part": "-n production",
+        "meaning": "Scope to the production namespace"
+      },
+      {
+        "part": "--sort-by=memory",
+        "meaning": "Sort results by memory usage"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-n, --namespace",
+        "description": "Specify the namespace scope for this request",
+        "source": "local"
+      },
+      {
+        "flag": "--sort-by",
+        "description": "Sort output by cpu or memory",
+        "source": "local"
+      },
+      {
+        "flag": "--containers",
+        "description": "Show metrics for individual containers within pods",
+        "source": "local"
+      },
+      {
+        "flag": "-l, --selector",
+        "description": "Filter pods by label selector",
+        "source": "local"
+      },
+      {
+        "flag": "--no-headers",
+        "description": "Do not print header row",
+        "source": "local"
+      }
+    ],
+    "example": "kubectl top pods -n production --sort-by=memory",
+    "output": "NAME                     CPU(cores)   MEMORY(bytes)\napi-6b8c4d5e7-ghi56     250m         512Mi\nweb-7d9f5b4c6-abc12     100m         256Mi\nweb-7d9f5b4c6-def34     95m          248Mi\nworker-8f9a1b2c3-jkl78  50m          128Mi",
+    "tip": "Requires metrics-server to be installed in the cluster. Use 'kubectl top nodes' to see node-level resource usage. Combine with '--containers' to find which container in a multi-container pod is consuming the most resources.",
+    "tags": [
+      "metrics",
+      "memory",
+      "cpu",
+      "monitoring",
+      "resources"
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "kubectl-create-secret",
+    "category": "kubernetes",
+    "command": "kubectl create secret generic db-creds --from-literal=password=secret",
+    "title": "Create secret",
+    "difficulty": "intermediate",
+    "description": "Create a Kubernetes secret imperatively from literal key-value pairs for storing sensitive data like passwords.",
+    "breakdown": [
+      {
+        "part": "kubectl create secret",
+        "meaning": "Create a new secret resource"
+      },
+      {
+        "part": "generic",
+        "meaning": "Create a generic (opaque) secret type"
+      },
+      {
+        "part": "db-creds",
+        "meaning": "Name of the secret to create"
+      },
+      {
+        "part": "--from-literal=password=secret",
+        "meaning": "Add a key-value pair (key=password, value=secret)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--from-literal",
+        "description": "Specify a key=value pair to insert into the secret (can be repeated)",
+        "source": "local"
+      },
+      {
+        "flag": "--from-file",
+        "description": "Create secret from a file (key defaults to filename)",
+        "source": "local"
+      },
+      {
+        "flag": "--from-env-file",
+        "description": "Create secret from an env-style file of key=value pairs",
+        "source": "local"
+      },
+      {
+        "flag": "--type",
+        "description": "Secret type (e.g. Opaque, kubernetes.io/tls, kubernetes.io/dockerconfigjson)",
+        "source": "local"
+      },
+      {
+        "flag": "-n, --namespace",
+        "description": "Specify the namespace scope for this request",
+        "source": "local"
+      },
+      {
+        "flag": "--dry-run=client",
+        "description": "Preview the secret without creating it",
+        "source": "local"
+      }
+    ],
+    "example": "kubectl create secret generic db-creds --from-literal=password=secret --from-literal=username=admin",
+    "output": "secret/db-creds created",
+    "tip": "Secrets are base64-encoded, NOT encrypted by default. Use '--dry-run=client -o yaml' to generate a YAML manifest for version control (after encrypting with tools like SOPS or Sealed Secrets). For TLS secrets, use 'kubectl create secret tls' instead.",
+    "tags": [
+      "secret",
+      "credentials",
+      "security",
+      "create"
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "kubectl-get-all",
+    "category": "kubernetes",
+    "title": "Get all resources",
+    "difficulty": "beginner",
+    "description": "List the most common resource types in a namespace — pods, services, deployments, and replicasets — in a single command.",
+    "command": "kubectl get all -n my-namespace",
+    "breakdown": [
+      {
+        "part": "kubectl get all",
+        "meaning": "List pods, services, deployments, replicasets, and more"
+      },
+      {
+        "part": "-n my-namespace",
+        "meaning": "Target a specific namespace"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-n <namespace>",
+        "description": "Target namespace",
+        "source": "local"
+      },
+      {
+        "flag": "--all-namespaces, -A",
+        "description": "Show resources across all namespaces",
+        "source": "local"
+      },
+      {
+        "flag": "-o wide",
+        "description": "Show additional columns like node and IP",
+        "source": "local"
+      }
+    ],
+    "example": "kubectl get all -n default\nkubectl get all -A\nkubectl get all -n production -o wide",
+    "output": "NAME                         READY   STATUS    RESTARTS\npod/web-6d4cf56db6-xk2pq     1/1     Running   0\n\nNAME          TYPE        CLUSTER-IP\nservice/web   ClusterIP   10.96.0.1",
+    "tip": "Note that --all-namespaces with 'all' shows common types only, not CRDs. For truly all resources use 'kubectl api-resources --verbs=list' piped to kubectl get.",
+    "tags": [
+      "get all",
+      "list",
+      "overview",
+      "namespace",
+      "resources"
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "kubectl-get-nodes",
+    "category": "kubernetes",
+    "title": "List cluster nodes",
+    "difficulty": "beginner",
+    "description": "List all nodes in the cluster with their status, roles, age, and Kubernetes version — the starting point for cluster health checks.",
+    "command": "kubectl get nodes -o wide",
+    "breakdown": [
+      {
+        "part": "kubectl get nodes",
+        "meaning": "List all nodes in the cluster"
+      },
+      {
+        "part": "-o wide",
+        "meaning": "Show extra columns: internal IP, OS, kernel version"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-o wide",
+        "description": "Show extra columns including IPs and OS",
+        "source": "local"
+      },
+      {
+        "flag": "--show-labels",
+        "description": "Show all node labels",
+        "source": "local"
+      }
+    ],
+    "example": "kubectl get nodes\nkubectl get nodes -o wide\nkubectl describe node my-node",
+    "output": "NAME        STATUS   ROLES           AGE   VERSION\nnode-1      Ready    control-plane   10d   v1.28.0\nnode-2      Ready    <none>          10d   v1.28.0",
+    "tip": "Use '-o wide' to see node IPs and OS images. Run 'kubectl describe node nodename' for detailed resource capacity, taints, and conditions.",
+    "tags": [
+      "nodes",
+      "cluster",
+      "status",
+      "workers",
+      "control plane"
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "kubectl-get-services",
+    "category": "kubernetes",
+    "title": "List services",
+    "difficulty": "beginner",
+    "description": "List all services in a namespace showing their type, cluster IP, external IP, and exposed ports.",
+    "command": "kubectl get svc -n my-namespace",
+    "breakdown": [
+      {
+        "part": "kubectl get svc",
+        "meaning": "List all services (svc is the short form)"
+      },
+      {
+        "part": "-n my-namespace",
+        "meaning": "Target a specific namespace"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-n <namespace>",
+        "description": "Target namespace",
+        "source": "local"
+      },
+      {
+        "flag": "-A",
+        "description": "All namespaces",
+        "source": "local"
+      },
+      {
+        "flag": "-o wide",
+        "description": "Show selector column",
+        "source": "local"
+      }
+    ],
+    "example": "kubectl get svc\nkubectl get svc -n production\nkubectl get svc -A",
+    "output": "NAME         TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)\nweb          LoadBalancer   10.96.0.1       203.0.113.10    80:30080/TCP\ndb           ClusterIP      10.96.0.2       <none>          5432/TCP",
+    "tip": "Use '-o wide' to see selector labels. Check EXTERNAL-IP for LoadBalancer services — it shows 'pending' until the cloud provider assigns one.",
+    "tags": [
+      "services",
+      "svc",
+      "ports",
+      "loadbalancer",
+      "clusterip",
+      "expose"
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "kubectl-get-events",
+    "category": "kubernetes",
+    "title": "View cluster events",
+    "difficulty": "intermediate",
+    "description": "Show cluster events sorted by time — often the fastest way to understand why a pod is failing or stuck in a pending state.",
+    "command": "kubectl get events -n my-namespace --sort-by='.lastTimestamp'",
+    "breakdown": [
+      {
+        "part": "kubectl get events",
+        "meaning": "List events recorded by the cluster"
+      },
+      {
+        "part": "-n my-namespace",
+        "meaning": "Target namespace"
+      },
+      {
+        "part": "--sort-by='.lastTimestamp'",
+        "meaning": "Show most recent events last"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--sort-by='.lastTimestamp'",
+        "description": "Sort by most recent",
+        "source": "local"
+      },
+      {
+        "flag": "--field-selector type=Warning",
+        "description": "Show only warning events",
+        "source": "local"
+      }
+    ],
+    "example": "kubectl get events -n default --sort-by='.lastTimestamp'\nkubectl get events -n production --field-selector type=Warning",
+    "output": "LAST SEEN   TYPE      REASON      OBJECT         MESSAGE\n2m          Warning   BackOff     pod/web-xyz    Back-off restarting failed container\n1m          Normal    Pulled      pod/web-xyz    Pulled image nginx:latest",
+    "tip": "Filter to a specific pod or namespace: 'kubectl get events --field-selector involvedObject.name=mypod'. Events expire after ~1 hour, so check promptly after an incident.",
+    "tags": [
+      "events",
+      "debug",
+      "warnings",
+      "errors",
+      "pod issues",
+      "troubleshoot"
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "kubectl-get-deployments",
+    "category": "kubernetes",
+    "title": "List deployments",
+    "difficulty": "beginner",
+    "description": "List all deployments in a namespace with replica counts, availability status, and rollout age.",
+    "command": "kubectl get deployments -n my-namespace",
+    "breakdown": [
+      {
+        "part": "kubectl get deployments",
+        "meaning": "List deployment resources"
+      },
+      {
+        "part": "-n my-namespace",
+        "meaning": "Target namespace"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-n <namespace>",
+        "description": "Target namespace",
+        "source": "local"
+      },
+      {
+        "flag": "-A",
+        "description": "All namespaces",
+        "source": "local"
+      },
+      {
+        "flag": "-o wide",
+        "description": "Show container images and selectors",
+        "source": "local"
+      }
+    ],
+    "example": "kubectl get deployments\nkubectl get deployments -n production\nkubectl get deploy -o wide",
+    "output": "NAME    READY   UP-TO-DATE   AVAILABLE   AGE\nweb     3/3     3            3           5d\napi     2/2     2            2           5d",
+    "tip": "Check AVAILABLE vs READY columns for rollout problems. Use 'kubectl rollout status deploy/name' for a blocking wait and 'kubectl rollout history deploy/name' for change history.",
+    "tags": [
+      "deployments",
+      "deploy",
+      "replicas",
+      "rollout",
+      "availability"
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  }
+]

@@ -1,0 +1,1070 @@
+[
+  {
+    "id": "docker-run",
+    "category": "docker",
+    "command": "docker run -d -p 8080:80 --name web nginx:alpine",
+    "title": "Run a container",
+    "difficulty": "beginner",
+    "description": "Create and start a new container from an image — the primary way to launch Docker workloads with configurable ports, volumes, and environment.",
+    "breakdown": [
+      {
+        "part": "docker run",
+        "meaning": "Create and start a new container"
+      },
+      {
+        "part": "-d",
+        "meaning": "Detached mode — run in background"
+      },
+      {
+        "part": "-p 8080:80",
+        "meaning": "Map host port 8080 to container port 80"
+      },
+      {
+        "part": "--name web",
+        "meaning": "Assign the name 'web' to the container"
+      },
+      {
+        "part": "nginx:alpine",
+        "meaning": "Use the nginx image with alpine tag (lightweight)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-d, --detach",
+        "description": "Run container in background and print container ID",
+        "source": "local"
+      },
+      {
+        "flag": "-p, --publish",
+        "description": "Publish a container's port to the host",
+        "source": "local"
+      },
+      {
+        "flag": "--name",
+        "description": "Assign a name to the container",
+        "source": "local"
+      },
+      {
+        "flag": "-e, --env",
+        "description": "Set environment variables",
+        "source": "local"
+      },
+      {
+        "flag": "-v, --volume",
+        "description": "Bind mount a volume",
+        "source": "local"
+      },
+      {
+        "flag": "--rm",
+        "description": "Automatically remove container when it exits",
+        "source": "local"
+      }
+    ],
+    "example": "docker run -d -p 8080:80 --name web nginx:alpine",
+    "output": "a1b2c3d4e5f6789...\n\n$ docker ps\nCONTAINER ID   IMAGE          PORTS                  NAMES\na1b2c3d4e5f6   nginx:alpine   0.0.0.0:8080->80/tcp   web",
+    "tip": "Always use --rm for one-off containers to avoid accumulating stopped containers.",
+    "tags": [
+      "containers",
+      "run",
+      "ports"
+    ],
+    "manPage": "1",
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "docker-build",
+    "category": "docker",
+    "command": "docker build -t myapp:v1.0 -f Dockerfile .",
+    "title": "Build a Docker image",
+    "difficulty": "beginner",
+    "description": "Build a Docker image from a Dockerfile in the current directory with a specific tag.",
+    "breakdown": [
+      {
+        "part": "docker build",
+        "meaning": "Build an image from a Dockerfile"
+      },
+      {
+        "part": "-t myapp:v1.0",
+        "meaning": "Tag the image as myapp with version v1.0"
+      },
+      {
+        "part": "-f Dockerfile",
+        "meaning": "Specify which Dockerfile to use"
+      },
+      {
+        "part": ".",
+        "meaning": "Build context — current directory"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-t, --tag",
+        "description": "Name and optionally a tag in 'name:tag' format",
+        "source": "local"
+      },
+      {
+        "flag": "-f, --file",
+        "description": "Name of the Dockerfile (default: PATH/Dockerfile)",
+        "source": "local"
+      },
+      {
+        "flag": "--no-cache",
+        "description": "Do not use cache when building the image",
+        "source": "local"
+      },
+      {
+        "flag": "--build-arg",
+        "description": "Set build-time variables",
+        "source": "local"
+      }
+    ],
+    "example": "docker build -t myapp:v1.0 .",
+    "output": "[+] Building 12.5s (10/10) FINISHED\n => [internal] load build definition from Dockerfile\n => [1/4] FROM node:18-alpine\n => [2/4] WORKDIR /app\n => [3/4] COPY package*.json ./\n => [4/4] RUN npm install\n => exporting to image\n => => naming to docker.io/library/myapp:v1.0",
+    "tip": "Use multi-stage builds to keep images small. Add a .dockerignore file to exclude node_modules and .git.",
+    "tags": [
+      "images",
+      "build",
+      "dockerfile"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "docker-compose-up",
+    "category": "docker",
+    "command": "docker compose up -d --build",
+    "title": "Start multi-container app",
+    "difficulty": "intermediate",
+    "description": "Build images and start all services defined in docker-compose.yml in detached mode.",
+    "breakdown": [
+      {
+        "part": "docker compose",
+        "meaning": "Docker Compose V2 command"
+      },
+      {
+        "part": "up",
+        "meaning": "Create and start containers"
+      },
+      {
+        "part": "-d",
+        "meaning": "Detached mode — run in background"
+      },
+      {
+        "part": "--build",
+        "meaning": "Build images before starting containers"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-d, --detach",
+        "description": "Detached mode: run containers in the background",
+        "source": "local"
+      },
+      {
+        "flag": "--build",
+        "description": "Build images before starting containers",
+        "source": "local"
+      },
+      {
+        "flag": "--force-recreate",
+        "description": "Recreate containers even if config hasn't changed",
+        "source": "local"
+      },
+      {
+        "flag": "--scale",
+        "description": "Scale SERVICE to NUM instances",
+        "source": "local"
+      }
+    ],
+    "example": "docker compose up -d --build",
+    "output": "[+] Running 3/3\n ✔ Network myapp_default     Created\n ✔ Container myapp-db-1      Started\n ✔ Container myapp-web-1     Started\n ✔ Container myapp-redis-1   Started",
+    "tip": "Use 'docker compose logs -f' to follow logs from all services. Add '--scale web=3' to run multiple instances.",
+    "tags": [
+      "compose",
+      "multi-container",
+      "orchestration"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "docker-exec",
+    "category": "docker",
+    "command": "docker exec -it container_name /bin/sh",
+    "title": "Execute command in container",
+    "difficulty": "beginner",
+    "description": "Run a command inside an already-running container — essential for debugging, inspecting state, or making temporary changes without restarting.",
+    "breakdown": [
+      {
+        "part": "docker exec",
+        "meaning": "Run a command in a running container"
+      },
+      {
+        "part": "-i",
+        "meaning": "Interactive — keep STDIN open"
+      },
+      {
+        "part": "-t",
+        "meaning": "TTY — allocate a pseudo-terminal"
+      },
+      {
+        "part": "container_name",
+        "meaning": "Name or ID of target container"
+      },
+      {
+        "part": "/bin/sh",
+        "meaning": "Shell to run (sh for alpine, bash for others)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-i, --interactive",
+        "description": "Keep STDIN open even if not attached",
+        "source": "local"
+      },
+      {
+        "flag": "-t, --tty",
+        "description": "Allocate a pseudo-TTY",
+        "source": "local"
+      },
+      {
+        "flag": "-d, --detach",
+        "description": "Run command in the background",
+        "source": "local"
+      },
+      {
+        "flag": "-e, --env",
+        "description": "Set environment variables",
+        "source": "local"
+      },
+      {
+        "flag": "-w, --workdir",
+        "description": "Working directory inside the container",
+        "source": "local"
+      }
+    ],
+    "example": "docker exec -it web /bin/sh",
+    "output": "/ # ls\nbin    etc    lib    mnt    proc   run    srv    tmp    var\ndev    home   media  opt    root   sbin   sys    usr\n/ # exit",
+    "tip": "Use /bin/sh for Alpine-based images. Use 'docker exec container_name command' for one-off commands without -it.",
+    "tags": [
+      "debug",
+      "shell",
+      "interactive"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "docker-ps",
+    "category": "docker",
+    "command": "docker ps -a --format \"table {{.Names}}\\t{{.Status}}\"",
+    "title": "List running containers",
+    "difficulty": "beginner",
+    "description": "List all containers (running and stopped) in a formatted table showing names and status.",
+    "breakdown": [
+      {
+        "part": "docker ps",
+        "meaning": "List containers"
+      },
+      {
+        "part": "-a",
+        "meaning": "Show all containers, including stopped ones"
+      },
+      {
+        "part": "--format",
+        "meaning": "Format output using a Go template"
+      },
+      {
+        "part": "\"table {{.Names}}\\t{{.Status}}\"",
+        "meaning": "Display as a table with container names and status columns"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-a, --all",
+        "description": "Show all containers (default shows just running)",
+        "source": "local"
+      },
+      {
+        "flag": "--format",
+        "description": "Format output using a Go template",
+        "source": "local"
+      },
+      {
+        "flag": "-q, --quiet",
+        "description": "Only display container IDs",
+        "source": "local"
+      },
+      {
+        "flag": "-f, --filter",
+        "description": "Filter output based on conditions (e.g., status=running)",
+        "source": "local"
+      },
+      {
+        "flag": "-n, --last",
+        "description": "Show n last created containers (includes all states)",
+        "source": "local"
+      },
+      {
+        "flag": "--no-trunc",
+        "description": "Don't truncate output",
+        "source": "local"
+      }
+    ],
+    "example": "docker ps -a --format \"table {{.Names}}\\t{{.Status}}\"",
+    "output": "NAMES       STATUS\nweb         Up 2 hours\nredis       Up 2 hours\nold-app     Exited (0) 3 days ago\ntest-db     Exited (137) 1 week ago",
+    "tip": "Use 'docker ps -q' to get just container IDs, handy for piping into other commands like 'docker stop $(docker ps -q)'.",
+    "tags": [
+      "containers",
+      "list",
+      "status"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "docker-logs",
+    "category": "docker",
+    "command": "docker logs -f --tail 100 container",
+    "title": "View container logs",
+    "difficulty": "beginner",
+    "description": "Fetch and follow the stdout/stderr output of a container — the primary way to debug application behaviour without exec'ing into the container.",
+    "breakdown": [
+      {
+        "part": "docker logs",
+        "meaning": "Fetch the logs of a container"
+      },
+      {
+        "part": "-f",
+        "meaning": "Follow log output in real time (like tail -f)"
+      },
+      {
+        "part": "--tail 100",
+        "meaning": "Show only the last 100 lines of the log"
+      },
+      {
+        "part": "container",
+        "meaning": "Name or ID of the target container"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-f, --follow",
+        "description": "Follow log output as new lines are written",
+        "source": "local"
+      },
+      {
+        "flag": "--tail",
+        "description": "Number of lines to show from the end of the logs",
+        "source": "local"
+      },
+      {
+        "flag": "-t, --timestamps",
+        "description": "Show timestamps with each log line",
+        "source": "local"
+      },
+      {
+        "flag": "--since",
+        "description": "Show logs since a timestamp or relative time (e.g., 30m)",
+        "source": "local"
+      },
+      {
+        "flag": "--until",
+        "description": "Show logs before a timestamp or relative time",
+        "source": "local"
+      }
+    ],
+    "example": "docker logs -f --tail 100 web",
+    "output": "2024-01-15 10:32:01 [info] Server started on port 80\n2024-01-15 10:32:05 [info] GET /index.html 200 12ms\n2024-01-15 10:33:12 [info] GET /api/health 200 3ms\n2024-01-15 10:34:00 [warn] High memory usage detected",
+    "tip": "Combine --since and --until to view logs for a specific time window: 'docker logs --since 2h --until 1h web'.",
+    "tags": [
+      "logs",
+      "debug",
+      "monitoring"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "docker-network",
+    "category": "docker",
+    "command": "docker network create --driver bridge mynet",
+    "title": "Create a network",
+    "difficulty": "intermediate",
+    "description": "Create, inspect, and manage Docker networks that control how containers communicate with each other and the outside world.",
+    "breakdown": [
+      {
+        "part": "docker network",
+        "meaning": "Manage Docker networks"
+      },
+      {
+        "part": "create",
+        "meaning": "Create a new network"
+      },
+      {
+        "part": "--driver bridge",
+        "meaning": "Use the bridge driver (default for single-host networking)"
+      },
+      {
+        "part": "mynet",
+        "meaning": "Name of the new network"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--driver, -d",
+        "description": "Driver to manage the network (bridge, overlay, host, none)",
+        "source": "local"
+      },
+      {
+        "flag": "--subnet",
+        "description": "Subnet in CIDR format (e.g., 172.20.0.0/16)",
+        "source": "local"
+      },
+      {
+        "flag": "--gateway",
+        "description": "IPv4 or IPv6 gateway for the subnet",
+        "source": "local"
+      },
+      {
+        "flag": "--ip-range",
+        "description": "Allocate container IPs from a sub-range of the subnet",
+        "source": "local"
+      },
+      {
+        "flag": "--internal",
+        "description": "Restrict external access to the network",
+        "source": "local"
+      },
+      {
+        "flag": "--attachable",
+        "description": "Enable manual container attachment to the network",
+        "source": "local"
+      }
+    ],
+    "example": "docker network create --driver bridge mynet",
+    "output": "f4a9b2c7d8e1a3b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9",
+    "tip": "User-defined bridge networks provide automatic DNS resolution between containers. Use 'docker run --network mynet' to attach containers.",
+    "tags": [
+      "networking",
+      "bridge",
+      "dns"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "docker-volume",
+    "category": "docker",
+    "command": "docker volume create mydata",
+    "title": "Manage volumes",
+    "difficulty": "intermediate",
+    "description": "Create a named volume for persistent data storage that survives container restarts.",
+    "breakdown": [
+      {
+        "part": "docker volume",
+        "meaning": "Manage Docker volumes"
+      },
+      {
+        "part": "create",
+        "meaning": "Create a new named volume"
+      },
+      {
+        "part": "mydata",
+        "meaning": "Name of the volume to create"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--driver, -d",
+        "description": "Specify volume driver name (default: local)",
+        "source": "local"
+      },
+      {
+        "flag": "--label",
+        "description": "Set metadata for a volume as key=value pairs",
+        "source": "local"
+      },
+      {
+        "flag": "--opt, -o",
+        "description": "Set driver-specific options (e.g., type, device, o)",
+        "source": "local"
+      },
+      {
+        "flag": "--name",
+        "description": "Specify an explicit volume name",
+        "source": "local"
+      }
+    ],
+    "example": "docker volume create mydata",
+    "output": "mydata\n\n$ docker volume ls\nDRIVER    VOLUME NAME\nlocal     mydata\nlocal     postgres_data\nlocal     redis_cache",
+    "tip": "Mount named volumes with 'docker run -v mydata:/app/data'. Unlike bind mounts, named volumes are managed by Docker and portable across hosts.",
+    "tags": [
+      "volumes",
+      "storage",
+      "persistence"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "docker-prune",
+    "category": "docker",
+    "command": "docker system prune -af --volumes",
+    "title": "Clean up unused resources",
+    "difficulty": "intermediate",
+    "description": "Remove all unused containers, networks, images, and optionally volumes to reclaim disk space.",
+    "breakdown": [
+      {
+        "part": "docker system prune",
+        "meaning": "Remove unused Docker data"
+      },
+      {
+        "part": "-a",
+        "meaning": "Remove all unused images, not just dangling ones"
+      },
+      {
+        "part": "-f",
+        "meaning": "Force — do not prompt for confirmation"
+      },
+      {
+        "part": "--volumes",
+        "meaning": "Also prune unused volumes"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-a, --all",
+        "description": "Remove all unused images, not just dangling ones",
+        "source": "local"
+      },
+      {
+        "flag": "-f, --force",
+        "description": "Do not prompt for confirmation",
+        "source": "local"
+      },
+      {
+        "flag": "--volumes",
+        "description": "Prune anonymous volumes",
+        "source": "local"
+      },
+      {
+        "flag": "--filter",
+        "description": "Filter with key=value pairs (e.g., until=24h, label=temp)",
+        "source": "local"
+      }
+    ],
+    "example": "docker system prune -af --volumes",
+    "output": "Deleted Containers:\na1b2c3d4e5f6...\nd7e8f9a0b1c2...\n\nDeleted Networks:\nunused_network\n\nDeleted Volumes:\nold_data\n\nDeleted Images:\nuntagged: oldapp:latest\ndeleted: sha256:abc123...\n\nTotal reclaimed space: 4.2GB",
+    "tip": "Use 'docker system df' first to see how much space Docker is using before pruning. Avoid --volumes in production to prevent accidental data loss.",
+    "tags": [
+      "cleanup",
+      "maintenance",
+      "disk-space"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "docker-inspect",
+    "category": "docker",
+    "command": "docker inspect --format '{{.NetworkSettings.IPAddress}}' container",
+    "title": "Inspect container details",
+    "difficulty": "intermediate",
+    "description": "Retrieve detailed low-level information about a container, using Go templates to extract specific fields.",
+    "breakdown": [
+      {
+        "part": "docker inspect",
+        "meaning": "Return low-level information on Docker objects"
+      },
+      {
+        "part": "--format",
+        "meaning": "Format the output using a Go template"
+      },
+      {
+        "part": "'{{.NetworkSettings.IPAddress}}'",
+        "meaning": "Extract only the container's IP address"
+      },
+      {
+        "part": "container",
+        "meaning": "Name or ID of the target container"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--format, -f",
+        "description": "Format output using a Go template",
+        "source": "local"
+      },
+      {
+        "flag": "--type",
+        "description": "Return JSON for specified type (container, image, network, volume)",
+        "source": "local"
+      },
+      {
+        "flag": "--size, -s",
+        "description": "Display total file sizes if the type is container",
+        "source": "local"
+      }
+    ],
+    "example": "docker inspect --format '{{.NetworkSettings.IPAddress}}' web",
+    "output": "172.17.0.3",
+    "tip": "Use 'docker inspect container | jq .' for pretty-printed JSON. Common fields: .State.Status, .Config.Env, .Mounts, .NetworkSettings.Ports.",
+    "tags": [
+      "inspect",
+      "debug",
+      "metadata"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "docker-cp",
+    "category": "docker",
+    "command": "docker cp container:/path/file ./local",
+    "title": "Copy files to/from container",
+    "difficulty": "beginner",
+    "description": "Copy files between a container and the host filesystem — useful for extracting build artifacts or injecting config files into a running container.",
+    "breakdown": [
+      {
+        "part": "docker cp",
+        "meaning": "Copy files/folders between container and local filesystem"
+      },
+      {
+        "part": "container:/path/file",
+        "meaning": "Source path inside the container (container_name:path)"
+      },
+      {
+        "part": "./local",
+        "meaning": "Destination path on the local host"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-a, --archive",
+        "description": "Archive mode — copy all uid/gid information",
+        "source": "local"
+      },
+      {
+        "flag": "-L, --follow-link",
+        "description": "Always follow symbolic links in source",
+        "source": "local"
+      },
+      {
+        "flag": "-q, --quiet",
+        "description": "Suppress progress output during copy",
+        "source": "local"
+      }
+    ],
+    "example": "docker cp web:/etc/nginx/nginx.conf ./nginx.conf",
+    "output": "Successfully copied 2.05kB to /home/user/nginx.conf",
+    "tip": "Reverse the arguments to copy into a container: 'docker cp ./local/config.json container:/app/config.json'. Works with both running and stopped containers.",
+    "tags": [
+      "files",
+      "copy",
+      "transfer"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "docker-tag-push",
+    "category": "docker",
+    "command": "docker tag myapp:v1 registry.example.com/myapp:v1 && docker push registry.example.com/myapp:v1",
+    "title": "Tag and push image",
+    "difficulty": "intermediate",
+    "description": "Tag a local image with a registry prefix and push it to a remote container registry.",
+    "breakdown": [
+      {
+        "part": "docker tag",
+        "meaning": "Create a tag that refers to a source image"
+      },
+      {
+        "part": "myapp:v1",
+        "meaning": "Source image name and tag"
+      },
+      {
+        "part": "registry.example.com/myapp:v1",
+        "meaning": "Target tag with registry URL prefix"
+      },
+      {
+        "part": "&&",
+        "meaning": "Run the next command only if tagging succeeds"
+      },
+      {
+        "part": "docker push",
+        "meaning": "Upload the tagged image to the registry"
+      },
+      {
+        "part": "registry.example.com/myapp:v1",
+        "meaning": "Full image reference to push"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-a, --all-tags",
+        "description": "Push all tags of the image to the registry",
+        "source": "local"
+      },
+      {
+        "flag": "--disable-content-trust",
+        "description": "Skip image signing",
+        "source": "local"
+      },
+      {
+        "flag": "--platform",
+        "description": "Push a platform-specific manifest (e.g., linux/amd64)",
+        "source": "local"
+      },
+      {
+        "flag": "-q, --quiet",
+        "description": "Suppress verbose output during push",
+        "source": "local"
+      }
+    ],
+    "example": "docker tag myapp:v1 registry.example.com/myapp:v1 && docker push registry.example.com/myapp:v1",
+    "output": "The push refers to repository [registry.example.com/myapp]\nv1: digest: sha256:a3ed95caeb02... size: 1570\n5f70bf18a086: Pushed\n8d3ac3489996: Pushed\nv1: digest: sha256:abc123def456... size: 1782",
+    "tip": "Log in to the registry first with 'docker login registry.example.com'. Use semantic versioning and always push both a version tag and 'latest'.",
+    "tags": [
+      "registry",
+      "push",
+      "tag",
+      "deploy"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ]
+  },
+  {
+    "id": "docker-pull",
+    "category": "docker",
+    "title": "Pull an image",
+    "difficulty": "beginner",
+    "description": "Download an image from a registry to the local Docker image cache — runs automatically before docker run if the image is not present.",
+    "command": "docker pull nginx:latest",
+    "breakdown": [
+      {
+        "part": "docker pull",
+        "meaning": "Download an image from a registry"
+      },
+      {
+        "part": "nginx:latest",
+        "meaning": "Image name and tag"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--platform",
+        "description": "Pull image for a specific platform e.g. linux/amd64",
+        "source": "local"
+      }
+    ],
+    "example": "docker pull nginx:latest\ndocker pull node:20-alpine\ndocker pull ubuntu:22.04",
+    "output": "latest: Pulling from library/nginx\nStatus: Downloaded newer image for nginx:latest",
+    "tip": "Always pin specific tags (nginx:1.25.3) rather than 'latest' in production to ensure reproducible deployments. Use 'docker pull --platform' for cross-arch images.",
+    "tags": [
+      "pull",
+      "download",
+      "image",
+      "registry",
+      "fetch"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "docker-stop",
+    "category": "docker",
+    "title": "Stop a running container",
+    "difficulty": "beginner",
+    "description": "Gracefully stop a running container by sending SIGTERM, then SIGKILL after a timeout — preserves data written to named volumes.",
+    "command": "docker stop my-container",
+    "breakdown": [
+      {
+        "part": "docker stop",
+        "meaning": "Gracefully stop a running container"
+      },
+      {
+        "part": "my-container",
+        "meaning": "Container name or ID"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-t <seconds>",
+        "description": "Seconds to wait before killing (default 10)",
+        "source": "local"
+      }
+    ],
+    "example": "docker stop my-container\ndocker stop $(docker ps -q)",
+    "output": "my-container",
+    "tip": "Use 'docker stop -t 0' to kill immediately without waiting. 'docker stop $(docker ps -q)' stops all running containers in one command.",
+    "tags": [
+      "stop",
+      "halt",
+      "kill",
+      "shutdown",
+      "terminate"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "docker-rm",
+    "category": "docker",
+    "title": "Remove containers",
+    "difficulty": "beginner",
+    "description": "Remove one or more stopped containers and free up their storage — containers must be stopped first unless using the -f flag.",
+    "command": "docker rm my-container",
+    "breakdown": [
+      {
+        "part": "docker rm",
+        "meaning": "Remove one or more containers"
+      },
+      {
+        "part": "my-container",
+        "meaning": "Container name or ID"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-f, --force",
+        "description": "Force remove a running container",
+        "source": "local"
+      },
+      {
+        "flag": "-v",
+        "description": "Also remove associated anonymous volumes",
+        "source": "local"
+      }
+    ],
+    "example": "docker rm my-container\ndocker rm -f my-container\ndocker rm $(docker ps -aq)",
+    "output": "my-container",
+    "tip": "Use 'docker rm $(docker ps -aq)' to remove all stopped containers. Run 'docker system prune' for a full cleanup of images, networks, and build cache.",
+    "tags": [
+      "remove",
+      "delete",
+      "clean",
+      "container",
+      "rm"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "docker-rmi",
+    "category": "docker",
+    "title": "Remove images",
+    "difficulty": "beginner",
+    "description": "Remove one or more images from the local Docker image cache to free up disk space — images in use by containers cannot be removed.",
+    "command": "docker rmi nginx:latest",
+    "breakdown": [
+      {
+        "part": "docker rmi",
+        "meaning": "Remove one or more images"
+      },
+      {
+        "part": "nginx:latest",
+        "meaning": "Image name:tag or image ID"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-f, --force",
+        "description": "Force removal even if a container uses the image",
+        "source": "local"
+      }
+    ],
+    "example": "docker rmi nginx:latest\ndocker rmi $(docker images -q)",
+    "output": "Untagged: nginx:latest\nDeleted: sha256:abc123...",
+    "tip": "Use 'docker image prune -a' to remove all images not used by any container. Tag images with version numbers before pushing to avoid losing track of what 'latest' contains.",
+    "tags": [
+      "remove image",
+      "delete",
+      "clean",
+      "rmi",
+      "image"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "docker-stats",
+    "category": "docker",
+    "title": "Live resource usage",
+    "difficulty": "beginner",
+    "description": "Stream real-time CPU, memory, network, and disk I/O statistics for running containers — useful for identifying resource-hungry containers.",
+    "command": "docker stats",
+    "breakdown": [
+      {
+        "part": "docker stats",
+        "meaning": "Display a live stream of container resource usage"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--no-stream",
+        "description": "Report a single snapshot then exit",
+        "source": "local"
+      },
+      {
+        "flag": "--format",
+        "description": "Format output using a Go template",
+        "source": "local"
+      }
+    ],
+    "example": "docker stats\ndocker stats --no-stream\ndocker stats my-container",
+    "output": "CONTAINER   CPU %  MEM USAGE / LIMIT   NET I/O\nnginx       0.1%   12MiB / 1.9GiB    1kB / 2kB",
+    "tip": "Use '--no-stream' for a one-time snapshot: 'docker stats --no-stream'. Format output with '--format' to show only the columns you need.",
+    "tags": [
+      "stats",
+      "monitor",
+      "cpu",
+      "memory",
+      "resource",
+      "usage",
+      "live"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "docker-images",
+    "category": "docker",
+    "title": "List images",
+    "difficulty": "beginner",
+    "description": "List all locally available Docker images with their repository, tag, image ID, creation date, and size.",
+    "command": "docker images",
+    "breakdown": [
+      {
+        "part": "docker images",
+        "meaning": "List images in local storage"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-a",
+        "description": "Show all images including intermediate layers",
+        "source": "local"
+      },
+      {
+        "flag": "-q",
+        "description": "Only print image IDs",
+        "source": "local"
+      },
+      {
+        "flag": "--filter dangling=true",
+        "description": "Show only untagged images",
+        "source": "local"
+      }
+    ],
+    "example": "docker images\ndocker images -q\ndocker images nginx",
+    "output": "REPOSITORY   TAG       IMAGE ID       CREATED       SIZE\nnginx        latest    abc123def456   2 days ago    187MB",
+    "tip": "Use 'docker images --filter dangling=true' to find untagged images wasting disk space. Pipe to 'docker rmi' to remove them in bulk.",
+    "tags": [
+      "images",
+      "list",
+      "show",
+      "local",
+      "repository"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "windows"
+    ],
+    "manPage": "1"
+  }
+]

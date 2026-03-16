@@ -1,0 +1,985 @@
+[
+  {
+    "id": "terraform-init",
+    "category": "terraform",
+    "command": "terraform init",
+    "title": "Initialize Terraform",
+    "difficulty": "beginner",
+    "description": "Initialize a Terraform working directory — downloads required providers, sets up the backend, and prepares modules before any other command.",
+    "breakdown": [
+      {
+        "part": "terraform",
+        "meaning": "Terraform CLI tool"
+      },
+      {
+        "part": "init",
+        "meaning": "Initialize the working directory with providers and backend"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-backend-config",
+        "description": "Provide backend configuration key=value pairs",
+        "source": "local"
+      },
+      {
+        "flag": "-upgrade",
+        "description": "Upgrade provider and module versions",
+        "source": "local"
+      },
+      {
+        "flag": "-reconfigure",
+        "description": "Reconfigure backend, ignoring any saved configuration",
+        "source": "local"
+      }
+    ],
+    "example": "terraform init",
+    "output": "Initializing the backend...\nInitializing provider plugins...\n- Finding hashicorp/aws versions matching \"~> 5.0\"...\n- Installing hashicorp/aws v5.40.0...\n- Installed hashicorp/aws v5.40.0\n\nTerraform has been successfully initialized!",
+    "tip": "Run 'terraform init -upgrade' when you change provider version constraints. Use -backend-config for environment-specific backends.",
+    "tags": [
+      "init",
+      "setup",
+      "providers"
+    ],
+    "package": "terraform",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "terraform-plan",
+    "category": "terraform",
+    "command": "terraform plan -out=tfplan",
+    "title": "Preview infrastructure changes",
+    "difficulty": "beginner",
+    "description": "Generate an execution plan showing what Terraform will create, modify, or destroy.",
+    "breakdown": [
+      {
+        "part": "terraform plan",
+        "meaning": "Create an execution plan"
+      },
+      {
+        "part": "-out=tfplan",
+        "meaning": "Save the plan to a file for later apply"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-out",
+        "description": "Write the plan to a file",
+        "source": "local"
+      },
+      {
+        "flag": "-var",
+        "description": "Set a variable value: -var 'key=value'",
+        "source": "local"
+      },
+      {
+        "flag": "-var-file",
+        "description": "Load variable values from a file",
+        "source": "local"
+      },
+      {
+        "flag": "-target",
+        "description": "Plan only specific resources",
+        "source": "local"
+      },
+      {
+        "flag": "-destroy",
+        "description": "Create a plan to destroy all resources",
+        "source": "local"
+      }
+    ],
+    "example": "terraform plan -out=tfplan",
+    "output": "Terraform will perform the following actions:\n\n  # aws_instance.web will be created\n  + resource \"aws_instance\" \"web\" {\n      + ami           = \"ami-0c55b159cbfafe1f0\"\n      + instance_type = \"t3.micro\"\n    }\n\nPlan: 1 to add, 0 to change, 0 to destroy.",
+    "tip": "Always save the plan with -out and apply that exact plan file. This ensures what you reviewed is what gets applied.",
+    "tags": [
+      "plan",
+      "preview",
+      "changes"
+    ],
+    "package": "terraform",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "terraform-apply",
+    "category": "terraform",
+    "command": "terraform apply tfplan",
+    "title": "Apply infrastructure changes",
+    "difficulty": "intermediate",
+    "description": "Apply a saved execution plan to create, update, or destroy infrastructure resources.",
+    "breakdown": [
+      {
+        "part": "terraform apply",
+        "meaning": "Apply the changes required to reach desired state"
+      },
+      {
+        "part": "tfplan",
+        "meaning": "Use the saved plan file (skips re-planning and confirmation)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-auto-approve",
+        "description": "Skip interactive approval",
+        "source": "local"
+      },
+      {
+        "flag": "-var",
+        "description": "Set a variable value",
+        "source": "local"
+      },
+      {
+        "flag": "-target",
+        "description": "Apply only specific resources",
+        "source": "local"
+      },
+      {
+        "flag": "-parallelism",
+        "description": "Limit concurrent operations (default: 10)",
+        "source": "local"
+      }
+    ],
+    "example": "terraform apply tfplan",
+    "output": "aws_instance.web: Creating...\naws_instance.web: Still creating... [10s elapsed]\naws_instance.web: Creation complete after 45s [id=i-0abc123def456]\n\nApply complete! Resources: 1 added, 0 changed, 0 destroyed.",
+    "tip": "Never use -auto-approve in production. Always review the plan first. Use 'terraform plan -out=plan && terraform apply plan' workflow.",
+    "tags": [
+      "apply",
+      "deploy",
+      "infrastructure"
+    ],
+    "package": "terraform",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "terraform-destroy",
+    "category": "terraform",
+    "command": "terraform destroy -target=aws_instance.web",
+    "title": "Destroy infrastructure",
+    "difficulty": "advanced",
+    "description": "Destroy Terraform-managed infrastructure resources. Use -target to destroy specific resources instead of everything.",
+    "breakdown": [
+      {
+        "part": "terraform",
+        "meaning": "Terraform CLI tool"
+      },
+      {
+        "part": "destroy",
+        "meaning": "Destroy all resources managed by the current configuration"
+      },
+      {
+        "part": "-target=aws_instance.web",
+        "meaning": "Only destroy the specified resource instead of all resources"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-target",
+        "description": "Destroy only the specified resource and its dependencies",
+        "source": "local"
+      },
+      {
+        "flag": "-auto-approve",
+        "description": "Skip interactive approval before destroying",
+        "source": "local"
+      },
+      {
+        "flag": "-var",
+        "description": "Set a variable value: -var 'key=value'",
+        "source": "local"
+      },
+      {
+        "flag": "-var-file",
+        "description": "Load variable values from a file",
+        "source": "local"
+      },
+      {
+        "flag": "-parallelism",
+        "description": "Limit the number of concurrent operations (default: 10)",
+        "source": "local"
+      }
+    ],
+    "example": "terraform destroy -target=aws_instance.web",
+    "output": "aws_instance.web: Refreshing state... [id=i-0abc123def456]\n\nTerraform will perform the following actions:\n\n  # aws_instance.web will be destroyed\n  - resource \"aws_instance\" \"web\" {\n      - ami           = \"ami-0c55b159cbfafe1f0\" -> null\n      - instance_type = \"t3.micro\" -> null\n      - id            = \"i-0abc123def456\" -> null\n    }\n\nPlan: 0 to add, 0 to change, 1 to destroy.\n\naws_instance.web: Destroying... [id=i-0abc123def456]\naws_instance.web: Destruction complete after 35s\n\nDestroy complete! Resources: 1 destroyed.",
+    "tip": "Use -target to surgically remove specific resources. Run 'terraform plan -destroy' first to preview what will be destroyed before committing.",
+    "tags": [
+      "destroy",
+      "teardown",
+      "cleanup"
+    ],
+    "package": "terraform",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "terraform-state",
+    "category": "terraform",
+    "command": "terraform state list && terraform state show aws_instance.web",
+    "title": "State management",
+    "difficulty": "intermediate",
+    "description": "Inspect and manage the Terraform state file. List all tracked resources and show detailed attributes of a specific resource.",
+    "breakdown": [
+      {
+        "part": "terraform state list",
+        "meaning": "List all resources tracked in the state file"
+      },
+      {
+        "part": "&&",
+        "meaning": "Run the next command only if the first succeeds"
+      },
+      {
+        "part": "terraform state show",
+        "meaning": "Show the attributes of a single resource in the state"
+      },
+      {
+        "part": "aws_instance.web",
+        "meaning": "The resource address to inspect"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "list",
+        "description": "List all resources in the Terraform state",
+        "source": "local"
+      },
+      {
+        "flag": "show",
+        "description": "Show attributes of a single resource in the state",
+        "source": "local"
+      },
+      {
+        "flag": "mv",
+        "description": "Move a resource to a different address in state",
+        "source": "local"
+      },
+      {
+        "flag": "rm",
+        "description": "Remove a resource from state without destroying it",
+        "source": "local"
+      },
+      {
+        "flag": "pull",
+        "description": "Pull current state and output to stdout",
+        "source": "local"
+      }
+    ],
+    "example": "terraform state list && terraform state show aws_instance.web",
+    "output": "aws_instance.web\naws_security_group.web_sg\naws_vpc.main\naws_subnet.public\n\n# aws_instance.web:\nresource \"aws_instance\" \"web\" {\n    ami                    = \"ami-0c55b159cbfafe1f0\"\n    arn                    = \"arn:aws:ec2:us-east-1:123456789:instance/i-0abc123def456\"\n    instance_type          = \"t3.micro\"\n    private_ip             = \"10.0.1.50\"\n    public_ip              = \"54.210.32.100\"\n    subnet_id              = \"subnet-0bb1c79de3EXAMPLE\"\n    vpc_security_group_ids = [\"sg-0a12b34cd56ef789a\"]\n}",
+    "tip": "Use 'terraform state mv' to rename resources without destroying and recreating them. Use 'terraform state rm' to stop managing a resource without deleting it.",
+    "tags": [
+      "state",
+      "inspect",
+      "management"
+    ],
+    "package": "terraform",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "terraform-import",
+    "category": "terraform",
+    "command": "terraform import aws_instance.web i-abc123",
+    "title": "Import existing resource",
+    "difficulty": "advanced",
+    "description": "Import an existing infrastructure resource into the Terraform state so it can be managed by Terraform going forward.",
+    "breakdown": [
+      {
+        "part": "terraform",
+        "meaning": "Terraform CLI tool"
+      },
+      {
+        "part": "import",
+        "meaning": "Associate an existing resource with a Terraform resource configuration"
+      },
+      {
+        "part": "aws_instance.web",
+        "meaning": "The Terraform resource address to import into"
+      },
+      {
+        "part": "i-abc123",
+        "meaning": "The cloud provider's resource ID to import"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-var",
+        "description": "Set a variable value: -var 'key=value'",
+        "source": "local"
+      },
+      {
+        "flag": "-var-file",
+        "description": "Load variable values from a file",
+        "source": "local"
+      },
+      {
+        "flag": "-input=false",
+        "description": "Disable interactive input of variables",
+        "source": "local"
+      },
+      {
+        "flag": "-lock=false",
+        "description": "Don't hold a state lock during the operation",
+        "source": "local"
+      }
+    ],
+    "example": "terraform import aws_instance.web i-abc123",
+    "output": "aws_instance.web: Importing from ID \"i-abc123\"...\naws_instance.web: Import prepared!\n  Prepared aws_instance for import\naws_instance.web: Refreshing state... [id=i-abc123]\n\nImport successful!\n\nThe resources that were imported are shown above. These resources are now in\nyour Terraform state and will henceforth be managed by Terraform.",
+    "tip": "You must write a matching resource block in your .tf file before importing. After import, run 'terraform plan' to verify the config matches the real resource and fill in any missing attributes.",
+    "tags": [
+      "import",
+      "migration",
+      "existing-infrastructure"
+    ],
+    "package": "terraform",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "terraform-output",
+    "category": "terraform",
+    "command": "terraform output -json",
+    "title": "Show outputs",
+    "difficulty": "beginner",
+    "description": "Display the output values defined in your Terraform configuration, formatted as JSON for easy parsing.",
+    "breakdown": [
+      {
+        "part": "terraform",
+        "meaning": "Terraform CLI tool"
+      },
+      {
+        "part": "output",
+        "meaning": "Read an output variable from the state file"
+      },
+      {
+        "part": "-json",
+        "meaning": "Output the values in JSON format for machine consumption"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-json",
+        "description": "Output values in JSON format",
+        "source": "local"
+      },
+      {
+        "flag": "-raw",
+        "description": "Output the raw string value without quotes (single output only)",
+        "source": "local"
+      },
+      {
+        "flag": "-no-color",
+        "description": "Disable color codes in output",
+        "source": "local"
+      }
+    ],
+    "example": "terraform output -json",
+    "output": "{\n  \"instance_public_ip\": {\n    \"sensitive\": false,\n    \"type\": \"string\",\n    \"value\": \"54.210.32.100\"\n  },\n  \"database_endpoint\": {\n    \"sensitive\": false,\n    \"type\": \"string\",\n    \"value\": \"mydb.c6c8mn7example.us-east-1.rds.amazonaws.com:5432\"\n  },\n  \"vpc_id\": {\n    \"sensitive\": false,\n    \"type\": \"string\",\n    \"value\": \"vpc-0bb1c79de3EXAMPLE\"\n  }\n}",
+    "tip": "Use 'terraform output instance_public_ip' to get a single value. Combine with -raw for clean output in scripts: terraform output -raw instance_public_ip.",
+    "tags": [
+      "output",
+      "values",
+      "variables"
+    ],
+    "package": "terraform",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "terraform-workspace",
+    "category": "terraform",
+    "command": "terraform workspace new staging",
+    "title": "Manage workspaces",
+    "difficulty": "intermediate",
+    "description": "Create and manage Terraform workspaces to maintain separate state files for different environments (e.g., dev, staging, prod).",
+    "breakdown": [
+      {
+        "part": "terraform",
+        "meaning": "Terraform CLI tool"
+      },
+      {
+        "part": "workspace",
+        "meaning": "Manage workspaces for isolated state files"
+      },
+      {
+        "part": "new",
+        "meaning": "Create a new workspace"
+      },
+      {
+        "part": "staging",
+        "meaning": "The name of the workspace to create"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "new",
+        "description": "Create a new workspace and switch to it",
+        "source": "local"
+      },
+      {
+        "flag": "select",
+        "description": "Switch to an existing workspace",
+        "source": "local"
+      },
+      {
+        "flag": "list",
+        "description": "List all available workspaces",
+        "source": "local"
+      },
+      {
+        "flag": "show",
+        "description": "Show the name of the current workspace",
+        "source": "local"
+      },
+      {
+        "flag": "delete",
+        "description": "Delete an existing workspace",
+        "source": "local"
+      }
+    ],
+    "example": "terraform workspace new staging",
+    "output": "Created and switched to workspace \"staging\"!\n\nYou're now on a new, empty workspace. Workspaces isolate their state,\nso if you run \"terraform plan\" Terraform will not see any existing state\nfor this configuration.",
+    "tip": "Use terraform.workspace in your config to customize resources per environment: tags = { Environment = terraform.workspace }. Use workspaces with a remote backend to share state across teams.",
+    "tags": [
+      "workspace",
+      "environments",
+      "state-isolation"
+    ],
+    "package": "terraform",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "terraform-fmt",
+    "category": "terraform",
+    "command": "terraform fmt -recursive",
+    "title": "Format code",
+    "difficulty": "beginner",
+    "description": "Automatically format Terraform configuration files to follow canonical style conventions, recursively processing all subdirectories.",
+    "breakdown": [
+      {
+        "part": "terraform",
+        "meaning": "Terraform CLI tool"
+      },
+      {
+        "part": "fmt",
+        "meaning": "Rewrite configuration files to canonical format"
+      },
+      {
+        "part": "-recursive",
+        "meaning": "Process files in subdirectories as well"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-recursive",
+        "description": "Also process files in subdirectories",
+        "source": "local"
+      },
+      {
+        "flag": "-check",
+        "description": "Check if files are formatted, return non-zero exit code if not",
+        "source": "local"
+      },
+      {
+        "flag": "-diff",
+        "description": "Display diffs of formatting changes",
+        "source": "local"
+      },
+      {
+        "flag": "-write=false",
+        "description": "Don't write changes, just display them",
+        "source": "local"
+      }
+    ],
+    "example": "terraform fmt -recursive",
+    "output": "main.tf\nmodules/vpc/main.tf\nmodules/vpc/variables.tf\nmodules/ec2/main.tf",
+    "tip": "Add 'terraform fmt -check' to your CI pipeline to enforce consistent formatting. Use 'terraform fmt -diff' to preview changes before writing them.",
+    "tags": [
+      "format",
+      "style",
+      "linting"
+    ],
+    "package": "terraform",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "terraform-validate",
+    "category": "terraform",
+    "command": "terraform validate",
+    "title": "Validate config",
+    "difficulty": "beginner",
+    "description": "Validate the Terraform configuration files for syntax errors and internal consistency without accessing remote services.",
+    "breakdown": [
+      {
+        "part": "terraform",
+        "meaning": "Terraform CLI tool"
+      },
+      {
+        "part": "validate",
+        "meaning": "Check configuration for syntax and consistency errors"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-json",
+        "description": "Output validation results in JSON format",
+        "source": "local"
+      },
+      {
+        "flag": "-no-color",
+        "description": "Disable color codes in output",
+        "source": "local"
+      }
+    ],
+    "example": "terraform validate",
+    "output": "Success! The configuration is valid.\n\n(If errors exist):\n\nError: Missing required argument\n\n  on main.tf line 12, in resource \"aws_instance\" \"web\":\n  12: resource \"aws_instance\" \"web\" {\n\nThe argument \"ami\" is required, but no definition was found.",
+    "tip": "Run 'terraform init' before validate, as validation needs initialized providers. Use 'terraform validate -json' in CI pipelines for machine-readable output.",
+    "tags": [
+      "validate",
+      "syntax",
+      "errors"
+    ],
+    "package": "terraform",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "terraform-show",
+    "category": "terraform",
+    "command": "terraform show terraform.tfplan",
+    "title": "Show plan or state",
+    "difficulty": "beginner",
+    "description": "Display a saved plan file or the current state in human-readable form — useful for reviewing what a plan will do before applying, or inspecting what Terraform currently tracks.",
+    "breakdown": [
+      {
+        "part": "terraform show",
+        "meaning": "Display a plan or state file in human-readable format"
+      },
+      {
+        "part": "terraform.tfplan",
+        "meaning": "The saved plan file to display (omit to show current state)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-json",
+        "description": "Output in machine-readable JSON format for scripting",
+        "source": "local"
+      },
+      {
+        "flag": "-no-color",
+        "description": "Disable colour output for piping or logging",
+        "source": "local"
+      }
+    ],
+    "example": "terraform show -json terraform.tfplan | jq '.resource_changes[] | select(.change.actions[] == \"create\")'",
+    "output": "# aws_instance.web_server will be created\nresource \"aws_instance\" \"web_server\" {\n    ami           = \"ami-0c55b159cbfafe1f0\"\n    instance_type = \"t3.micro\"\n    tags = {\n        Name = \"web-server\"\n    }\n\n    network_interface {\n        network_interface_id = (known after apply)\n    }\n}",
+    "tip": "Use terraform show -json combined with jq to filter specific resource types or changes from a plan — great for automated approval gates in CI/CD pipelines.",
+    "tags": [
+      "show",
+      "plan",
+      "state",
+      "inspection"
+    ],
+    "package": "terraform",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "terraform-console",
+    "category": "terraform",
+    "command": "terraform console",
+    "title": "Interactive expression console",
+    "difficulty": "intermediate",
+    "description": "Open an interactive REPL to evaluate Terraform expressions against the current state — ideal for testing variable interpolation, functions, and resource attribute references before using them in code.",
+    "breakdown": [
+      {
+        "part": "terraform console",
+        "meaning": "Start an interactive Terraform expression evaluator"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-var 'key=value'",
+        "description": "Set a variable value for the session",
+        "source": "local"
+      },
+      {
+        "flag": "-var-file=FILE",
+        "description": "Load variable definitions from a file",
+        "source": "local"
+      },
+      {
+        "flag": "-state=PATH",
+        "description": "Use a specific state file instead of the default",
+        "source": "local"
+      }
+    ],
+    "example": "echo 'cidrsubnets(\"10.0.0.0/8\", 8, 8, 8)' | terraform console",
+    "output": "$ terraform console\n> var.region\n\"us-east-1\"\n> aws_vpc.main.id\n\"vpc-0a1b2c3d4e5f6a7b8\"\n> cidrsubnet(\"10.0.0.0/16\", 8, 1)\n\"10.0.1.0/24\"\n> toset([\"a\", \"b\", \"a\"])\ntoset([\"a\",\"b\"])\n> Ctrl+D",
+    "tip": "Use terraform console to debug cidrsubnet calculations, test for_each key generation, and verify that resource attributes reference the right values before writing the code. Pipe expressions in non-interactively with echo for quick one-off checks.",
+    "tags": [
+      "console",
+      "repl",
+      "debugging",
+      "expressions"
+    ],
+    "package": "terraform",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "terraform-state-mv",
+    "category": "terraform",
+    "command": "terraform state mv aws_instance.old_name aws_instance.new_name",
+    "title": "Move resource in state",
+    "difficulty": "advanced",
+    "description": "Rename or move a resource in the Terraform state without destroying and recreating it — essential when refactoring resource names or moving resources into modules.",
+    "breakdown": [
+      {
+        "part": "terraform state mv",
+        "meaning": "Move a resource record within the state file"
+      },
+      {
+        "part": "aws_instance.old_name",
+        "meaning": "Current address of the resource in state"
+      },
+      {
+        "part": "aws_instance.new_name",
+        "meaning": "New address to move the resource to"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-dry-run",
+        "description": "Preview the move without actually modifying state",
+        "source": "local"
+      },
+      {
+        "flag": "-backup=PATH",
+        "description": "Override the backup file path (default: .terraform.tfstate.backup)",
+        "source": "local"
+      },
+      {
+        "flag": "-state=PATH",
+        "description": "Read from a specific state file",
+        "source": "local"
+      },
+      {
+        "flag": "-state-out=PATH",
+        "description": "Write output to a different state file",
+        "source": "local"
+      }
+    ],
+    "example": "terraform state mv 'module.app.aws_instance.server' 'module.web.aws_instance.server'",
+    "output": "Move \"aws_instance.old_name\" to \"aws_instance.new_name\"\nSuccessfully moved 1 object(s).",
+    "tip": "Always take a manual state backup before running state mv: terraform state pull > backup.tfstate. After moving, run terraform plan to confirm no unintended destroy/create actions remain.",
+    "tags": [
+      "state",
+      "refactoring",
+      "rename",
+      "modules"
+    ],
+    "package": "terraform",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "terraform-taint",
+    "category": "terraform",
+    "command": "terraform apply -replace=aws_instance.web_server",
+    "title": "Force resource replacement",
+    "difficulty": "advanced",
+    "description": "Mark a specific resource for forced recreation on the next apply — useful when a resource has drifted or become unhealthy without Terraform detecting a config change.",
+    "breakdown": [
+      {
+        "part": "terraform apply",
+        "meaning": "Apply changes to infrastructure"
+      },
+      {
+        "part": "-replace=aws_instance.web_server",
+        "meaning": "Force-replace this specific resource even if no config change is detected"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-replace=ADDRESS",
+        "description": "Force replacement of the named resource (Terraform 0.15.2+, replaces terraform taint)",
+        "source": "local"
+      },
+      {
+        "flag": "-target=ADDRESS",
+        "description": "Combine with -replace to scope the apply to just this resource",
+        "source": "local"
+      }
+    ],
+    "example": "terraform apply -replace=aws_instance.web_server -target=aws_instance.web_server",
+    "output": "Terraform will perform the following actions:\n\n  # aws_instance.web_server will be replaced, as requested\n-/+ resource \"aws_instance\" \"web_server\" {\n      ~ id = \"i-0a1b2c3d4e5f\" -> (known after apply) # forces replacement\n    }\n\nPlan: 1 to add, 0 to change, 1 to destroy.",
+    "tip": "The -replace flag (Terraform 0.15.2+) is preferred over the deprecated terraform taint command. Combine with -target to scope the apply to only the affected resource and avoid unintended side effects on other resources.",
+    "tags": [
+      "replace",
+      "taint",
+      "recreation",
+      "drift"
+    ],
+    "package": "terraform",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "terraform-graph",
+    "category": "terraform",
+    "command": "terraform graph | dot -Tsvg > graph.svg",
+    "title": "Visualise dependency graph",
+    "difficulty": "intermediate",
+    "description": "Generate a visual dependency graph of all resources in the configuration — helps understand resource ordering, debug dependency cycles, and communicate infrastructure architecture.",
+    "breakdown": [
+      {
+        "part": "terraform graph",
+        "meaning": "Output the resource dependency graph in DOT format"
+      },
+      {
+        "part": "|",
+        "meaning": "Pipe DOT output to the Graphviz rendering tool"
+      },
+      {
+        "part": "dot -Tsvg",
+        "meaning": "Render the DOT graph as an SVG image"
+      },
+      {
+        "part": "> graph.svg",
+        "meaning": "Write the rendered SVG to a file"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-type=plan",
+        "description": "Generate graph for a plan operation (default: apply)",
+        "source": "local"
+      },
+      {
+        "flag": "-type=plan-destroy",
+        "description": "Generate graph for a destroy plan",
+        "source": "local"
+      },
+      {
+        "flag": "-draw-cycles",
+        "description": "Highlight dependency cycles in the output",
+        "source": "local"
+      }
+    ],
+    "example": "terraform graph -type=plan | dot -Tpng > plan-graph.png",
+    "output": "digraph {\n\tcompound = \"true\"\n\tnewrank = \"true\"\n\tsubgraph \"root\" {\n\t\t\"[root] aws_instance.web_server\" [label = \"aws_instance.web_server\", shape = \"box\"]\n\t\t\"[root] aws_security_group.web\" [label = \"aws_security_group.web\", shape = \"box\"]\n\t\t\"[root] aws_instance.web_server\" -> \"[root] aws_security_group.web\"\n\t}\n}",
+    "tip": "Install Graphviz (brew install graphviz or apt install graphviz) to render DOT output. Use -draw-cycles when Terraform reports a cycle error — it makes the circular dependency immediately visible in the graph.",
+    "tags": [
+      "graph",
+      "visualisation",
+      "dependencies",
+      "debugging"
+    ],
+    "package": "terraform",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "terraform-providers",
+    "category": "terraform",
+    "command": "terraform providers",
+    "title": "List required providers",
+    "difficulty": "beginner",
+    "description": "Show all providers required by the current configuration and their version constraints — useful for auditing dependencies and diagnosing init failures.",
+    "breakdown": [
+      {
+        "part": "terraform providers",
+        "meaning": "List all providers used in the configuration with version constraints"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "lock",
+        "description": "Write provider locks to .terraform.lock.hcl without downloading",
+        "source": "local"
+      },
+      {
+        "flag": "mirror PATH",
+        "description": "Copy providers into a local mirror directory for air-gapped use",
+        "source": "local"
+      },
+      {
+        "flag": "schema",
+        "description": "Print the JSON schema for all providers and their resources",
+        "source": "local"
+      }
+    ],
+    "example": "terraform providers schema -json | jq '.provider_schemas | keys'",
+    "output": "Providers required by configuration:\n.\n+-- provider[\"registry.terraform.io/hashicorp/aws\"] ~> 5.0\n+-- provider[\"registry.terraform.io/hashicorp/random\"] ~> 3.5\n\nProviders required by state:\n    provider[\"registry.terraform.io/hashicorp/aws\"]\n    provider[\"registry.terraform.io/hashicorp/random\"]",
+    "tip": "Use terraform providers lock -platform=linux_amd64 -platform=darwin_arm64 to pre-generate lock files for all target platforms — avoids \"provider not available for architecture\" errors in CI.",
+    "tags": [
+      "providers",
+      "dependencies",
+      "versions",
+      "init"
+    ],
+    "package": "terraform",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "terraform-force-unlock",
+    "category": "terraform",
+    "command": "terraform force-unlock LOCK_ID",
+    "title": "Release stuck state lock",
+    "difficulty": "advanced",
+    "description": "Manually release a Terraform state lock that was not properly cleared — typically needed when a previous apply was interrupted, leaving the state locked and blocking further operations.",
+    "breakdown": [
+      {
+        "part": "terraform force-unlock",
+        "meaning": "Manually remove a stuck state lock"
+      },
+      {
+        "part": "LOCK_ID",
+        "meaning": "The lock ID shown in the error message when the state is locked"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-force",
+        "description": "Skip the interactive confirmation prompt",
+        "source": "local"
+      }
+    ],
+    "example": "terraform force-unlock -force a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "output": "Do you really want to force-unlock?\n  Terraform will remove the lock on the remote state.\n  This will allow local Terraform commands to modify this state, even though it\n  may be still be in use. Only 'yes' will be accepted to confirm.\n\n  Enter a value: yes\n\nTerraform state has been successfully unlocked!",
+    "tip": "Only run force-unlock after confirming no other Terraform process is actively running against this state — running it while an apply is in progress can corrupt the state file. The LOCK_ID is printed in the error message when you hit a locked state.",
+    "tags": [
+      "lock",
+      "state",
+      "unlock",
+      "recovery"
+    ],
+    "package": "terraform",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "terraform-refresh",
+    "category": "terraform",
+    "command": "terraform apply -refresh-only",
+    "title": "Sync state with real infra",
+    "difficulty": "intermediate",
+    "description": "Refresh the Terraform state to match the actual current state of remote infrastructure, without making any config-driven changes — detects and records drift.",
+    "breakdown": [
+      {
+        "part": "terraform apply",
+        "meaning": "Run an apply operation"
+      },
+      {
+        "part": "-refresh-only",
+        "meaning": "Only update state to match real infrastructure — make no config-driven changes (Terraform 0.15.4+)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-refresh-only",
+        "description": "Reconcile state with real infra without applying config changes (modern approach)",
+        "source": "local"
+      },
+      {
+        "flag": "-auto-approve",
+        "description": "Skip confirmation prompt",
+        "source": "local"
+      },
+      {
+        "flag": "-target=ADDRESS",
+        "description": "Refresh only a specific resource",
+        "source": "local"
+      }
+    ],
+    "example": "terraform plan -refresh-only",
+    "output": "Terraform will perform the following actions:\n\n  # aws_instance.web_server will be updated in-place\n  ~ resource \"aws_instance\" \"web_server\" {\n        id            = \"i-0a1b2c3d4e5f\"\n      ~ tags          = {\n          + \"LastModified\" = \"2026-03-15\"\n        }\n    }\n\nPlan: 0 to add, 1 to change, 0 to destroy.",
+    "tip": "Run terraform plan -refresh-only first to see what has drifted before applying. The legacy terraform refresh command is deprecated since 0.15.4 — -refresh-only gives you review/approval control that the old command lacked.",
+    "tags": [
+      "refresh",
+      "drift",
+      "state",
+      "reconcile"
+    ],
+    "package": "terraform",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  }
+]

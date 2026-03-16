@@ -1,0 +1,59 @@
+name: Validate Commands
+
+on:
+  pull_request:
+    paths:
+      - 'data/**'
+      - 'src/**'
+
+jobs:
+  validate-json:
+    name: Validate command data
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate JSON schema
+        run: |
+          npm install --no-save ajv ajv-cli
+          for file in data/*.json; do
+            if [ "$(basename "$file")" != "_schema.json" ]; then
+              echo "Validating $file..."
+              npx ajv validate -s data/_schema.json -d "$file" --strict=false
+            fi
+          done
+
+      - name: Check for duplicate IDs
+        run: |
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+            const dataDir = './data';
+            const ids = new Set();
+            const dupes = [];
+            const files = fs.readdirSync(dataDir).filter(f => f.endsWith('.json') && !f.startsWith('_'));
+            for (const file of files) {
+              const commands = JSON.parse(fs.readFileSync(path.join(dataDir, file), 'utf-8'));
+              for (const cmd of commands) {
+                if (ids.has(cmd.id)) {
+                  dupes.push(cmd.id);
+                }
+                ids.add(cmd.id);
+              }
+            }
+            if (dupes.length > 0) {
+              console.error('Duplicate command IDs found:', dupes.join(', '));
+              process.exit(1);
+            }
+            console.log('No duplicate IDs found. Total commands:', ids.size);
+          "
+
+      - name: Lint check
+        run: npx next lint

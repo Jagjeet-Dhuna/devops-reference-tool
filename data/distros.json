@@ -1,0 +1,924 @@
+[
+  {
+    "id": "ubuntu",
+    "category": "distros",
+    "command": "apt install -y package",
+    "title": "Ubuntu",
+    "difficulty": "beginner",
+    "description": "Debian-based distribution by Canonical. The most widely used Linux distro for servers and cloud. LTS releases get 5 years of support.",
+    "breakdown": [
+      {
+        "part": "apt",
+        "meaning": "Advanced Package Tool — Ubuntu/Debian package manager"
+      },
+      {
+        "part": "install",
+        "meaning": "Install the specified package(s)"
+      },
+      {
+        "part": "-y",
+        "meaning": "Assume yes — skip interactive confirmation prompt"
+      },
+      {
+        "part": "package",
+        "meaning": "Package name to install"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "apt update",
+        "description": "Refresh package index from repositories",
+        "source": "local"
+      },
+      {
+        "flag": "apt upgrade",
+        "description": "Upgrade all installed packages",
+        "source": "local"
+      },
+      {
+        "flag": "apt install PKG",
+        "description": "Install a package",
+        "source": "local"
+      },
+      {
+        "flag": "apt remove PKG",
+        "description": "Remove a package (keeps config files)",
+        "source": "local"
+      },
+      {
+        "flag": "apt purge PKG",
+        "description": "Remove package and its config files",
+        "source": "local"
+      },
+      {
+        "flag": "apt search TERM",
+        "description": "Search for packages by name/description",
+        "source": "local"
+      },
+      {
+        "flag": "apt show PKG",
+        "description": "Show detailed package information",
+        "source": "local"
+      },
+      {
+        "flag": "apt autoremove",
+        "description": "Remove unused dependency packages",
+        "source": "local"
+      }
+    ],
+    "example": "apt update && apt install -y nginx curl git",
+    "output": "Get:1 http://archive.ubuntu.com/ubuntu jammy/main amd64 nginx amd64 1.18.0-6ubuntu1 [44.0 kB]\nFetched 44.0 kB in 1s (44.0 kB/s)\nSelecting previously unselected package nginx.\nSetting up nginx (1.18.0-6ubuntu1) ...\nProcessing triggers for systemd (249.11-0ubuntu3) ...",
+    "tip": "Ubuntu releases follow YY.MM naming. LTS (Long Term Support) releases come every 2 years (20.04, 22.04, 24.04) — prefer these for servers.",
+    "tags": [
+      "ubuntu",
+      "debian",
+      "apt",
+      "canonical",
+      "lts",
+      "cloud"
+    ],
+    "manPage": "8",
+    "relatedCommands": [
+      "debian",
+      "apt"
+    ],
+    "os": [
+      "ubuntu",
+      "debian"
+    ],
+    "package": "apt"
+  },
+  {
+    "id": "debian",
+    "category": "distros",
+    "command": "apt-get install -y package",
+    "title": "Debian",
+    "difficulty": "beginner",
+    "description": "The universal Linux OS. Upstream of Ubuntu, known for rock-solid stability. Runs on more hardware architectures than any other distro. Three branches: stable, testing, unstable.",
+    "breakdown": [
+      {
+        "part": "apt-get",
+        "meaning": "APT package handling utility (lower-level than apt)"
+      },
+      {
+        "part": "install",
+        "meaning": "Install packages"
+      },
+      {
+        "part": "-y",
+        "meaning": "Automatic yes to prompts"
+      },
+      {
+        "part": "package",
+        "meaning": "Package name to install"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "apt-get update",
+        "description": "Download package lists from repositories",
+        "source": "local"
+      },
+      {
+        "flag": "apt-get upgrade",
+        "description": "Upgrade all upgradeable packages",
+        "source": "local"
+      },
+      {
+        "flag": "apt-get dist-upgrade",
+        "description": "Upgrade with smart dependency resolution",
+        "source": "local"
+      },
+      {
+        "flag": "apt-get install PKG",
+        "description": "Install a package",
+        "source": "local"
+      },
+      {
+        "flag": "dpkg -l",
+        "description": "List all installed packages",
+        "source": "local"
+      },
+      {
+        "flag": "dpkg -i file.deb",
+        "description": "Install a .deb file directly",
+        "source": "local"
+      }
+    ],
+    "example": "# Check Debian version\ncat /etc/debian_version\n\n# Install essentials\napt-get update && apt-get install -y sudo curl wget vim",
+    "output": "12.4\n\nReading package lists... Done\nBuilding dependency tree... Done\n0 upgraded, 4 newly installed, 0 to remove\nNeed to get 8,742 kB of archives.\nDo you want to continue? [Y/n] y",
+    "tip": "Debian stable is very conservative — packages may be 1-2 years behind upstream. Use backports (deb ... bookworm-backports) for newer versions of specific packages.",
+    "tags": [
+      "debian",
+      "apt",
+      "stable",
+      "dpkg",
+      "deb"
+    ],
+    "relatedCommands": [
+      "ubuntu"
+    ],
+    "os": [
+      "debian"
+    ],
+    "package": "apt-get"
+  },
+  {
+    "id": "rhel",
+    "category": "distros",
+    "command": "dnf install -y package",
+    "title": "RHEL / CentOS Stream",
+    "difficulty": "intermediate",
+    "description": "Red Hat Enterprise Linux is the enterprise standard for production Linux. CentOS Stream is its freely available upstream. Uses RPM packages and dnf/yum. Dominates enterprise data centers.",
+    "breakdown": [
+      {
+        "part": "dnf",
+        "meaning": "Dandified YUM — next-gen package manager for RHEL/Fedora"
+      },
+      {
+        "part": "install",
+        "meaning": "Install the specified package(s)"
+      },
+      {
+        "part": "-y",
+        "meaning": "Assume yes — skip interactive confirmation"
+      },
+      {
+        "part": "package",
+        "meaning": "Package name to install"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "dnf update",
+        "description": "Update all installed packages",
+        "source": "local"
+      },
+      {
+        "flag": "dnf install PKG",
+        "description": "Install a package",
+        "source": "local"
+      },
+      {
+        "flag": "dnf remove PKG",
+        "description": "Remove a package",
+        "source": "local"
+      },
+      {
+        "flag": "dnf search TERM",
+        "description": "Search for packages",
+        "source": "local"
+      },
+      {
+        "flag": "dnf info PKG",
+        "description": "Display package information",
+        "source": "local"
+      },
+      {
+        "flag": "dnf list installed",
+        "description": "List all installed packages",
+        "source": "local"
+      },
+      {
+        "flag": "rpm -qa",
+        "description": "Query all installed RPM packages",
+        "source": "local"
+      },
+      {
+        "flag": "rpm -ivh file.rpm",
+        "description": "Install RPM file with verbose output and progress",
+        "source": "local"
+      }
+    ],
+    "example": "# Enable EPEL repository then install packages\ndnf install -y epel-release\ndnf install -y htop ncdu jq",
+    "output": "Dependencies resolved.\n================================================================================\n Package      Arch    Version         Repository  Size\n================================================================================\nInstalling:\n htop         x86_64  3.2.1-1.el9     epel        290 k\n\nTransaction Summary\n================================================================================\nInstall  1 Package\nInstalled: htop-3.2.1-1.el9.x86_64",
+    "tip": "RHEL uses SELinux in enforcing mode by default — many issues are SELinux-related. Check with 'ausearch -m avc' or 'sealert -a /var/log/audit/audit.log'.",
+    "tags": [
+      "rhel",
+      "centos",
+      "redhat",
+      "rpm",
+      "dnf",
+      "yum",
+      "enterprise"
+    ],
+    "relatedCommands": [
+      "fedora"
+    ],
+    "os": [
+      "rhel"
+    ],
+    "package": "dnf"
+  },
+  {
+    "id": "fedora",
+    "category": "distros",
+    "command": "dnf install -y package",
+    "title": "Fedora",
+    "difficulty": "intermediate",
+    "description": "Red Hat's community cutting-edge distro. Features the very latest software — Fedora gets new packages 6-12 months before they reach RHEL. New release every 6 months with 13 months support.",
+    "breakdown": [
+      {
+        "part": "dnf",
+        "meaning": "Dandified YUM — Fedora's primary package manager"
+      },
+      {
+        "part": "install",
+        "meaning": "Install packages"
+      },
+      {
+        "part": "-y",
+        "meaning": "Assume yes"
+      },
+      {
+        "part": "package",
+        "meaning": "Package to install"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "dnf upgrade --refresh",
+        "description": "Refresh metadata and upgrade all packages",
+        "source": "local"
+      },
+      {
+        "flag": "dnf install PKG",
+        "description": "Install package",
+        "source": "local"
+      },
+      {
+        "flag": "dnf copr enable user/repo",
+        "description": "Enable a COPR community repository",
+        "source": "local"
+      },
+      {
+        "flag": "dnf history",
+        "description": "View transaction history",
+        "source": "local"
+      },
+      {
+        "flag": "dnf history undo N",
+        "description": "Undo transaction number N",
+        "source": "local"
+      }
+    ],
+    "example": "# Add RPM Fusion repo (non-free software)\ndnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm\ndnf install -y vlc",
+    "output": "RPM Fusion for Fedora 39 - Free - 14 kB/s | 3.6 kB     00:00\nDependencies resolved.\n...\nInstalled:\n  vlc-3.0.20-3.fc39.x86_64",
+    "tip": "Fedora Workstation is excellent for developers who want latest tools. Use 'dnf history undo' to roll back a bad update — a feature most distros lack.",
+    "tags": [
+      "fedora",
+      "redhat",
+      "rpm",
+      "dnf",
+      "cutting-edge",
+      "developer"
+    ],
+    "relatedCommands": [
+      "rhel"
+    ],
+    "os": [
+      "fedora"
+    ],
+    "package": "dnf"
+  },
+  {
+    "id": "arch",
+    "category": "distros",
+    "command": "pacman -Syu package",
+    "title": "Arch Linux",
+    "difficulty": "advanced",
+    "description": "A rolling-release, minimalist distro built around simplicity and user control. You install exactly what you need. Legendary Arch Wiki is one of the best Linux documentation resources. Features the AUR (Arch User Repository) with 90,000+ packages.",
+    "breakdown": [
+      {
+        "part": "pacman",
+        "meaning": "Arch's package manager (PAC-kage MANager)"
+      },
+      {
+        "part": "-S",
+        "meaning": "Sync — install package(s) from repositories"
+      },
+      {
+        "part": "-y",
+        "meaning": "Refresh package database from server"
+      },
+      {
+        "part": "-u",
+        "meaning": "Upgrade all out-of-date packages"
+      },
+      {
+        "part": "package",
+        "meaning": "Package to install"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-Syu",
+        "description": "Sync, refresh db, and upgrade all packages",
+        "source": "local"
+      },
+      {
+        "flag": "-S PKG",
+        "description": "Install package",
+        "source": "local"
+      },
+      {
+        "flag": "-R PKG",
+        "description": "Remove package",
+        "source": "local"
+      },
+      {
+        "flag": "-Rs PKG",
+        "description": "Remove package and its unused dependencies",
+        "source": "local"
+      },
+      {
+        "flag": "-Ss TERM",
+        "description": "Search the package database",
+        "source": "local"
+      },
+      {
+        "flag": "-Qi PKG",
+        "description": "Display detailed info about installed package",
+        "source": "local"
+      },
+      {
+        "flag": "-Ql PKG",
+        "description": "List all files owned by package",
+        "source": "local"
+      },
+      {
+        "flag": "-Qo /path/to/file",
+        "description": "Find which package owns a file",
+        "source": "local"
+      }
+    ],
+    "example": "# System update\npacman -Syu\n\n# Install with AUR helper (yay)\nyay -S google-chrome",
+    "output": ":: Synchronizing package databases...\n core is up to date\n extra is up to date\n:: Starting full system upgrade...\n resolving dependencies...\n:: Proceed with installation? (Y/n) y\n(142/142) checking keys in keyring        [######################] 100%",
+    "tip": "Never do partial upgrades on Arch (pacman -Sy package without -u). Always run full -Syu to avoid dependency hell. Check news.archlinux.org before upgrading.",
+    "tags": [
+      "arch",
+      "rolling-release",
+      "pacman",
+      "aur",
+      "minimalist",
+      "advanced"
+    ],
+    "relatedCommands": [
+      "manjaro"
+    ],
+    "os": [
+      "arch"
+    ],
+    "package": "pacman"
+  },
+  {
+    "id": "alpine",
+    "category": "distros",
+    "command": "apk add package",
+    "title": "Alpine Linux",
+    "difficulty": "intermediate",
+    "description": "Ultra-minimal Linux distro designed for security and small footprint. Base image is only ~5MB. The standard base image for Docker containers. Uses musl libc instead of glibc and busybox instead of GNU coreutils.",
+    "breakdown": [
+      {
+        "part": "apk",
+        "meaning": "Alpine Package Keeper — Alpine's package manager"
+      },
+      {
+        "part": "add",
+        "meaning": "Install package(s)"
+      },
+      {
+        "part": "package",
+        "meaning": "Package to install"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "apk update",
+        "description": "Update package index",
+        "source": "local"
+      },
+      {
+        "flag": "apk add PKG",
+        "description": "Install package",
+        "source": "local"
+      },
+      {
+        "flag": "apk del PKG",
+        "description": "Remove package",
+        "source": "local"
+      },
+      {
+        "flag": "apk upgrade",
+        "description": "Upgrade all installed packages",
+        "source": "local"
+      },
+      {
+        "flag": "apk search TERM",
+        "description": "Search for packages",
+        "source": "local"
+      },
+      {
+        "flag": "apk info PKG",
+        "description": "Show package information",
+        "source": "local"
+      },
+      {
+        "flag": "apk add --no-cache PKG",
+        "description": "Install without caching index (best for Docker layers)",
+        "source": "local"
+      }
+    ],
+    "example": "# Typical Alpine Dockerfile pattern\nFROM alpine:3.19\nRUN apk add --no-cache curl bash ca-certificates",
+    "output": "fetch https://dl-cdn.alpinelinux.org/alpine/v3.19/main/x86_64/APKINDEX.tar.gz\nfetch https://dl-cdn.alpinelinux.org/alpine/v3.19/community/x86_64/APKINDEX.tar.gz\n(1/3) Installing ca-certificates (20240226-r0)\n(2/3) Installing curl (8.5.0-r0)\n(3/3) Installing bash (5.2.21-r0)\nOK: 12 MiB in 16 packages",
+    "tip": "Use --no-cache in Dockerfiles to avoid storing the package index in the image layer, keeping images smaller. Note: some software compiled for glibc won't run on Alpine's musl libc.",
+    "tags": [
+      "alpine",
+      "docker",
+      "container",
+      "minimal",
+      "security",
+      "musl"
+    ],
+    "relatedCommands": [
+      "ubuntu"
+    ],
+    "os": [
+      "alpine"
+    ],
+    "package": "apk"
+  },
+  {
+    "id": "amazon-linux",
+    "category": "distros",
+    "command": "dnf install -y package",
+    "title": "Amazon Linux 2023",
+    "difficulty": "intermediate",
+    "description": "AWS's purpose-built Linux distro, optimized for EC2. AL2023 is based on Fedora/RHEL, uses DNF, and ships with AWS CLI pre-installed. Long-term support until 2028.",
+    "breakdown": [
+      {
+        "part": "dnf",
+        "meaning": "Package manager for Amazon Linux 2023"
+      },
+      {
+        "part": "install",
+        "meaning": "Install the specified packages"
+      },
+      {
+        "part": "-y",
+        "meaning": "Non-interactive — assume yes"
+      },
+      {
+        "part": "package",
+        "meaning": "Package name"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "dnf update",
+        "description": "Update all packages",
+        "source": "local"
+      },
+      {
+        "flag": "dnf install PKG",
+        "description": "Install package",
+        "source": "local"
+      },
+      {
+        "flag": "amazon-linux-extras install PKG",
+        "description": "Install from extras (AL2 only)",
+        "source": "local"
+      },
+      {
+        "flag": "dnf list available",
+        "description": "List all available packages",
+        "source": "local"
+      }
+    ],
+    "example": "# Check AL version and install common tools\ncat /etc/system-release\ndnf install -y git htop tmux aws-cli",
+    "output": "Amazon Linux 2023\n\nDependencies resolved.\n Package     Arch    Version          Repository  Size\n Installing:\n git         x86_64  2.40.1-1.amzn2023  amazonlinux 6.3 M\n htop        x86_64  3.2.1-1.amzn2023   amazonlinux 290 k\nInstalled: git-2.40.1, htop-3.2.1, tmux-3.3a, aws-cli-2.x",
+    "tip": "AL2023 dropped support for amazon-linux-extras. If you're upgrading from AL2, many extras are now standard packages in AL2023 repos.",
+    "tags": [
+      "aws",
+      "amazon-linux",
+      "ec2",
+      "cloud",
+      "dnf",
+      "rpm"
+    ],
+    "relatedCommands": [
+      "rhel",
+      "fedora"
+    ],
+    "os": [
+      "rhel"
+    ],
+    "package": "dnf"
+  },
+  {
+    "id": "opensuse",
+    "category": "distros",
+    "command": "zypper install package",
+    "title": "openSUSE",
+    "difficulty": "intermediate",
+    "description": "German-engineered, enterprise-grade Linux. Two flavors: Leap (stable, point release, based on SUSE Enterprise) and Tumbleweed (rolling release). Features YaST — the most comprehensive Linux system administration tool.",
+    "breakdown": [
+      {
+        "part": "zypper",
+        "meaning": "openSUSE's package manager"
+      },
+      {
+        "part": "install",
+        "meaning": "Install the specified package(s)"
+      },
+      {
+        "part": "package",
+        "meaning": "Package to install"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "zypper refresh",
+        "description": "Refresh all repository metadata",
+        "source": "local"
+      },
+      {
+        "flag": "zypper update",
+        "description": "Update all installed packages",
+        "source": "local"
+      },
+      {
+        "flag": "zypper install PKG",
+        "description": "Install package",
+        "source": "local"
+      },
+      {
+        "flag": "zypper remove PKG",
+        "description": "Remove package",
+        "source": "local"
+      },
+      {
+        "flag": "zypper search TERM",
+        "description": "Search for packages",
+        "source": "local"
+      },
+      {
+        "flag": "zypper info PKG",
+        "description": "Show package info",
+        "source": "local"
+      },
+      {
+        "flag": "zypper dup",
+        "description": "Distribution upgrade (Tumbleweed)",
+        "source": "local"
+      },
+      {
+        "flag": "yast2",
+        "description": "Launch YaST system administration tool (GUI/TUI)",
+        "source": "local"
+      }
+    ],
+    "example": "# Tumbleweed full upgrade\nzypper refresh && zypper dup",
+    "output": "Refreshing service 'openSUSE'.\nLoading repository data...\nReading installed packages...\nResolving package dependencies...\n\nThe following packages are going to be upgraded:\n  kernel-default  6.7.6-1.1 -> 6.7.7-1.1\n  ...\n23 packages to upgrade. Overall download size: 245.0 MiB.",
+    "tip": "openSUSE Tumbleweed is arguably the best rolling-release distro for stability — it uses automated testing to prevent regressions before packages hit users.",
+    "tags": [
+      "opensuse",
+      "suse",
+      "zypper",
+      "tumbleweed",
+      "leap",
+      "yast",
+      "enterprise"
+    ],
+    "relatedCommands": [
+      "rhel"
+    ],
+    "os": [
+      "linux"
+    ],
+    "package": "zypper"
+  },
+  {
+    "id": "kali",
+    "category": "distros",
+    "command": "apt install -y package",
+    "title": "Kali Linux",
+    "difficulty": "advanced",
+    "description": "Debian-based distro specialized for penetration testing and security auditing. Ships with 600+ pre-installed security tools. Maintained by Offensive Security. Runs as root by default since Kali 2020.",
+    "breakdown": [
+      {
+        "part": "apt",
+        "meaning": "Kali uses Debian's APT package manager"
+      },
+      {
+        "part": "install",
+        "meaning": "Install the specified package(s)"
+      },
+      {
+        "part": "-y",
+        "meaning": "Assume yes"
+      },
+      {
+        "part": "package",
+        "meaning": "Package or security tool to install"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "apt update && apt upgrade",
+        "description": "Update Kali tools and packages",
+        "source": "local"
+      },
+      {
+        "flag": "apt install kali-linux-everything",
+        "description": "Install all Kali tools metapackage",
+        "source": "local"
+      },
+      {
+        "flag": "apt install kali-tools-web",
+        "description": "Install web application security tools only",
+        "source": "local"
+      },
+      {
+        "flag": "apt install kali-tools-wireless",
+        "description": "Install wireless attack tools only",
+        "source": "local"
+      }
+    ],
+    "example": "# Update Kali and install a specific tool\napt update && apt install -y gobuster\ngobuster --version",
+    "output": "Get:1 http://http.kali.org/kali kali-rolling/main amd64 gobuster amd64 3.6.0-0kali1 [2,453 kB]\nFetched 2,453 kB in 2s (1,226 kB/s)\nSetting up gobuster (3.6.0-0kali1) ...\n\ngobuster v3.6.0",
+    "tip": "Kali is for security testing, not daily use. Use it in a VM or live boot for pentesting engagements. Install only the tool categories you need — 'everything' is 15+ GB.",
+    "tags": [
+      "kali",
+      "security",
+      "pentest",
+      "hacking",
+      "debian",
+      "apt",
+      "offensive-security"
+    ],
+    "relatedCommands": [
+      "debian",
+      "ubuntu"
+    ],
+    "os": [
+      "debian"
+    ],
+    "package": "apt"
+  },
+  {
+    "id": "nixos",
+    "category": "distros",
+    "command": "nix-env -iA nixpkgs.package",
+    "title": "NixOS",
+    "difficulty": "advanced",
+    "description": "Declarative, reproducible Linux distro. The entire system — packages, services, users, configs — is defined in a single /etc/nixos/configuration.nix file. Atomic upgrades with instant rollback to any previous generation.",
+    "breakdown": [
+      {
+        "part": "nix-env",
+        "meaning": "Nix environment manager for managing packages"
+      },
+      {
+        "part": "-iA",
+        "meaning": "Install from attribute path"
+      },
+      {
+        "part": "nixpkgs.package",
+        "meaning": "Package attribute path in the Nixpkgs collection"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "nix-env -iA nixpkgs.PKG",
+        "description": "Install package into user environment",
+        "source": "local"
+      },
+      {
+        "flag": "nix-env -e PKG",
+        "description": "Remove package from environment",
+        "source": "local"
+      },
+      {
+        "flag": "nixos-rebuild switch",
+        "description": "Apply system configuration changes",
+        "source": "local"
+      },
+      {
+        "flag": "nixos-rebuild switch --rollback",
+        "description": "Rollback to previous generation",
+        "source": "local"
+      },
+      {
+        "flag": "nix-shell -p PKG",
+        "description": "Open a temporary shell with package available",
+        "source": "local"
+      },
+      {
+        "flag": "nix flake update",
+        "description": "Update all flake inputs",
+        "source": "local"
+      }
+    ],
+    "example": "# Declarative package install in configuration.nix\n{ pkgs, ... }: {\n  environment.systemPackages = with pkgs; [\n    nginx postgresql git docker\n  ];\n  services.nginx.enable = true;\n}\n\n# Apply the config\nnixos-rebuild switch",
+    "output": "building the system configuration...\nactivating the configuration...\nrestarting the following units: nginx.service\n\n# Generation 42 created — rollback with:\n# nixos-rebuild switch --rollback",
+    "tip": "Use 'nix-shell -p nodejs python3 postgresql' for ephemeral dev environments that disappear when you exit — perfect for project-specific tooling without polluting the system.",
+    "tags": [
+      "nixos",
+      "nix",
+      "declarative",
+      "reproducible",
+      "rollback",
+      "advanced"
+    ],
+    "relatedCommands": [],
+    "os": [
+      "linux"
+    ],
+    "package": "nix-env"
+  },
+  {
+    "id": "rocky",
+    "category": "distros",
+    "command": "dnf install -y package",
+    "title": "Rocky Linux / AlmaLinux",
+    "difficulty": "intermediate",
+    "description": "1:1 binary-compatible RHEL rebuilds, created after CentOS 8 was discontinued. Rocky Linux (by one of CentOS's original founders) and AlmaLinux (by CloudLinux) are the primary CentOS replacements for production servers.",
+    "breakdown": [
+      {
+        "part": "dnf",
+        "meaning": "DNF package manager — identical to RHEL's"
+      },
+      {
+        "part": "install",
+        "meaning": "Install the specified package(s)"
+      },
+      {
+        "part": "-y",
+        "meaning": "Non-interactive mode"
+      },
+      {
+        "part": "package",
+        "meaning": "Package name"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "dnf update",
+        "description": "Update all packages",
+        "source": "local"
+      },
+      {
+        "flag": "dnf install epel-release",
+        "description": "Enable EPEL repository for extra packages",
+        "source": "local"
+      },
+      {
+        "flag": "dnf module list",
+        "description": "List available DNF module streams",
+        "source": "local"
+      },
+      {
+        "flag": "dnf module enable MODULE:STREAM",
+        "description": "Enable a specific module stream version",
+        "source": "local"
+      },
+      {
+        "flag": "subscription-manager register",
+        "description": "Register with Red Hat (RHEL only, not needed for Rocky/Alma)",
+        "source": "local"
+      }
+    ],
+    "example": "cat /etc/rocky-release\ndnf install -y epel-release\ndnf install -y htop tmux git",
+    "output": "Rocky Linux release 9.3 (Blue Onyx)\n\nDependencies resolved.\n Package      Arch    Version     Repository  Size\n Installing:\n epel-release noarch  9-5.el9     extras      18 k\n\nInstalled:\n  epel-release-9-5.el9.noarch",
+    "tip": "Rocky and Alma are drop-in CentOS 8 replacements. If you have existing RHEL/CentOS configs and RPM specs, they should work without modification.",
+    "tags": [
+      "rocky",
+      "almalinux",
+      "rhel",
+      "centos",
+      "replacement",
+      "enterprise",
+      "dnf",
+      "rpm"
+    ],
+    "relatedCommands": [
+      "rhel",
+      "fedora"
+    ],
+    "os": [
+      "rhel"
+    ],
+    "package": "dnf"
+  },
+  {
+    "id": "ubuntu-server-tips",
+    "category": "distros",
+    "command": "do-release-upgrade",
+    "title": "Distribution upgrades and tips",
+    "difficulty": "intermediate",
+    "description": "Key operations that apply across Debian/Ubuntu family distros: release upgrades, PPA management, and package pinning.",
+    "breakdown": [
+      {
+        "part": "do-release-upgrade",
+        "meaning": "Ubuntu/Debian tool to upgrade to the next OS release"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "do-release-upgrade -d",
+        "description": "Upgrade to development/next release (Ubuntu)",
+        "source": "local"
+      },
+      {
+        "flag": "add-apt-repository ppa:USER/PPA",
+        "description": "Add a PPA (Personal Package Archive) repository",
+        "source": "local"
+      },
+      {
+        "flag": "add-apt-repository --remove ppa:USER/PPA",
+        "description": "Remove a PPA",
+        "source": "local"
+      },
+      {
+        "flag": "apt-mark hold PKG",
+        "description": "Prevent a package from being upgraded",
+        "source": "local"
+      },
+      {
+        "flag": "apt-mark unhold PKG",
+        "description": "Allow a held package to upgrade again",
+        "source": "local"
+      },
+      {
+        "flag": "apt-cache policy PKG",
+        "description": "Show available versions and which repo they come from",
+        "source": "local"
+      },
+      {
+        "flag": "dpkg --get-selections",
+        "description": "List all packages with their state",
+        "source": "local"
+      }
+    ],
+    "example": "# Hold a specific package version\napt-mark hold nginx\nnginx set on hold.\n\n# Check which repos provide a package\napt-cache policy nginx",
+    "output": "nginx:\n  Installed: 1.18.0-6ubuntu1\n  Candidate: 1.24.0-1~jammy\n  Version table:\n *** 1.18.0-6ubuntu1 500\n        500 http://archive.ubuntu.com/ubuntu jammy/main amd64 Packages\n     1.24.0-1~jammy 500\n        500 http://ppa.launchpadcontent.net/ondrej/nginx/ubuntu jammy/main",
+    "tip": "Use apt-mark hold to pin critical packages (kernel, nginx) before major upgrades. Always test do-release-upgrade in a VM or snapshot first.",
+    "tags": [
+      "ubuntu",
+      "debian",
+      "upgrade",
+      "ppa",
+      "apt",
+      "pinning"
+    ],
+    "relatedCommands": [
+      "ubuntu",
+      "debian"
+    ],
+    "os": [
+      "ubuntu",
+      "debian"
+    ],
+    "package": "apt"
+  }
+]

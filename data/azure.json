@@ -1,0 +1,2060 @@
+[
+  {
+    "id": "az-login",
+    "category": "azure",
+    "command": "az login",
+    "title": "Login to Azure",
+    "difficulty": "beginner",
+    "description": "Authenticate to Azure and list accessible subscriptions — opens a browser for interactive login, with flags for service principal or device-code flows.",
+    "breakdown": [
+      {
+        "part": "az",
+        "meaning": "Azure CLI entry point"
+      },
+      {
+        "part": "login",
+        "meaning": "Authenticate and store credentials for subsequent az commands"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--service-principal",
+        "description": "Authenticate as a service principal (for CI/CD pipelines)",
+        "source": "local"
+      },
+      {
+        "flag": "--username APP_ID",
+        "description": "Service principal app ID or user UPN",
+        "source": "local"
+      },
+      {
+        "flag": "--password SECRET",
+        "description": "Service principal client secret or certificate path",
+        "source": "local"
+      },
+      {
+        "flag": "--tenant TENANT_ID",
+        "description": "Azure AD tenant ID to authenticate against",
+        "source": "local"
+      },
+      {
+        "flag": "--use-device-code",
+        "description": "Device code flow — for headless environments without a browser",
+        "source": "local"
+      }
+    ],
+    "example": "az login --service-principal --username $APP_ID --password $CLIENT_SECRET --tenant $TENANT_ID",
+    "output": "[\n  {\n    \"cloudName\": \"AzureCloud\",\n    \"id\": \"12345678-1234-1234-1234-123456789012\",\n    \"isDefault\": true,\n    \"name\": \"My Production Subscription\",\n    \"state\": \"Enabled\",\n    \"tenantId\": \"87654321-4321-4321-4321-987654321098\"\n  }\n]",
+    "tip": "Use --use-device-code in SSH sessions or CI environments without a browser. For CI/CD pipelines, authenticate with a service principal and store APP_ID, CLIENT_SECRET, and TENANT_ID as environment variables — never hardcode them in scripts.",
+    "tags": [
+      "auth",
+      "login",
+      "credentials",
+      "setup"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-account-list",
+    "category": "azure",
+    "command": "az account list --output table",
+    "title": "List subscriptions",
+    "difficulty": "beginner",
+    "description": "Show all Azure subscriptions accessible to the current account, with their names, IDs, and which is currently active.",
+    "breakdown": [
+      {
+        "part": "az account list",
+        "meaning": "List all subscriptions accessible with current credentials"
+      },
+      {
+        "part": "--output table",
+        "meaning": "Render output as an ASCII table"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--output table|json",
+        "description": "Output format — table for human review, json for scripting",
+        "source": "local"
+      },
+      {
+        "flag": "--all",
+        "description": "Include disabled subscriptions in the list",
+        "source": "local"
+      },
+      {
+        "flag": "--refresh",
+        "description": "Fetch fresh subscription data from Azure instead of cached info",
+        "source": "local"
+      },
+      {
+        "flag": "--query",
+        "description": "JMESPath expression to filter or reshape output",
+        "source": "local"
+      }
+    ],
+    "example": "az account list --query '[].{Name:name, ID:id, State:state}' --output table",
+    "output": "Name                    CloudName    SubscriptionId                        State\n----------------------  -----------  ------------------------------------  -------\nProd Subscription       AzureCloud   12345678-1234-1234-1234-123456789012  Enabled\nDev Subscription        AzureCloud   87654321-4321-4321-4321-987654321098  Enabled",
+    "tip": "Run with --refresh after login to ensure the list reflects the latest subscription access. Use 'az account show' to confirm which subscription is currently active before running any resource commands.",
+    "tags": [
+      "subscriptions",
+      "account",
+      "list"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-account-set",
+    "category": "azure",
+    "command": "az account set --subscription 'My Production Subscription'",
+    "title": "Switch active subscription",
+    "difficulty": "beginner",
+    "description": "Set the active Azure subscription for all subsequent commands — persisted to the CLI profile until changed or overridden per-command.",
+    "breakdown": [
+      {
+        "part": "az account set",
+        "meaning": "Change the active subscription for the CLI session"
+      },
+      {
+        "part": "--subscription 'My Production Subscription'",
+        "meaning": "Target subscription by name or GUID"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--subscription NAME|GUID",
+        "description": "Subscription name or ID to activate",
+        "source": "local"
+      }
+    ],
+    "example": "az account set --subscription 12345678-1234-1234-1234-123456789012 && az account show --query name -o tsv",
+    "output": "",
+    "tip": "Use the subscription GUID rather than the name in scripts — display names can change or be duplicated across tenants. Always follow with 'az account show' to verify the correct subscription is active before running destructive commands.",
+    "tags": [
+      "subscriptions",
+      "account",
+      "switch"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-group-list",
+    "category": "azure",
+    "command": "az group list --output table",
+    "title": "List resource groups",
+    "difficulty": "beginner",
+    "description": "Show all resource groups in the active subscription with their names, locations, and provisioning state.",
+    "breakdown": [
+      {
+        "part": "az group list",
+        "meaning": "List all resource groups in the current subscription"
+      },
+      {
+        "part": "--output table",
+        "meaning": "Render as an ASCII table"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--output table|json",
+        "description": "Output format",
+        "source": "local"
+      },
+      {
+        "flag": "--query EXPR",
+        "description": "JMESPath expression to filter results",
+        "source": "local"
+      },
+      {
+        "flag": "--tag KEY=VALUE",
+        "description": "Filter groups by a specific tag",
+        "source": "local"
+      }
+    ],
+    "example": "az group list --query '[?location==`eastus`].{Name:name, State:properties.provisioningState}' --output table",
+    "output": "Name              Location    ProvisioningState\n----------------  ----------  -----------------\nprod-rg           eastus      Succeeded\ndev-rg            westeurope  Succeeded\nstaging-rg        eastus      Succeeded",
+    "tip": "Filter by location with '--query \"[?location=='eastus']\"'. Use 'az group show -n rg-name' for a specific group including full tag details. Delete a group and all its resources at once with 'az group delete -n my-rg --yes --no-wait'.",
+    "tags": [
+      "resource-groups",
+      "organisation",
+      "list"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-group-create",
+    "category": "azure",
+    "command": "az group create --name my-app-rg --location eastus",
+    "title": "Create resource group",
+    "difficulty": "beginner",
+    "description": "Create a new resource group in a specified Azure region — all related resources for a project should share a group for unified management, RBAC, and cleanup.",
+    "breakdown": [
+      {
+        "part": "az group create",
+        "meaning": "Create a new resource group"
+      },
+      {
+        "part": "--name my-app-rg",
+        "meaning": "Name of the resource group — use a consistent naming convention"
+      },
+      {
+        "part": "--location eastus",
+        "meaning": "Azure region where the group's metadata is stored"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--name NAME",
+        "description": "Resource group name",
+        "source": "local"
+      },
+      {
+        "flag": "--location REGION",
+        "description": "Azure region (e.g. eastus, westeurope, australiaeast)",
+        "source": "local"
+      },
+      {
+        "flag": "--tags KEY=VALUE [KEY=VALUE...]",
+        "description": "Tags for cost allocation and policy enforcement",
+        "source": "local"
+      }
+    ],
+    "example": "az group create --name my-app-rg --location eastus --tags env=prod team=platform cost-center=eng",
+    "output": "{\n  \"id\": \"/subscriptions/12345678.../resourceGroups/my-app-rg\",\n  \"location\": \"eastus\",\n  \"name\": \"my-app-rg\",\n  \"properties\": {\n    \"provisioningState\": \"Succeeded\"\n  }\n}",
+    "tip": "Add tags at creation time for cost allocation and policy enforcement — they're much harder to add consistently after resources exist. Resources inherit the group's location by default but can be in a different region.",
+    "tags": [
+      "resource-groups",
+      "create",
+      "organisation"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-vm-list",
+    "category": "azure",
+    "command": "az vm list --resource-group my-rg --show-details --output table",
+    "title": "List virtual machines",
+    "difficulty": "beginner",
+    "description": "Show all VMs in a resource group or across the subscription with their power state, size, OS, and public IP addresses.",
+    "breakdown": [
+      {
+        "part": "az vm list",
+        "meaning": "List virtual machines in the subscription or a resource group"
+      },
+      {
+        "part": "--resource-group my-rg",
+        "meaning": "Scope to a specific resource group — omit to list all VMs in the subscription"
+      },
+      {
+        "part": "--show-details",
+        "meaning": "Include power state and public IPs — requires an extra API call per VM"
+      },
+      {
+        "part": "--output table",
+        "meaning": "Render as an ASCII table"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--resource-group NAME",
+        "description": "Limit to VMs in this resource group",
+        "source": "local"
+      },
+      {
+        "flag": "--show-details",
+        "description": "Include VM power state and network details (slower)",
+        "source": "local"
+      },
+      {
+        "flag": "--query EXPR",
+        "description": "JMESPath filter expression",
+        "source": "local"
+      }
+    ],
+    "example": "az vm list --show-details --query '[].{Name:name, State:powerState, Size:hardwareProfile.vmSize}' --output table",
+    "output": "Name       PowerState   Size           PublicIps\n---------  -----------  -------------  ---------------\nweb-vm-1   VM running   Standard_D2s   40.112.128.10\ndb-vm-1    VM running   Standard_D4s\nweb-vm-2   VM stopped   Standard_D2s",
+    "tip": "Use --show-details to include power state and public IPs in one call — without it you need a separate 'az vm show' per instance. Omit --resource-group to list all VMs across the subscription, but expect a slower response.",
+    "tags": [
+      "vm",
+      "compute",
+      "list",
+      "virtual-machines"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-vm-start",
+    "category": "azure",
+    "command": "az vm start --resource-group my-rg --name my-vm",
+    "title": "Start a virtual machine",
+    "difficulty": "beginner",
+    "description": "Start a stopped or deallocated Azure VM — compute billing resumes and the VM gets a new public IP unless a static IP is assigned.",
+    "breakdown": [
+      {
+        "part": "az vm start",
+        "meaning": "Power on a stopped or deallocated virtual machine"
+      },
+      {
+        "part": "--resource-group my-rg",
+        "meaning": "Resource group containing the VM"
+      },
+      {
+        "part": "--name my-vm",
+        "meaning": "Name of the virtual machine to start"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--resource-group NAME",
+        "description": "Resource group of the VM",
+        "source": "local"
+      },
+      {
+        "flag": "--name VM_NAME",
+        "description": "Virtual machine name",
+        "source": "local"
+      },
+      {
+        "flag": "--no-wait",
+        "description": "Return immediately without waiting for the VM to finish starting",
+        "source": "local"
+      }
+    ],
+    "example": "az vm start --resource-group my-rg --name my-vm --no-wait && az vm wait --resource-group my-rg --name my-vm --running",
+    "output": "",
+    "tip": "Use --no-wait to start asynchronously and continue script execution. Follow with 'az vm wait --running' to block until the VM is fully running. Assign a static public IP to prevent the address changing after each stop/start cycle.",
+    "tags": [
+      "vm",
+      "start",
+      "compute",
+      "virtual-machines"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-vm-deallocate",
+    "category": "azure",
+    "command": "az vm deallocate --resource-group my-rg --name my-vm",
+    "title": "Deallocate VM (stop billing)",
+    "difficulty": "intermediate",
+    "description": "Deallocate a VM to stop compute billing — unlike 'az vm stop', deallocate releases the underlying hardware and stops the compute charge completely.",
+    "breakdown": [
+      {
+        "part": "az vm deallocate",
+        "meaning": "Shut down the VM and release its compute resources to stop billing"
+      },
+      {
+        "part": "--resource-group my-rg",
+        "meaning": "Resource group containing the VM"
+      },
+      {
+        "part": "--name my-vm",
+        "meaning": "Virtual machine name to deallocate"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--resource-group NAME",
+        "description": "Resource group of the VM",
+        "source": "local"
+      },
+      {
+        "flag": "--name VM_NAME",
+        "description": "Virtual machine name",
+        "source": "local"
+      },
+      {
+        "flag": "--no-wait",
+        "description": "Return immediately without waiting for deallocation to complete",
+        "source": "local"
+      }
+    ],
+    "example": "az vm deallocate --resource-group my-rg --name my-vm --no-wait",
+    "output": "",
+    "tip": "Always use 'deallocate' rather than 'az vm stop' — 'az vm stop' shuts the OS down but keeps the VM allocated, so compute costs continue. Disk storage costs still apply when deallocated, but at a fraction of running costs.",
+    "tags": [
+      "vm",
+      "stop",
+      "deallocate",
+      "cost"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-storage-blob-upload",
+    "category": "azure",
+    "command": "az storage blob upload --account-name mystorageaccount --container-name mycontainer --name myfile.txt --file ./myfile.txt --auth-mode login",
+    "title": "Upload blob to storage",
+    "difficulty": "intermediate",
+    "description": "Upload a local file to Azure Blob Storage in a specified container — supports large files, custom metadata, content types, and access tier selection.",
+    "breakdown": [
+      {
+        "part": "az storage blob upload",
+        "meaning": "Upload a single file to a blob container"
+      },
+      {
+        "part": "--account-name mystorageaccount",
+        "meaning": "Storage account name"
+      },
+      {
+        "part": "--container-name mycontainer",
+        "meaning": "Target blob container"
+      },
+      {
+        "part": "--name myfile.txt",
+        "meaning": "Blob name (path) in the container"
+      },
+      {
+        "part": "--file ./myfile.txt",
+        "meaning": "Local source file to upload"
+      },
+      {
+        "part": "--auth-mode login",
+        "meaning": "Authenticate using current Azure CLI login instead of a storage key"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--auth-mode login",
+        "description": "Use Azure AD credentials instead of storage account keys",
+        "source": "local"
+      },
+      {
+        "flag": "--tier Hot|Cool|Archive",
+        "description": "Set the access tier for cost optimisation",
+        "source": "local"
+      },
+      {
+        "flag": "--content-type TYPE",
+        "description": "Set MIME type (e.g. application/json)",
+        "source": "local"
+      },
+      {
+        "flag": "upload-batch --source DIR",
+        "description": "Upload an entire directory to the container",
+        "source": "local"
+      }
+    ],
+    "example": "az storage blob upload-batch --account-name mysa --destination mycontainer --source ./dist --auth-mode login",
+    "output": "Finished[#############################################################]  100.0000%\n{\n  \"etag\": \"\\\"0x8DB12345ABCDEF\\\"\",\n  \"lastModified\": \"2025-03-15T10:30:00+00:00\"\n}",
+    "tip": "Prefer --auth-mode login over storage account keys to avoid managing long-lived credentials. Use 'upload-batch' to upload entire directories. Set --tier Archive for infrequently accessed data to reduce storage costs by ~90%.",
+    "tags": [
+      "storage",
+      "blob",
+      "upload",
+      "files"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-aks-credentials",
+    "category": "azure",
+    "command": "az aks get-credentials --resource-group my-rg --name my-cluster",
+    "title": "Configure kubectl for AKS",
+    "difficulty": "intermediate",
+    "description": "Merge the kubeconfig for an AKS cluster into ~/.kube/config, enabling kubectl commands authenticated via Azure AD credentials.",
+    "breakdown": [
+      {
+        "part": "az aks get-credentials",
+        "meaning": "Fetch AKS cluster credentials and merge into local kubeconfig"
+      },
+      {
+        "part": "--resource-group my-rg",
+        "meaning": "Resource group containing the AKS cluster"
+      },
+      {
+        "part": "--name my-cluster",
+        "meaning": "AKS cluster name"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--resource-group NAME",
+        "description": "Resource group of the cluster",
+        "source": "local"
+      },
+      {
+        "flag": "--name CLUSTER",
+        "description": "AKS cluster name",
+        "source": "local"
+      },
+      {
+        "flag": "--overwrite-existing",
+        "description": "Overwrite existing context with the same name",
+        "source": "local"
+      },
+      {
+        "flag": "--context NAME",
+        "description": "Set a custom context name instead of the cluster name",
+        "source": "local"
+      },
+      {
+        "flag": "--admin",
+        "description": "Get admin kubeconfig — bypasses AAD auth, use sparingly",
+        "source": "local"
+      }
+    ],
+    "example": "az aks get-credentials --resource-group prod-rg --name prod-cluster --overwrite-existing --context prod-aks",
+    "output": "Merged \"prod-cluster\" as current context in /home/user/.kube/config",
+    "tip": "Use --context prod-aks to set a short, memorable context name instead of the cluster name. Use --overwrite-existing in CI pipelines to prevent the command from failing if the context already exists.",
+    "tags": [
+      "aks",
+      "kubernetes",
+      "kubeconfig",
+      "cluster"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-acr-login",
+    "category": "azure",
+    "command": "az acr login --name myregistry",
+    "title": "Login to container registry",
+    "difficulty": "beginner",
+    "description": "Authenticate Docker to push and pull images from Azure Container Registry using current Azure credentials — token is valid for 3 hours.",
+    "breakdown": [
+      {
+        "part": "az acr login",
+        "meaning": "Authenticate Docker to an Azure Container Registry"
+      },
+      {
+        "part": "--name myregistry",
+        "meaning": "ACR registry name (without .azurecr.io suffix)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--name REGISTRY",
+        "description": "Container registry name",
+        "source": "local"
+      },
+      {
+        "flag": "--expose-token",
+        "description": "Return the raw token instead of logging Docker in — for environments without Docker",
+        "source": "local"
+      },
+      {
+        "flag": "--resource-group NAME",
+        "description": "Specify the resource group if the registry name is ambiguous",
+        "source": "local"
+      }
+    ],
+    "example": "az acr login --name myregistry && docker push myregistry.azurecr.io/myapp:latest",
+    "output": "Login Succeeded",
+    "tip": "The ACR hostname format is registryname.azurecr.io. Use --expose-token for environments running containerd or Podman instead of Docker. Enable 'Admin user' on the registry only as a fallback — prefer service principal auth in CI pipelines.",
+    "tags": [
+      "acr",
+      "docker",
+      "registry",
+      "auth"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-webapp-list",
+    "category": "azure",
+    "command": "az webapp list --resource-group my-rg --output table",
+    "title": "List App Service apps",
+    "difficulty": "beginner",
+    "description": "Show all App Service web apps in a resource group with their names, state, location, and default hostname.",
+    "breakdown": [
+      {
+        "part": "az webapp list",
+        "meaning": "List all App Service web apps in the subscription or resource group"
+      },
+      {
+        "part": "--resource-group my-rg",
+        "meaning": "Scope the list to a specific resource group"
+      },
+      {
+        "part": "--output table",
+        "meaning": "Render as ASCII table"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--resource-group NAME",
+        "description": "Filter by resource group",
+        "source": "local"
+      },
+      {
+        "flag": "--query EXPR",
+        "description": "JMESPath expression to extract specific fields",
+        "source": "local"
+      },
+      {
+        "flag": "log tail --name APP -g RG",
+        "description": "Stream live application logs from App Service",
+        "source": "local"
+      }
+    ],
+    "example": "az webapp list --query '[].{Name:name, State:state, URL:defaultHostName}' --output table",
+    "output": "Name            State    URL\n--------------  -------  ---------------------------------\nmy-web-app      Running  my-web-app.azurewebsites.net\nmy-api-app      Running  my-api-app.azurewebsites.net\nmy-staging      Stopped  my-staging.azurewebsites.net",
+    "tip": "Use 'az webapp log tail -n myapp -g myrg' to stream live application logs. Deploy a ZIP package with 'az webapp deployment source config-zip -g myrg -n myapp --src app.zip' — no full CI pipeline required for quick deployments.",
+    "tags": [
+      "webapp",
+      "app-service",
+      "hosting",
+      "deployment"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-keyvault-secret",
+    "category": "azure",
+    "command": "az keyvault secret show --vault-name my-vault --name db-password",
+    "title": "Read Key Vault secret",
+    "difficulty": "intermediate",
+    "description": "Retrieve a secret value from Azure Key Vault — returns the secret string along with version ID, expiry date, and enabled status.",
+    "breakdown": [
+      {
+        "part": "az keyvault secret show",
+        "meaning": "Retrieve the current value and metadata for a Key Vault secret"
+      },
+      {
+        "part": "--vault-name my-vault",
+        "meaning": "Name of the Key Vault"
+      },
+      {
+        "part": "--name db-password",
+        "meaning": "Secret name within the vault"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--vault-name NAME",
+        "description": "Key Vault name",
+        "source": "local"
+      },
+      {
+        "flag": "--name SECRET",
+        "description": "Secret name",
+        "source": "local"
+      },
+      {
+        "flag": "--version ID",
+        "description": "Retrieve a specific version of the secret",
+        "source": "local"
+      },
+      {
+        "flag": "--query value",
+        "description": "Extract just the secret value field",
+        "source": "local"
+      }
+    ],
+    "example": "az keyvault secret show --vault-name my-vault --name db-password --query value --output tsv",
+    "output": "{\n  \"id\": \"https://my-vault.vault.azure.net/secrets/db-password/abc123def456\",\n  \"name\": \"db-password\",\n  \"value\": \"my-secret-value\",\n  \"attributes\": {\n    \"enabled\": true,\n    \"expires\": \"2026-01-01T00:00:00+00:00\"\n  }\n}",
+    "tip": "Use '--query value --output tsv' to extract just the secret value for scripting. In App Service and Functions, reference secrets directly with Key Vault references (@Microsoft.KeyVault(SecretUri=...)) in app settings — eliminates runtime CLI calls entirely.",
+    "tags": [
+      "keyvault",
+      "secrets",
+      "security",
+      "credentials"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-network-vnet-list",
+    "category": "azure",
+    "command": "az network vnet list --resource-group my-rg --output table",
+    "title": "List virtual networks",
+    "difficulty": "intermediate",
+    "description": "Show all virtual networks in a resource group with their address spaces and subnet counts — starting point for diagnosing connectivity and peering issues.",
+    "breakdown": [
+      {
+        "part": "az network vnet list",
+        "meaning": "List virtual networks in the subscription or a resource group"
+      },
+      {
+        "part": "--resource-group my-rg",
+        "meaning": "Scope to a specific resource group"
+      },
+      {
+        "part": "--output table",
+        "meaning": "Render as ASCII table"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--resource-group NAME",
+        "description": "Filter to a specific resource group",
+        "source": "local"
+      },
+      {
+        "flag": "--query EXPR",
+        "description": "JMESPath to extract address spaces or subnet names",
+        "source": "local"
+      },
+      {
+        "flag": "show -n NAME -g RG",
+        "description": "Get full details of a specific VNet including subnets and peerings",
+        "source": "local"
+      }
+    ],
+    "example": "az network vnet show --resource-group my-rg --name my-vnet --query '{Name:name, Space:addressSpace.addressPrefixes, Subnets:subnets[*].name}'",
+    "output": "Name      Location  AddressSpace   NumSubnets\n--------  --------  -------------  ----------\nmy-vnet   eastus    10.0.0.0/16    3\nprod-net  eastus    172.16.0.0/12  5",
+    "tip": "Use 'az network vnet show' with --query to inspect subnet CIDR ranges, NSG associations, and service endpoints. Use 'az network vnet peering list --vnet-name myvnet -g myrg' to check VNet-to-VNet connections and their sync state.",
+    "tags": [
+      "networking",
+      "vnet",
+      "subnets",
+      "connectivity"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-role-assignment-list",
+    "category": "azure",
+    "command": "az role assignment list --assignee user@example.com --output table",
+    "title": "List RBAC role assignments",
+    "difficulty": "intermediate",
+    "description": "Show all Azure RBAC role assignments for a user, service principal, or group — essential for auditing access and troubleshooting permission denied errors.",
+    "breakdown": [
+      {
+        "part": "az role assignment list",
+        "meaning": "List role assignments at subscription, resource group, or resource scope"
+      },
+      {
+        "part": "--assignee user@example.com",
+        "meaning": "Filter to assignments for a specific user, service principal, or group by UPN or object ID"
+      },
+      {
+        "part": "--output table",
+        "meaning": "Render as ASCII table"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--assignee UPN|OBJECT_ID",
+        "description": "Filter by user, service principal, or group",
+        "source": "local"
+      },
+      {
+        "flag": "--scope RESOURCE_ID",
+        "description": "Limit to a specific resource scope",
+        "source": "local"
+      },
+      {
+        "flag": "--resource-group NAME",
+        "description": "Limit to resource group scope",
+        "source": "local"
+      },
+      {
+        "flag": "--all",
+        "description": "Include all assignments in the subscription, not just the current scope",
+        "source": "local"
+      },
+      {
+        "flag": "--include-inherited",
+        "description": "Show assignments inherited from parent scopes",
+        "source": "local"
+      }
+    ],
+    "example": "az role assignment list --assignee user@example.com --all --include-inherited --output table",
+    "output": "Principal             Role          Scope\n--------------------  ------------  ----------------------------------\nuser@example.com      Contributor   /subscriptions/12345678...\nuser@example.com      Reader        /subscriptions/.../resourceGroups/prod-rg",
+    "tip": "Use --all --include-inherited to see the full effective permission set, not just direct assignments at the current scope. Use 'az role definition list --name Contributor --output json' to see what actions a given role actually permits.",
+    "tags": [
+      "rbac",
+      "permissions",
+      "roles",
+      "security"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-monitor-log-query",
+    "category": "azure",
+    "command": "az monitor log-analytics query --workspace my-workspace-id --analytics-query 'AzureActivity | limit 20'",
+    "title": "Query Log Analytics",
+    "difficulty": "advanced",
+    "description": "Run a KQL (Kusto Query Language) query against a Log Analytics workspace to search logs and metrics from Azure services.",
+    "breakdown": [
+      {
+        "part": "az monitor log-analytics query",
+        "meaning": "Execute a KQL query against a Log Analytics workspace"
+      },
+      {
+        "part": "--workspace my-workspace-id",
+        "meaning": "Log Analytics workspace ID (a GUID, not the workspace name)"
+      },
+      {
+        "part": "--analytics-query 'AzureActivity | limit 20'",
+        "meaning": "KQL query string — pipe-based syntax similar to bash"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--workspace GUID",
+        "description": "Workspace customer ID (GUID) — find with 'az monitor log-analytics workspace show --query customerId'",
+        "source": "local"
+      },
+      {
+        "flag": "--analytics-query KQL",
+        "description": "KQL query string",
+        "source": "local"
+      },
+      {
+        "flag": "--timespan DURATION",
+        "description": "ISO 8601 duration (e.g. P1D = last 24h, PT1H = last hour)",
+        "source": "local"
+      }
+    ],
+    "example": "az monitor log-analytics query --workspace $(az monitor log-analytics workspace show -n myws -g myrg --query customerId -o tsv) --analytics-query 'ContainerLog | where LogEntry contains \"ERROR\" | limit 50' --timespan PT1H",
+    "output": "[\n  {\n    \"TimeGenerated\": \"2025-03-15T10:30:00Z\",\n    \"LogEntry\": \"ERROR: Database connection timeout after 30s\"\n  }\n]",
+    "tip": "The --workspace value must be the workspace GUID (customerId), not its display name — use the subshell pattern in the example to look it up automatically. Use --timespan P1D for last 24 hours (ISO 8601 duration format).",
+    "tags": [
+      "monitoring",
+      "logs",
+      "kql",
+      "log-analytics"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-container-create",
+    "category": "azure",
+    "command": "az container create --resource-group my-rg --name my-container --image nginx:latest --ports 80 --dns-name-label my-app",
+    "title": "Run a container (ACI)",
+    "difficulty": "intermediate",
+    "description": "Deploy a Docker container using Azure Container Instances — serverless container hosting billed per second, no cluster management required.",
+    "breakdown": [
+      {
+        "part": "az container create",
+        "meaning": "Create and start a container group in Azure Container Instances"
+      },
+      {
+        "part": "--resource-group my-rg",
+        "meaning": "Resource group to deploy the container into"
+      },
+      {
+        "part": "--name my-container",
+        "meaning": "Container group name"
+      },
+      {
+        "part": "--image nginx:latest",
+        "meaning": "Docker image to run"
+      },
+      {
+        "part": "--ports 80",
+        "meaning": "Ports to expose publicly"
+      },
+      {
+        "part": "--dns-name-label my-app",
+        "meaning": "DNS label — container is reachable at my-app.region.azurecontainer.io"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--image IMAGE",
+        "description": "Docker image (public or from ACR)",
+        "source": "local"
+      },
+      {
+        "flag": "--ports PORT [PORT...]",
+        "description": "Ports to expose",
+        "source": "local"
+      },
+      {
+        "flag": "--cpu N",
+        "description": "CPU cores to allocate (e.g. 1, 2)",
+        "source": "local"
+      },
+      {
+        "flag": "--memory GB",
+        "description": "Memory in GB to allocate",
+        "source": "local"
+      },
+      {
+        "flag": "--environment-variables KEY=VALUE",
+        "description": "Environment variables passed to the container",
+        "source": "local"
+      },
+      {
+        "flag": "--registry-login-server URL",
+        "description": "Private registry hostname (for ACR images)",
+        "source": "local"
+      }
+    ],
+    "example": "az container create --resource-group my-rg --name my-job --image myregistry.azurecr.io/processor:latest --registry-login-server myregistry.azurecr.io --cpu 2 --memory 4 --restart-policy Never",
+    "output": "{\n  \"name\": \"my-container\",\n  \"properties\": {\n    \"provisioningState\": \"Succeeded\",\n    \"ipAddress\": {\"fqdn\": \"my-app.eastus.azurecontainer.io\", \"ip\": \"40.112.128.10\"}\n  }\n}",
+    "tip": "ACI is ideal for short-lived batch jobs and one-off tasks — no cluster overhead, billed per second. Use --restart-policy Never for batch jobs that should not restart. Use 'az container logs -n my-container -g my-rg' for output and 'az container delete' to stop billing.",
+    "tags": [
+      "aci",
+      "containers",
+      "serverless",
+      "docker"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-functionapp-list",
+    "category": "azure",
+    "command": "az functionapp list --resource-group my-rg --output table",
+    "title": "List Function Apps",
+    "difficulty": "beginner",
+    "description": "Show all Azure Function Apps in a resource group with their state, location, and runtime — the starting point for managing and deploying serverless functions.",
+    "breakdown": [
+      {
+        "part": "az functionapp list",
+        "meaning": "List Azure Function Apps in the subscription or resource group"
+      },
+      {
+        "part": "--resource-group my-rg",
+        "meaning": "Scope to a specific resource group"
+      },
+      {
+        "part": "--output table",
+        "meaning": "Render as ASCII table"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--resource-group NAME",
+        "description": "Filter to a specific resource group",
+        "source": "local"
+      },
+      {
+        "flag": "--query EXPR",
+        "description": "JMESPath expression to extract specific fields",
+        "source": "local"
+      },
+      {
+        "flag": "show -n NAME -g RG",
+        "description": "Show full details including runtime stack and app settings keys",
+        "source": "local"
+      }
+    ],
+    "example": "az functionapp show --resource-group my-rg --name my-func --query '{Name:name, State:state, Runtime:siteConfig.linuxFxVersion}'",
+    "output": "Name              State    Location    Kind\n----------------  -------  ----------  --------\nmy-func-app       Running  East US     functionapp\ndata-processor    Running  East US     functionapp",
+    "tip": "Deploy a ZIP package with 'az functionapp deployment source config-zip -g myrg -n myfunc --src func.zip'. Stream live logs with 'az webapp log tail -n myfunc -g myrg'. Check runtime version with 'az functionapp show --query siteConfig.linuxFxVersion'.",
+    "tags": [
+      "functions",
+      "serverless",
+      "deployment",
+      "compute"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-ad-user-create",
+    "category": "azure",
+    "command": "az ad user create --display-name \"Jane Doe\" --user-principal-name jane@contoso.com --password TempP@ss1 --force-change-password-next-sign-in true",
+    "title": "Create Azure AD user",
+    "difficulty": "intermediate",
+    "description": "Create a new user account in Azure Active Directory with a temporary password that must be changed on first login — used for onboarding employees or service accounts.",
+    "breakdown": [
+      {
+        "part": "az ad user create",
+        "meaning": "Create a new user object in Azure AD (Entra ID)"
+      },
+      {
+        "part": "--display-name \"Jane Doe\"",
+        "meaning": "Full display name shown in the directory and email clients"
+      },
+      {
+        "part": "--user-principal-name jane@contoso.com",
+        "meaning": "UPN — the login email address for the user"
+      },
+      {
+        "part": "--password TempP@ss1",
+        "meaning": "Initial password; must meet the tenant password policy"
+      },
+      {
+        "part": "--force-change-password-next-sign-in true",
+        "meaning": "Require password reset on first login — best practice for onboarding"
+      }
+    ],
+    "example": "az ad user create --display-name \"Jane Doe\" --user-principal-name jane@contoso.com --password \"TempP@ss$(date +%Y)!\" --force-change-password-next-sign-in true --mail-nickname jane",
+    "output": "{\n  \"displayName\": \"Jane Doe\",\n  \"id\": \"aaaa1111-bbbb-cccc-dddd-eeeeffffgggg\",\n  \"userPrincipalName\": \"jane@contoso.com\",\n  \"accountEnabled\": true\n}",
+    "tip": "Always set --force-change-password-next-sign-in true when creating accounts so the temp password is never the long-term credential. Prefer automating bulk user creation from CSV with a loop over this command rather than using the portal, which does not scale.",
+    "tags": [
+      "azure-ad",
+      "users",
+      "identity",
+      "iam"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-ad-user-list",
+    "category": "azure",
+    "command": "az ad user list --output table --query \"[].{Name:displayName, UPN:userPrincipalName, Enabled:accountEnabled}\"",
+    "title": "List Azure AD users",
+    "difficulty": "beginner",
+    "description": "Retrieve all user accounts from Azure Active Directory with their display names, login UPNs, and enabled state — useful for audits and bulk operations.",
+    "breakdown": [
+      {
+        "part": "az ad user list",
+        "meaning": "List all users in the Azure AD tenant"
+      },
+      {
+        "part": "--output table",
+        "meaning": "Format the result as a human-readable ASCII table"
+      },
+      {
+        "part": "--query \"[].{Name:displayName, UPN:userPrincipalName, Enabled:accountEnabled}\"",
+        "meaning": "JMESPath projection to show only the three most relevant fields"
+      }
+    ],
+    "example": "az ad user list --filter \"accountEnabled eq true\" --query \"[].{Name:displayName, UPN:userPrincipalName}\" --output table",
+    "output": "Name          UPN                       Enabled\n------------  ------------------------  -------\nJane Doe      jane@contoso.com          True\nJohn Smith    john@contoso.com          True\nOld Account   former@contoso.com        False",
+    "tip": "Use --filter with OData syntax (e.g. \"accountEnabled eq true\" or \"startswith(displayName,'A')\") to reduce API response size. Large tenants can return thousands of users; always filter in CI scripts to avoid token-size errors and slow queries.",
+    "tags": [
+      "azure-ad",
+      "users",
+      "identity",
+      "audit"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-ad-user-delete",
+    "category": "azure",
+    "command": "az ad user delete --id jane@contoso.com",
+    "title": "Delete Azure AD user",
+    "difficulty": "intermediate",
+    "description": "Permanently delete a user account from Azure Active Directory — removes sign-in access immediately and the account lands in the 30-day soft-delete recycle bin.",
+    "breakdown": [
+      {
+        "part": "az ad user delete",
+        "meaning": "Delete a user from Azure AD (soft-delete, recoverable for 30 days)"
+      },
+      {
+        "part": "--id jane@contoso.com",
+        "meaning": "Identify the user by UPN, object ID, or email address"
+      }
+    ],
+    "example": "az ad user delete --id $(az ad user show --id jane@contoso.com --query id --output tsv)",
+    "output": "",
+    "tip": "Deletion is soft — the user lands in the AAD recycle bin for 30 days and can be restored with \"az ad user restore --id OBJECT_ID\". Revoke active tokens immediately after deletion by also running \"az ad user revoke-sign-in-sessions --id UPN\" to terminate live sessions.",
+    "tags": [
+      "azure-ad",
+      "users",
+      "identity",
+      "offboarding"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-ad-user-update",
+    "category": "azure",
+    "command": "az ad user update --id jane@contoso.com --display-name \"Jane A. Doe\" --account-enabled true",
+    "title": "Update Azure AD user",
+    "difficulty": "intermediate",
+    "description": "Modify attributes of an existing Azure AD user account — change display names, enable or disable accounts, set department, or force a password reset.",
+    "breakdown": [
+      {
+        "part": "az ad user update",
+        "meaning": "Update attributes of an existing Azure AD user object"
+      },
+      {
+        "part": "--id jane@contoso.com",
+        "meaning": "Target user identified by UPN or object ID"
+      },
+      {
+        "part": "--display-name \"Jane A. Doe\"",
+        "meaning": "New display name to set for the account"
+      },
+      {
+        "part": "--account-enabled true",
+        "meaning": "Re-enable a previously disabled account (or set false to disable)"
+      }
+    ],
+    "example": "az ad user update --id jane@contoso.com --account-enabled false --force-change-password-next-sign-in true",
+    "output": "",
+    "tip": "To disable a user without deleting (e.g. a leaver who may return), set --account-enabled false — this blocks login instantly without losing group memberships or license assignments. Pair with --force-change-password-next-sign-in true when handing over accounts.",
+    "tags": [
+      "azure-ad",
+      "users",
+      "identity",
+      "iam"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-ad-group-create",
+    "category": "azure",
+    "command": "az ad group create --display-name \"Platform Engineers\" --mail-nickname platform-engineers",
+    "title": "Create Azure AD group",
+    "difficulty": "intermediate",
+    "description": "Create a security group in Azure AD to manage access collectively — assign RBAC roles or application permissions to the group instead of individual users.",
+    "breakdown": [
+      {
+        "part": "az ad group create",
+        "meaning": "Create a new security or Microsoft 365 group in Azure AD"
+      },
+      {
+        "part": "--display-name \"Platform Engineers\"",
+        "meaning": "Human-readable group name shown in the portal and IAM views"
+      },
+      {
+        "part": "--mail-nickname platform-engineers",
+        "meaning": "Short alias used for the group email address and internal identifier"
+      }
+    ],
+    "example": "az ad group create --display-name \"Platform Engineers\" --mail-nickname platform-engineers --description \"Team responsible for shared infrastructure\"",
+    "output": "{\n  \"displayName\": \"Platform Engineers\",\n  \"id\": \"bbbb2222-cccc-dddd-eeee-ffffgggggggg\",\n  \"mailNickname\": \"platform-engineers\",\n  \"securityEnabled\": true\n}",
+    "tip": "Assign RBAC roles to groups rather than individual users — when someone joins or leaves the team you only update group membership, not every resource role assignment. Use the returned group object ID when running \"az role assignment create --assignee-object-id\".",
+    "tags": [
+      "azure-ad",
+      "groups",
+      "rbac",
+      "identity"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-ad-group-member-add",
+    "category": "azure",
+    "command": "az ad group member add --group \"Platform Engineers\" --member-id <user-object-id>",
+    "title": "Add member to Azure AD group",
+    "difficulty": "intermediate",
+    "description": "Add a user, service principal, or nested group to an Azure AD security group — the member inherits all RBAC and app roles assigned to the group immediately.",
+    "breakdown": [
+      {
+        "part": "az ad group member add",
+        "meaning": "Add a member (user, SP, or group) to an Azure AD group"
+      },
+      {
+        "part": "--group \"Platform Engineers\"",
+        "meaning": "Target group identified by display name or object ID"
+      },
+      {
+        "part": "--member-id <user-object-id>",
+        "meaning": "Object ID of the user, service principal, or nested group to add"
+      }
+    ],
+    "example": "USER_OID=$(az ad user show --id jane@contoso.com --query id --output tsv) && az ad group member add --group \"Platform Engineers\" --member-id \"$USER_OID\"",
+    "output": "",
+    "tip": "The --member-id must be an Azure AD object ID, not a UPN or email — use \"az ad user show --id UPN --query id -o tsv\" to resolve it first. Check current membership with \"az ad group member list --group GROUP_NAME --output table\" before adding to avoid duplicates.",
+    "tags": [
+      "azure-ad",
+      "groups",
+      "identity",
+      "iam"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-ad-sp-create",
+    "category": "azure",
+    "command": "az ad sp create-for-rbac --name my-cicd-sp --role Contributor --scopes /subscriptions/<subscription-id>/resourceGroups/my-rg",
+    "title": "Create service principal for automation",
+    "difficulty": "intermediate",
+    "description": "Create an Azure AD service principal with a client secret and assign it an RBAC role — the standard way to grant non-human identities (CI/CD pipelines, scripts) access to Azure resources.",
+    "breakdown": [
+      {
+        "part": "az ad sp create-for-rbac",
+        "meaning": "Create a new app registration and service principal together with a client secret"
+      },
+      {
+        "part": "--name my-cicd-sp",
+        "meaning": "Display name for the service principal in the Azure AD app list"
+      },
+      {
+        "part": "--role Contributor",
+        "meaning": "Built-in RBAC role to assign — use the minimum required role (Reader, Contributor, or custom)"
+      },
+      {
+        "part": "--scopes /subscriptions/<subscription-id>/resourceGroups/my-rg",
+        "meaning": "Resource scope for the role assignment — prefer resource group over full subscription"
+      }
+    ],
+    "example": "az ad sp create-for-rbac --name my-cicd-sp --role Contributor --scopes /subscriptions/$SUB_ID/resourceGroups/my-rg --sdk-auth",
+    "output": "{\n  \"clientId\": \"aaaaaaaa-1111-2222-3333-bbbbbbbbbbbb\",\n  \"clientSecret\": \"xxxx~xxxx~xxxx\",\n  \"subscriptionId\": \"12345678-...\",\n  \"tenantId\": \"87654321-...\",\n  \"activeDirectoryEndpointUrl\": \"https://login.microsoftonline.com\"\n}",
+    "tip": "Scope the role assignment to a resource group rather than the whole subscription to limit blast radius. The generated client secret expires — set a calendar reminder to rotate it before expiry with \"az ad sp credential reset --id APP_ID\". Store the output JSON as a CI/CD secret, not in code.",
+    "tags": [
+      "service-principal",
+      "rbac",
+      "automation",
+      "cicd"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-resource-list",
+    "category": "azure",
+    "command": "az resource list --resource-group my-rg --output table",
+    "title": "List all resources in a group",
+    "difficulty": "beginner",
+    "description": "Show every Azure resource in a resource group or subscription regardless of type — a fast way to inventory what exists before making changes or estimating costs.",
+    "breakdown": [
+      {
+        "part": "az resource list",
+        "meaning": "List resources across all types in the active subscription or a resource group"
+      },
+      {
+        "part": "--resource-group my-rg",
+        "meaning": "Scope the listing to a single resource group — omit to search the whole subscription"
+      },
+      {
+        "part": "--output table",
+        "meaning": "Render as ASCII table with Name, ResourceGroup, Location, Type columns"
+      }
+    ],
+    "example": "az resource list --resource-group my-rg --query \"[].{Name:name, Type:type, Location:location}\" --output table",
+    "output": "Name              Type                                    Location\n----------------  --------------------------------------  --------\nmy-vm             Microsoft.Compute/virtualMachines       eastus\nmy-vnet           Microsoft.Network/virtualNetworks       eastus\nmy-storage        Microsoft.Storage/storageAccounts       eastus",
+    "tip": "Filter by resource type with \"--resource-type Microsoft.Compute/virtualMachines\" to narrow results. Use \"--tag env=prod\" to list only tagged resources — essential for cost tracking. Combine with \"az resource delete\" for bulk cleanup of non-prod environments.",
+    "tags": [
+      "resources",
+      "inventory",
+      "list",
+      "audit"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-resource-delete",
+    "category": "azure",
+    "command": "az resource delete --ids <resource-id> --verbose",
+    "title": "Delete a resource by ID",
+    "difficulty": "intermediate",
+    "description": "Delete any Azure resource by its full resource ID — useful for bulk cleanup via scripted loops or when the resource-type-specific subcommand is not available.",
+    "breakdown": [
+      {
+        "part": "az resource delete",
+        "meaning": "Delete an Azure resource using its full ARM resource ID"
+      },
+      {
+        "part": "--ids <resource-id>",
+        "meaning": "One or more full resource IDs (space-separated); get IDs from \"az resource list --query [].id\""
+      },
+      {
+        "part": "--verbose",
+        "meaning": "Print detailed request/response info — useful for diagnosing failed deletions"
+      }
+    ],
+    "example": "az resource list --resource-group old-rg --query \"[].id\" --output tsv | xargs az resource delete --ids",
+    "output": "",
+    "tip": "Pass multiple IDs to --ids in a single call to batch-delete — more efficient than looping. For whole environments, \"az group delete -n rg-name --yes --no-wait\" deletes the group and all contained resources in one command and is generally faster than individual resource deletions.",
+    "tags": [
+      "resources",
+      "delete",
+      "cleanup",
+      "automation"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-deployment-group-create",
+    "category": "azure",
+    "command": "az deployment group create --resource-group my-rg --template-file azuredeploy.json --parameters @azuredeploy.parameters.json",
+    "title": "Deploy ARM template",
+    "difficulty": "advanced",
+    "description": "Deploy an Azure Resource Manager (ARM) template to a resource group — the native infrastructure-as-code mechanism for provisioning any Azure resource declaratively.",
+    "breakdown": [
+      {
+        "part": "az deployment group create",
+        "meaning": "Start an ARM template deployment scoped to a resource group"
+      },
+      {
+        "part": "--resource-group my-rg",
+        "meaning": "Target resource group for the deployment"
+      },
+      {
+        "part": "--template-file azuredeploy.json",
+        "meaning": "Path to the ARM template JSON file (or Bicep file if Bicep CLI is installed)"
+      },
+      {
+        "part": "--parameters @azuredeploy.parameters.json",
+        "meaning": "Parameter file prefixed with @ to pass values into the template; can also pass inline KEY=VALUE pairs"
+      }
+    ],
+    "example": "az deployment group create --resource-group my-rg --template-file main.bicep --parameters env=prod location=eastus --what-if",
+    "output": "{\n  \"properties\": {\n    \"provisioningState\": \"Succeeded\",\n    \"correlationId\": \"abc123\",\n    \"deploymentName\": \"azuredeploy-20250315\"\n  }\n}",
+    "tip": "Add --what-if to preview resource changes before deploying — equivalent to Terraform plan. Use --mode Complete only when you intend to delete resources not defined in the template; default mode is Incremental, which is safer. Bicep files are compiled automatically when passed to --template-file if the Bicep CLI is installed.",
+    "tags": [
+      "arm",
+      "iac",
+      "deployment",
+      "templates"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-storage-account-create",
+    "category": "azure",
+    "command": "az storage account create --name mystorageacct --resource-group my-rg --location eastus --sku Standard_LRS --kind StorageV2",
+    "title": "Create storage account",
+    "difficulty": "intermediate",
+    "description": "Provision a new Azure Storage account that can host blobs, queues, tables, and file shares — select the replication SKU based on durability requirements and cost budget.",
+    "breakdown": [
+      {
+        "part": "az storage account create",
+        "meaning": "Create a new Azure Storage account in a resource group"
+      },
+      {
+        "part": "--name mystorageacct",
+        "meaning": "Storage account name — globally unique, 3-24 lowercase alphanumeric characters"
+      },
+      {
+        "part": "--resource-group my-rg",
+        "meaning": "Resource group to place the account in"
+      },
+      {
+        "part": "--location eastus",
+        "meaning": "Azure region for the primary storage endpoint"
+      },
+      {
+        "part": "--sku Standard_LRS",
+        "meaning": "Replication type: LRS=local, ZRS=zone, GRS=geo, RAGRS=read-access geo"
+      },
+      {
+        "part": "--kind StorageV2",
+        "meaning": "Account kind — StorageV2 is recommended for all new accounts; supports all features"
+      }
+    ],
+    "example": "az storage account create --name mystorageacct --resource-group my-rg --location eastus --sku Standard_GRS --kind StorageV2 --allow-blob-public-access false --min-tls-version TLS1_2",
+    "output": "{\n  \"name\": \"mystorageacct\",\n  \"kind\": \"StorageV2\",\n  \"location\": \"eastus\",\n  \"sku\": {\"name\": \"Standard_LRS\"},\n  \"primaryEndpoints\": {\n    \"blob\": \"https://mystorageacct.blob.core.windows.net/\"\n  }\n}",
+    "tip": "Set --allow-blob-public-access false and --min-tls-version TLS1_2 at creation time to harden the account by default — these are not the defaults in all regions. Use Standard_GRS or Standard_RAGRS for production data that requires geo-redundancy and SLA guarantees.",
+    "tags": [
+      "storage",
+      "blob",
+      "create",
+      "infrastructure"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-network-nsg-rule-add",
+    "category": "azure",
+    "command": "az network nsg rule create --resource-group my-rg --nsg-name my-nsg --name AllowHTTPS --priority 100 --protocol Tcp --destination-port-ranges 443 --access Allow --direction Inbound",
+    "title": "Add NSG inbound rule",
+    "difficulty": "intermediate",
+    "description": "Add an inbound security rule to an Azure Network Security Group — controls which traffic is allowed into a subnet or network interface on a specific port and protocol.",
+    "breakdown": [
+      {
+        "part": "az network nsg rule create",
+        "meaning": "Create a new rule inside an existing Network Security Group"
+      },
+      {
+        "part": "--resource-group my-rg",
+        "meaning": "Resource group containing the NSG"
+      },
+      {
+        "part": "--nsg-name my-nsg",
+        "meaning": "Name of the NSG to modify"
+      },
+      {
+        "part": "--name AllowHTTPS",
+        "meaning": "Descriptive rule name — use a convention like Allow/Deny + Protocol + Port"
+      },
+      {
+        "part": "--priority 100",
+        "meaning": "Rule evaluation order — lower numbers are processed first (100–4096); must be unique per NSG"
+      },
+      {
+        "part": "--protocol Tcp",
+        "meaning": "Network protocol: Tcp, Udp, or * (any)"
+      },
+      {
+        "part": "--destination-port-ranges 443",
+        "meaning": "Port(s) to allow or deny; use ranges like 8000-8080 or * for any"
+      },
+      {
+        "part": "--access Allow",
+        "meaning": "Action: Allow or Deny traffic matching this rule"
+      },
+      {
+        "part": "--direction Inbound",
+        "meaning": "Traffic direction: Inbound (incoming to resource) or Outbound"
+      }
+    ],
+    "example": "az network nsg rule create --resource-group my-rg --nsg-name my-nsg --name AllowSSHFromCorp --priority 200 --protocol Tcp --source-address-prefixes 10.0.0.0/8 --destination-port-ranges 22 --access Allow --direction Inbound",
+    "output": "{\n  \"name\": \"AllowHTTPS\",\n  \"priority\": 100,\n  \"protocol\": \"Tcp\",\n  \"access\": \"Allow\",\n  \"direction\": \"Inbound\",\n  \"destinationPortRange\": \"443\",\n  \"provisioningState\": \"Succeeded\"\n}",
+    "tip": "Restrict --source-address-prefixes to known IP ranges rather than * (any) — especially for SSH (22) and RDP (3389). Use priority gaps (100, 200, 300) rather than consecutive numbers so you can insert rules later without renumbering. View effective rules with \"az network nic show-effective-nsg -n NIC -g RG\".",
+    "tags": [
+      "networking",
+      "nsg",
+      "security",
+      "firewall"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "az-lock-create",
+    "category": "azure",
+    "command": "az lock create --name no-delete --resource-group my-rg --lock-type CanNotDelete",
+    "title": "Create resource lock",
+    "difficulty": "intermediate",
+    "description": "Apply a management lock to a resource group or individual resource to prevent accidental deletion or modification — even subscription owners cannot bypass locks without removing them first.",
+    "breakdown": [
+      {
+        "part": "az lock create",
+        "meaning": "Create an Azure management lock on a subscription, resource group, or individual resource"
+      },
+      {
+        "part": "--name no-delete",
+        "meaning": "Lock name — descriptive so teams understand its purpose"
+      },
+      {
+        "part": "--resource-group my-rg",
+        "meaning": "Apply the lock to the entire resource group and all resources within it"
+      },
+      {
+        "part": "--lock-type CanNotDelete",
+        "meaning": "Lock type: CanNotDelete (read and modify allowed, delete blocked) or ReadOnly (all changes blocked)"
+      }
+    ],
+    "example": "az lock create --name protect-prod-db --resource-group prod-rg --resource-name prod-sql --resource-type Microsoft.Sql/servers --lock-type CanNotDelete --notes \"Contact DBA team before removing\"",
+    "output": "{\n  \"id\": \"/subscriptions/.../resourceGroups/my-rg/providers/Microsoft.Authorization/locks/no-delete\",\n  \"level\": \"CanNotDelete\",\n  \"name\": \"no-delete\"\n}",
+    "tip": "Use CanNotDelete for production databases and storage accounts to prevent accidental destruction in runbook mistakes. ReadOnly is stricter — it also blocks writes, which can break services that need to update resource metadata. List all locks with \"az lock list --resource-group my-rg\" before deleting resources.",
+    "tags": [
+      "governance",
+      "security",
+      "locks",
+      "protection"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "azps-connect",
+    "category": "azure",
+    "command": "Connect-AzAccount -TenantId $tenantId -SubscriptionId $subscriptionId",
+    "title": "Connect to Azure (PowerShell)",
+    "difficulty": "beginner",
+    "description": "Authenticate to Azure using the Az PowerShell module — opens an interactive browser login, with support for service principal and managed identity auth for automation.",
+    "breakdown": [
+      {
+        "part": "Connect-AzAccount",
+        "meaning": "Authenticate and establish an Azure session for all subsequent Az cmdlets"
+      },
+      {
+        "part": "-TenantId $tenantId",
+        "meaning": "Azure AD tenant ID — required when your account has access to multiple tenants"
+      },
+      {
+        "part": "-SubscriptionId $subscriptionId",
+        "meaning": "Set the active subscription immediately after login"
+      }
+    ],
+    "example": "Connect-AzAccount -ServicePrincipal -TenantId $env:AZURE_TENANT_ID -Credential (New-Object PSCredential $env:AZURE_CLIENT_ID, (ConvertTo-SecureString $env:AZURE_CLIENT_SECRET -AsPlainText -Force))",
+    "output": "Account                   SubscriptionName   TenantId\n-------                   ----------------   --------\nuser@contoso.com          Prod Subscription  87654321-...",
+    "tip": "For unattended scripts, authenticate with a service principal using -ServicePrincipal and -Credential rather than interactive browser login. In Azure VMs or App Service, use Connect-AzAccount -Identity to authenticate with a managed identity — no credentials to store or rotate.",
+    "tags": [
+      "auth",
+      "powershell",
+      "az-module",
+      "login"
+    ],
+    "package": "Az",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "azps-get-context",
+    "category": "azure",
+    "command": "Get-AzContext",
+    "title": "Get / Set Azure context (PowerShell)",
+    "difficulty": "beginner",
+    "description": "Display the current Azure subscription and account context in the PowerShell session, or switch to a different subscription using Set-AzContext.",
+    "breakdown": [
+      {
+        "part": "Get-AzContext",
+        "meaning": "Show the active tenant, subscription, and account identity for the current PowerShell session"
+      }
+    ],
+    "example": "Get-AzContext | Select-Object Name, Account, Subscription\nSet-AzContext -SubscriptionId \"12345678-1234-1234-1234-123456789012\"",
+    "output": "Name                Account            SubscriptionId\n----                -------            --------------\nProd (87654321...)  user@contoso.com   12345678-...",
+    "tip": "Always run Get-AzContext at the start of automation scripts to assert the correct subscription is active before making changes. Use Set-AzContext -SubscriptionId to switch without re-authenticating. Save and restore context with Save-AzContext / Import-AzContext for parallel pipeline jobs that need different subscription scopes.",
+    "tags": [
+      "context",
+      "powershell",
+      "az-module",
+      "subscriptions"
+    ],
+    "package": "Az",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "azps-get-resource",
+    "category": "azure",
+    "command": "Get-AzResource -ResourceGroupName my-rg | Select-Object Name, ResourceType, Location | Format-Table",
+    "title": "List resources (PowerShell)",
+    "difficulty": "beginner",
+    "description": "Retrieve all Azure resources in a subscription or resource group using PowerShell — pipe the output to Where-Object or Select-Object to filter and shape results for automation.",
+    "breakdown": [
+      {
+        "part": "Get-AzResource",
+        "meaning": "List all Azure resources accessible under the current context"
+      },
+      {
+        "part": "-ResourceGroupName my-rg",
+        "meaning": "Scope the query to a specific resource group — omit to search all groups in the subscription"
+      },
+      {
+        "part": "| Select-Object Name, ResourceType, Location",
+        "meaning": "Project only the three most useful properties"
+      },
+      {
+        "part": "| Format-Table",
+        "meaning": "Render as a formatted table in the console"
+      }
+    ],
+    "example": "Get-AzResource -ResourceGroupName my-rg | Where-Object { $_.ResourceType -eq \"Microsoft.Compute/virtualMachines\" }",
+    "output": "Name       ResourceType                            Location\n----       ------------                            --------\nmy-vm      Microsoft.Compute/virtualMachines       eastus\nmy-vnet    Microsoft.Network/virtualNetworks       eastus",
+    "tip": "Filter early with -ResourceType \"Microsoft.Compute/virtualMachines\" to avoid fetching all resource types when you only care about one. The objects returned are full ARM resource descriptors — pipe to Get-AzResource -ResourceId $_.ResourceId for deeper property inspection without a second cmdlet call.",
+    "tags": [
+      "resources",
+      "powershell",
+      "az-module",
+      "inventory"
+    ],
+    "package": "Az",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "azps-new-resourcegroup",
+    "category": "azure",
+    "command": "New-AzResourceGroup -Name my-app-rg -Location eastus -Tag @{env=\"prod\"; team=\"platform\"}",
+    "title": "Create resource group (PowerShell)",
+    "difficulty": "beginner",
+    "description": "Create a new Azure resource group in a specified region using PowerShell — the logical container for all related resources in a project or environment.",
+    "breakdown": [
+      {
+        "part": "New-AzResourceGroup",
+        "meaning": "Create a new resource group in the active subscription"
+      },
+      {
+        "part": "-Name my-app-rg",
+        "meaning": "Name for the resource group — use a naming convention like {project}-{env}-rg"
+      },
+      {
+        "part": "-Location eastus",
+        "meaning": "Azure region where group metadata is stored (resources can be in any region)"
+      },
+      {
+        "part": "-Tag @{env=\"prod\"; team=\"platform\"}",
+        "meaning": "Key-value tag pairs as a PowerShell hashtable — used for cost allocation and policy enforcement"
+      }
+    ],
+    "example": "New-AzResourceGroup -Name my-app-rg -Location eastus -Tag @{env=\"prod\"; team=\"platform\"; \"cost-center\"=\"eng-001\"}",
+    "output": "ResourceGroupName : my-app-rg\nLocation          : eastus\nProvisioningState : Succeeded\nTags              : {env=prod, team=platform}",
+    "tip": "Tag resource groups at creation with cost-center, environment, and owner tags — Azure Cost Management uses these tags for billing breakdowns. The -Force parameter suppresses the confirmation prompt for use in scripts. Check if a group already exists before creating with \"Get-AzResourceGroup -Name my-rg -ErrorAction SilentlyContinue\".",
+    "tags": [
+      "resource-groups",
+      "powershell",
+      "az-module",
+      "infrastructure"
+    ],
+    "package": "Az",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "azps-remove-resourcegroup",
+    "category": "azure",
+    "command": "Remove-AzResourceGroup -Name my-app-rg -Force",
+    "title": "Delete resource group (PowerShell)",
+    "difficulty": "intermediate",
+    "description": "Delete an Azure resource group and all resources it contains — cascades deletion to every VM, disk, VNet, and storage account within the group permanently.",
+    "breakdown": [
+      {
+        "part": "Remove-AzResourceGroup",
+        "meaning": "Delete a resource group and all resources contained within it"
+      },
+      {
+        "part": "-Name my-app-rg",
+        "meaning": "Name of the resource group to delete"
+      },
+      {
+        "part": "-Force",
+        "meaning": "Skip the interactive confirmation prompt — required in unattended scripts"
+      }
+    ],
+    "example": "Remove-AzResourceGroup -Name dev-temp-rg -Force -AsJob",
+    "output": "",
+    "tip": "Add -AsJob to run the deletion asynchronously and continue script execution — useful when deleting large groups. Check for management locks first with \"Get-AzResourceLock -ResourceGroupName my-rg\" — the deletion will fail silently if a lock is in place. This operation is irreversible; prefer deleting dev/test groups rather than production.",
+    "tags": [
+      "resource-groups",
+      "powershell",
+      "az-module",
+      "cleanup"
+    ],
+    "package": "Az",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "azps-get-vm",
+    "category": "azure",
+    "command": "Get-AzVM -ResourceGroupName my-rg | Select-Object Name, Location, @{n=\"Size\";e={$_.HardwareProfile.VmSize}}",
+    "title": "List VMs (PowerShell)",
+    "difficulty": "beginner",
+    "description": "Retrieve virtual machine objects from Azure using PowerShell — returns full VM descriptors that can be piped into Start-AzVM, Stop-AzVM, or property-access expressions.",
+    "breakdown": [
+      {
+        "part": "Get-AzVM",
+        "meaning": "Retrieve one or all VM objects in the subscription or resource group"
+      },
+      {
+        "part": "-ResourceGroupName my-rg",
+        "meaning": "Scope to a specific resource group — omit for all VMs in the subscription"
+      },
+      {
+        "part": "| Select-Object Name, Location, @{n=\"Size\";e={$_.HardwareProfile.VmSize}}",
+        "meaning": "Project VM name, region, and SKU size using a calculated property"
+      }
+    ],
+    "example": "Get-AzVM -ResourceGroupName my-rg -Status | Where-Object { $_.PowerState -ne \"VM running\" } | Select-Object Name, PowerState",
+    "output": "Name       Location  Size\n----       --------  ----\nweb-vm-1   eastus    Standard_D2s_v3\ndb-vm-1    eastus    Standard_D4s_v3",
+    "tip": "Add -Status to include VM power state (running/deallocated/stopped) — without it the PowerState property is null. Pipe to Start-AzVM or Stop-AzVM to act on filtered results in a single pipeline. Use Get-AzVM -Name specific-vm -ResourceGroupName rg to get the full ARM object for a single VM.",
+    "tags": [
+      "vm",
+      "compute",
+      "powershell",
+      "az-module"
+    ],
+    "package": "Az",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "azps-get-aduser",
+    "category": "azure",
+    "command": "Get-AzADUser -UserPrincipalName jane@contoso.com",
+    "title": "Get Azure AD user (PowerShell)",
+    "difficulty": "beginner",
+    "description": "Retrieve an Azure AD user object by UPN or display name — returns the object ID, account enabled state, and assigned licenses needed for downstream automation.",
+    "breakdown": [
+      {
+        "part": "Get-AzADUser",
+        "meaning": "Query Azure AD for user objects using the Az PowerShell module"
+      },
+      {
+        "part": "-UserPrincipalName jane@contoso.com",
+        "meaning": "Filter to a specific user by their login UPN; alternatively use -DisplayName or -ObjectId"
+      }
+    ],
+    "example": "Get-AzADUser -StartsWith \"jane\" | Select-Object DisplayName, UserPrincipalName, Id, AccountEnabled",
+    "output": "DisplayName  UserPrincipalName      Id                                    AccountEnabled\n-----------  -----------------      --                                    --------------\nJane Doe     jane@contoso.com       aaaa1111-bbbb-cccc-dddd-eeeeffffgggg  True",
+    "tip": "Use -StartsWith for prefix-based searches across large tenants without pulling the full user list. The Id property (object ID) returned here is what you pass to New-AzRoleAssignment -ObjectId or Add-AzADGroupMember -MemberObjectId for downstream RBAC operations.",
+    "tags": [
+      "azure-ad",
+      "users",
+      "powershell",
+      "identity"
+    ],
+    "package": "Az",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "azps-new-aduser",
+    "category": "azure",
+    "command": "New-AzADUser -DisplayName \"Jane Doe\" -UserPrincipalName jane@contoso.com -Password (ConvertTo-SecureString \"TempP@ss1\" -AsPlainText -Force) -MailNickname jane",
+    "title": "Create Azure AD user (PowerShell)",
+    "difficulty": "intermediate",
+    "description": "Create a new user account in Azure AD from PowerShell — integrates naturally with PowerShell pipelines for bulk onboarding workflows that read from CSV or HR system exports.",
+    "breakdown": [
+      {
+        "part": "New-AzADUser",
+        "meaning": "Create a new user object in Azure Active Directory via the Az module"
+      },
+      {
+        "part": "-DisplayName \"Jane Doe\"",
+        "meaning": "Full name shown in the portal and email clients"
+      },
+      {
+        "part": "-UserPrincipalName jane@contoso.com",
+        "meaning": "Login UPN (email) for the new account"
+      },
+      {
+        "part": "-Password (ConvertTo-SecureString \"TempP@ss1\" -AsPlainText -Force)",
+        "meaning": "Initial password as a SecureString — never pass plain text passwords directly in scripts"
+      },
+      {
+        "part": "-MailNickname jane",
+        "meaning": "Short alias used for the email address — required field"
+      }
+    ],
+    "example": "Import-Csv users.csv | ForEach-Object { New-AzADUser -DisplayName $_.Name -UserPrincipalName $_.UPN -Password (ConvertTo-SecureString $_.TempPass -AsPlainText -Force) -MailNickname $_.Alias -ForceChangePasswordNextLogin }",
+    "output": "DisplayName  UserPrincipalName   Id\n-----------  -----------------   --\nJane Doe     jane@contoso.com    aaaa1111-...",
+    "tip": "For bulk onboarding, pipe Import-Csv directly into New-AzADUser as shown in the example — far more efficient than manual portal entry. Always use -ForceChangePasswordNextLogin to force a password reset on first sign-in. Store temp passwords in a secret manager rather than in the CSV file itself.",
+    "tags": [
+      "azure-ad",
+      "users",
+      "powershell",
+      "onboarding"
+    ],
+    "package": "Az",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "azps-remove-aduser",
+    "category": "azure",
+    "command": "Remove-AzADUser -UserPrincipalName jane@contoso.com",
+    "title": "Remove Azure AD user (PowerShell)",
+    "difficulty": "intermediate",
+    "description": "Delete an Azure AD user account from PowerShell — soft-deletes the account for 30 days before permanent removal, immediately revoking sign-in access.",
+    "breakdown": [
+      {
+        "part": "Remove-AzADUser",
+        "meaning": "Soft-delete an Azure AD user; recoverable within 30 days via the AAD recycle bin"
+      },
+      {
+        "part": "-UserPrincipalName jane@contoso.com",
+        "meaning": "Target user by UPN; alternatively use -ObjectId for the AAD object ID"
+      }
+    ],
+    "example": "$user = Get-AzADUser -UserPrincipalName jane@contoso.com\nRevoke-AzureADUserAllRefreshToken -ObjectId $user.Id\nRemove-AzADUser -ObjectId $user.Id",
+    "output": "",
+    "tip": "Before removing a user, revoke their active tokens with \"Revoke-AzureADUserAllRefreshToken\" (requires AzureAD module) to terminate live browser and app sessions immediately — Remove-AzADUser alone does not invalidate existing tokens. Document the offboarding in a runbook for audit trails.",
+    "tags": [
+      "azure-ad",
+      "users",
+      "powershell",
+      "offboarding"
+    ],
+    "package": "Az",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "azps-get-roleassignment",
+    "category": "azure",
+    "command": "Get-AzRoleAssignment -SignInName jane@contoso.com | Select-Object DisplayName, RoleDefinitionName, Scope",
+    "title": "Get role assignments (PowerShell)",
+    "difficulty": "intermediate",
+    "description": "List all Azure RBAC role assignments for a user, service principal, or group using PowerShell — essential for access audits and diagnosing permission denied errors.",
+    "breakdown": [
+      {
+        "part": "Get-AzRoleAssignment",
+        "meaning": "Retrieve RBAC role assignments at subscription, resource group, or resource scope"
+      },
+      {
+        "part": "-SignInName jane@contoso.com",
+        "meaning": "Filter to assignments for a specific user by UPN; use -ObjectId for service principals or groups"
+      },
+      {
+        "part": "| Select-Object DisplayName, RoleDefinitionName, Scope",
+        "meaning": "Project the three most relevant fields for a concise audit output"
+      }
+    ],
+    "example": "Get-AzRoleAssignment -ResourceGroupName prod-rg | Where-Object { $_.RoleDefinitionName -eq \"Owner\" } | Select-Object SignInName, DisplayName, Scope",
+    "output": "DisplayName    RoleDefinitionName   Scope\n-----------    ------------------   -----\nJane Doe       Contributor          /subscriptions/12345678.../resourceGroups/prod-rg\nJane Doe       Reader               /subscriptions/12345678...",
+    "tip": "Use Get-AzRoleAssignment -IncludeClassicAdministrators to also surface legacy Classic admin roles that are not visible in standard RBAC queries. When scoping to a resource group, inherited subscription-level assignments are also returned — filter them out with \"Where-Object { $_.Scope -like \"*resourceGroups*\" }\" if needed.",
+    "tags": [
+      "rbac",
+      "permissions",
+      "powershell",
+      "audit"
+    ],
+    "package": "Az",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "azps-new-roleassignment",
+    "category": "azure",
+    "command": "New-AzRoleAssignment -SignInName jane@contoso.com -RoleDefinitionName \"Contributor\" -ResourceGroupName my-rg",
+    "title": "Assign RBAC role (PowerShell)",
+    "difficulty": "intermediate",
+    "description": "Grant an Azure RBAC role to a user, group, or service principal at subscription, resource group, or resource scope using PowerShell — the standard way to grant least-privilege access.",
+    "breakdown": [
+      {
+        "part": "New-AzRoleAssignment",
+        "meaning": "Create a new RBAC role assignment binding a principal to a role at a given scope"
+      },
+      {
+        "part": "-SignInName jane@contoso.com",
+        "meaning": "Assign to a user by UPN; use -ObjectId for service principals or AD groups"
+      },
+      {
+        "part": "-RoleDefinitionName \"Contributor\"",
+        "meaning": "Built-in role to assign — use the exact role name from \"Get-AzRoleDefinition | Select-Object Name\""
+      },
+      {
+        "part": "-ResourceGroupName my-rg",
+        "meaning": "Scope the assignment to a resource group — more restrictive than subscription scope"
+      }
+    ],
+    "example": "$sp = Get-AzADServicePrincipal -DisplayName \"my-cicd-sp\"\nNew-AzRoleAssignment -ObjectId $sp.Id -RoleDefinitionName \"Contributor\" -ResourceGroupName prod-rg",
+    "output": "RoleAssignmentId   : /subscriptions/.../resourceGroups/my-rg/providers/Microsoft.Authorization/roleAssignments/abc123\nDisplayName        : Jane Doe\nRoleDefinitionName : Contributor\nScope              : /subscriptions/.../resourceGroups/my-rg",
+    "tip": "Scope assignments to the smallest required resource scope — resource group is usually right for human operators, but individual resources are better for automation service principals. Avoid assigning Owner at subscription scope; use Contributor plus specific data-plane roles where needed.",
+    "tags": [
+      "rbac",
+      "permissions",
+      "powershell",
+      "iam"
+    ],
+    "package": "Az",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "azps-get-keyvaultsecret",
+    "category": "azure",
+    "command": "Get-AzKeyVaultSecret -VaultName my-vault -Name db-password -AsPlainText",
+    "title": "Read / Set Key Vault secret (PowerShell)",
+    "difficulty": "intermediate",
+    "description": "Retrieve or store secrets in Azure Key Vault using PowerShell — integrates directly with SecureString and pipeline workflows to avoid plain-text secrets in scripts.",
+    "breakdown": [
+      {
+        "part": "Get-AzKeyVaultSecret",
+        "meaning": "Retrieve a secret value from Azure Key Vault"
+      },
+      {
+        "part": "-VaultName my-vault",
+        "meaning": "Name of the Key Vault containing the secret"
+      },
+      {
+        "part": "-Name db-password",
+        "meaning": "Secret name within the vault"
+      },
+      {
+        "part": "-AsPlainText",
+        "meaning": "Return the secret as a plain string — omit to get a SecureString for use in credentials"
+      }
+    ],
+    "example": "# Read secret as plain text\n$secret = Get-AzKeyVaultSecret -VaultName my-vault -Name db-password -AsPlainText\n\n# Set a new secret\n$secureValue = ConvertTo-SecureString \"newP@ssw0rd\" -AsPlainText -Force\nSet-AzKeyVaultSecret -VaultName my-vault -Name db-password -SecretValue $secureValue",
+    "output": "my-secret-value",
+    "tip": "Omit -AsPlainText to keep the value as a SecureString throughout your script — pass it directly to -Password parameters of cmdlets that accept SecureString to avoid the secret ever appearing as plain text in memory or logs. Use Set-AzKeyVaultSecret to rotate secrets programmatically as part of a scheduled runbook.",
+    "tags": [
+      "keyvault",
+      "secrets",
+      "powershell",
+      "security"
+    ],
+    "package": "Az",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  }
+]

@@ -1,0 +1,1022 @@
+[
+  {
+    "id": "bash-for-loop",
+    "category": "bash",
+    "command": "for i in {1..5}; do echo \"Item $i\"; done",
+    "title": "For loop iteration",
+    "difficulty": "beginner",
+    "description": "Iterate over a list of values, a range, or command output — the foundation of repetitive task automation in bash scripts.",
+    "breakdown": [
+      {
+        "part": "for i in {1..5}",
+        "meaning": "Loop variable i iterates from 1 to 5"
+      },
+      {
+        "part": "do",
+        "meaning": "Start of loop body"
+      },
+      {
+        "part": "echo \"Item $i\"",
+        "meaning": "Print current item number"
+      },
+      {
+        "part": "done",
+        "meaning": "End of loop body"
+      }
+    ],
+    "example": "for i in {1..3}; do echo \"Server-$i is starting...\"; done",
+    "output": "Server-1 is starting...\nServer-2 is starting...\nServer-3 is starting...",
+    "tip": "Use 'for f in *.log; do' to iterate files. Prefer 'while read line' for processing large files line-by-line to avoid word splitting issues.",
+    "tags": [
+      "loops",
+      "iteration",
+      "scripting"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "bash-if-statement",
+    "category": "bash",
+    "command": "if [ -f /etc/nginx/nginx.conf ]; then echo 'exists'; fi",
+    "title": "Conditional file check",
+    "difficulty": "beginner",
+    "description": "Conditionally execute commands based on exit codes, string comparisons, file tests, or numeric expressions.",
+    "breakdown": [
+      {
+        "part": "if",
+        "meaning": "Start conditional block"
+      },
+      {
+        "part": "[ -f ... ]",
+        "meaning": "Test if file exists and is a regular file"
+      },
+      {
+        "part": "then",
+        "meaning": "Execute following commands if condition is true"
+      },
+      {
+        "part": "fi",
+        "meaning": "End of if block"
+      }
+    ],
+    "example": "if [ -f /etc/hosts ]; then echo 'Hosts file found'; else echo 'Not found'; fi",
+    "output": "Hosts file found",
+    "tip": "Use [[ ]] instead of [ ] in bash — it supports regex matching with =~, handles empty variables safely, and avoids word splitting. Always quote variables inside [ ].",
+    "tags": [
+      "conditionals",
+      "scripting",
+      "test"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "bash-pipe-chain",
+    "category": "bash",
+    "command": "cat access.log | grep 'POST' | awk '{print $1}' | sort | uniq -c | sort -rn | head -10",
+    "title": "Pipeline: Top IP addresses",
+    "difficulty": "advanced",
+    "description": "Chain commands with pipes to find the top 10 IP addresses making POST requests in an access log.",
+    "breakdown": [
+      {
+        "part": "cat access.log",
+        "meaning": "Read the log file"
+      },
+      {
+        "part": "grep 'POST'",
+        "meaning": "Filter only POST request lines"
+      },
+      {
+        "part": "awk '{print $1}'",
+        "meaning": "Extract the first field (IP address)"
+      },
+      {
+        "part": "sort",
+        "meaning": "Sort IPs alphabetically (required for uniq)"
+      },
+      {
+        "part": "uniq -c",
+        "meaning": "Count consecutive duplicate lines"
+      },
+      {
+        "part": "sort -rn",
+        "meaning": "Sort numerically in reverse (highest first)"
+      },
+      {
+        "part": "head -10",
+        "meaning": "Show only top 10 results"
+      }
+    ],
+    "example": "cat /var/log/nginx/access.log | grep 'POST' | awk '{print $1}' | sort | uniq -c | sort -rn | head -5",
+    "output": "    142 192.168.1.50\n     98 10.0.0.15\n     67 172.16.0.100\n     45 192.168.1.22\n     31 10.0.0.8",
+    "tip": "Use 'grep -c' for simple counting. This pipeline pattern works for any log analysis task.",
+    "tags": [
+      "pipes",
+      "log-analysis",
+      "text-processing"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "bash-function",
+    "category": "bash",
+    "command": "deploy() { echo \"Deploying $1 to $2\"; ssh $2 \"cd /app && git pull && systemctl restart $1\"; }",
+    "title": "Define a reusable function",
+    "difficulty": "intermediate",
+    "description": "Define a reusable block of commands that can be called by name, accept arguments via $1 $2, and return an exit code.",
+    "breakdown": [
+      {
+        "part": "deploy()",
+        "meaning": "Define function named 'deploy'"
+      },
+      {
+        "part": "$1",
+        "meaning": "First argument (service name)"
+      },
+      {
+        "part": "$2",
+        "meaning": "Second argument (server address)"
+      },
+      {
+        "part": "ssh $2 \"...\"",
+        "meaning": "Execute commands on remote server"
+      }
+    ],
+    "example": "greet() { echo \"Hello, $1! Today is $(date +%A)\"; }\ngreet \"DevOps Engineer\"",
+    "output": "Hello, DevOps Engineer! Today is Tuesday",
+    "tip": "Use 'local' for all variables inside functions to avoid polluting the global scope. Functions return exit codes (not values) — capture output with result=$(my_func).",
+    "tags": [
+      "functions",
+      "scripting",
+      "reusable"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "bash-variables",
+    "category": "bash",
+    "command": "name=\"DevOps\"; echo \"${name,,}\" ; echo \"${UNSET_VAR:-default_value}\"",
+    "title": "Variable substitution",
+    "difficulty": "beginner",
+    "description": "Use parameter expansion to transform variable values, apply defaults for unset variables, and manipulate strings directly in bash.",
+    "breakdown": [
+      {
+        "part": "name=\"DevOps\"",
+        "meaning": "Assign the string 'DevOps' to variable name"
+      },
+      {
+        "part": "${name,,}",
+        "meaning": "Convert value to lowercase (bash 4+)"
+      },
+      {
+        "part": "${UNSET_VAR:-default_value}",
+        "meaning": "Use 'default_value' if UNSET_VAR is unset or empty"
+      },
+      {
+        "part": "${name^^}",
+        "meaning": "Convert value to uppercase (bash 4+)"
+      },
+      {
+        "part": "${name:0:3}",
+        "meaning": "Substring extraction: first 3 characters"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "${VAR:-default}",
+        "description": "Use default if VAR is unset or empty",
+        "source": "local"
+      },
+      {
+        "flag": "${VAR:=default}",
+        "description": "Assign default if VAR is unset or empty",
+        "source": "local"
+      },
+      {
+        "flag": "${VAR:+alt}",
+        "description": "Use alt value only if VAR is set and non-empty",
+        "source": "local"
+      },
+      {
+        "flag": "${VAR:?error}",
+        "description": "Print error and exit if VAR is unset or empty",
+        "source": "local"
+      },
+      {
+        "flag": "${#VAR}",
+        "description": "Length of the variable value",
+        "source": "local"
+      },
+      {
+        "flag": "${VAR,,}",
+        "description": "Convert to lowercase",
+        "source": "local"
+      },
+      {
+        "flag": "${VAR^^}",
+        "description": "Convert to uppercase",
+        "source": "local"
+      }
+    ],
+    "example": "env=\"PRODUCTION\"; echo \"Env: ${env,,}\"; echo \"Port: ${PORT:-8080}\"; echo \"Length: ${#env}\"",
+    "output": "Env: production\nPort: 8080\nLength: 10",
+    "tip": "Use ${VAR:?\"VAR is required\"} at the top of scripts to enforce required environment variables and fail fast with a clear message.",
+    "tags": [
+      "variables",
+      "parameter-expansion",
+      "scripting",
+      "defaults"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "bash-trap",
+    "category": "bash",
+    "command": "trap 'echo \"Cleaning up temp files...\"; rm -f /tmp/myapp_*' EXIT ERR",
+    "title": "Signal handling",
+    "difficulty": "advanced",
+    "description": "Register cleanup actions that run automatically when the script exits or encounters an error, ensuring resources are always released.",
+    "breakdown": [
+      {
+        "part": "trap",
+        "meaning": "Built-in command to register signal handlers"
+      },
+      {
+        "part": "'echo ... ; rm -f /tmp/myapp_*'",
+        "meaning": "Commands to execute when the signal is caught"
+      },
+      {
+        "part": "EXIT",
+        "meaning": "Trigger on any script exit (normal or abnormal)"
+      },
+      {
+        "part": "ERR",
+        "meaning": "Trigger when any command returns a non-zero exit code"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "EXIT",
+        "description": "Fires when the shell or script exits for any reason",
+        "source": "local"
+      },
+      {
+        "flag": "ERR",
+        "description": "Fires when a command exits with non-zero status",
+        "source": "local"
+      },
+      {
+        "flag": "INT",
+        "description": "Fires on Ctrl+C (SIGINT)",
+        "source": "local"
+      },
+      {
+        "flag": "TERM",
+        "description": "Fires on termination signal (SIGTERM)",
+        "source": "local"
+      },
+      {
+        "flag": "trap - SIGNAL",
+        "description": "Reset a signal handler to its default behavior",
+        "source": "local"
+      },
+      {
+        "flag": "trap '' SIGNAL",
+        "description": "Ignore a signal entirely",
+        "source": "local"
+      }
+    ],
+    "example": "#!/bin/bash\ntmpfile=$(mktemp /tmp/deploy.XXXXXX)\ntrap 'rm -f \"$tmpfile\"; echo \"Temp file removed.\"' EXIT\necho \"Working with $tmpfile\"\necho \"deploy_status=success\" > \"$tmpfile\"\ncat \"$tmpfile\"",
+    "output": "Working with /tmp/deploy.a3fK92\ndeploy_status=success\nTemp file removed.",
+    "tip": "Always use trap EXIT in scripts that create temp files, lock files, or mount resources. Combine with 'set -e' so ERR traps catch failures early.",
+    "tags": [
+      "signals",
+      "cleanup",
+      "error-handling",
+      "scripting"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "bash-heredoc",
+    "category": "bash",
+    "command": "cat <<EOF > config.yml\napp:\n  name: myservice\n  port: 8080\nEOF",
+    "title": "Here document",
+    "difficulty": "intermediate",
+    "description": "Write multi-line content to a file or pass it to a command using a here document, with support for variable interpolation.",
+    "breakdown": [
+      {
+        "part": "cat",
+        "meaning": "Concatenate and output text"
+      },
+      {
+        "part": "<<EOF",
+        "meaning": "Start here document with EOF as the delimiter"
+      },
+      {
+        "part": "> config.yml",
+        "meaning": "Redirect the output into config.yml"
+      },
+      {
+        "part": "... content ...",
+        "meaning": "Multi-line content with variable expansion"
+      },
+      {
+        "part": "EOF",
+        "meaning": "End of here document (must be on its own line, no leading whitespace)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "<<EOF",
+        "description": "Here document with variable expansion enabled",
+        "source": "local"
+      },
+      {
+        "flag": "<<'EOF'",
+        "description": "Here document with variable expansion disabled (literal content)",
+        "source": "local"
+      },
+      {
+        "flag": "<<-EOF",
+        "description": "Here document that strips leading tabs (for indented scripts)",
+        "source": "local"
+      },
+      {
+        "flag": "<<<\"string\"",
+        "description": "Here string: pass a single string as stdin",
+        "source": "local"
+      }
+    ],
+    "example": "HOST=\"db-primary\"; PORT=5432\ncat <<EOF > /tmp/db-config.yml\ndatabase:\n  host: ${HOST}\n  port: ${PORT}\n  pool_size: 10\nEOF\ncat /tmp/db-config.yml",
+    "output": "database:\n  host: db-primary\n  port: 5432\n  pool_size: 10",
+    "tip": "Use <<'EOF' (single quotes around delimiter) to prevent variable expansion when writing literal scripts or configs that contain $ characters.",
+    "tags": [
+      "heredoc",
+      "file-generation",
+      "config",
+      "scripting"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "bash-array",
+    "category": "bash",
+    "command": "arr=(\"a\" \"b\" \"c\"); for item in \"${arr[@]}\"; do echo \"$item\"; done",
+    "title": "Array operations",
+    "difficulty": "intermediate",
+    "description": "Create and iterate over indexed arrays in bash for managing lists of servers, services, or configuration values.",
+    "breakdown": [
+      {
+        "part": "arr=(\"a\" \"b\" \"c\")",
+        "meaning": "Declare an indexed array with three elements"
+      },
+      {
+        "part": "${arr[@]}",
+        "meaning": "Expand to all array elements"
+      },
+      {
+        "part": "for item in \"${arr[@]}\"",
+        "meaning": "Iterate over each element safely (quoting preserves spaces)"
+      },
+      {
+        "part": "do echo \"$item\"; done",
+        "meaning": "Print each element on its own line"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "${arr[@]}",
+        "description": "All elements (each as separate word when quoted)",
+        "source": "local"
+      },
+      {
+        "flag": "${arr[*]}",
+        "description": "All elements as a single string",
+        "source": "local"
+      },
+      {
+        "flag": "${#arr[@]}",
+        "description": "Number of elements in the array",
+        "source": "local"
+      },
+      {
+        "flag": "${arr[0]}",
+        "description": "Access element by index (zero-based)",
+        "source": "local"
+      },
+      {
+        "flag": "arr+=(\"d\")",
+        "description": "Append an element to the array",
+        "source": "local"
+      },
+      {
+        "flag": "unset arr[1]",
+        "description": "Remove element at index 1",
+        "source": "local"
+      }
+    ],
+    "example": "servers=(\"web-1\" \"web-2\" \"db-1\")\necho \"Total servers: ${#servers[@]}\"\nfor srv in \"${servers[@]}\"; do\n  echo \"Pinging $srv...\"\ndone",
+    "output": "Total servers: 3\nPinging web-1...\nPinging web-2...\nPinging db-1...",
+    "tip": "Always double-quote array expansions (\"${arr[@]}\") to handle elements with spaces correctly. Use associative arrays (declare -A) for key-value pairs.",
+    "tags": [
+      "arrays",
+      "lists",
+      "iteration",
+      "scripting"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "bash-case",
+    "category": "bash",
+    "command": "case \"$1\" in start) echo \"Starting...\";; stop) echo \"Stopping...\";; *) echo \"Usage: $0 {start|stop}\";; esac",
+    "title": "Case statement",
+    "difficulty": "intermediate",
+    "description": "Pattern-match on a variable to handle multiple branches cleanly, commonly used in init scripts and CLI argument parsing.",
+    "breakdown": [
+      {
+        "part": "case \"$1\" in",
+        "meaning": "Match the first argument against patterns"
+      },
+      {
+        "part": "start)",
+        "meaning": "Pattern to match the literal string 'start'"
+      },
+      {
+        "part": ";;",
+        "meaning": "End of this case branch (like break)"
+      },
+      {
+        "part": "*)",
+        "meaning": "Default/wildcard pattern (matches anything)"
+      },
+      {
+        "part": "esac",
+        "meaning": "End of case block (case spelled backward)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "pattern)",
+        "description": "Exact string match for a branch",
+        "source": "local"
+      },
+      {
+        "flag": "a|b)",
+        "description": "Match multiple patterns with OR",
+        "source": "local"
+      },
+      {
+        "flag": "*)",
+        "description": "Default catch-all pattern",
+        "source": "local"
+      },
+      {
+        "flag": ";;",
+        "description": "Terminate a branch (no fallthrough)",
+        "source": "local"
+      },
+      {
+        "flag": ";;&",
+        "description": "Continue testing subsequent patterns (bash 4+)",
+        "source": "local"
+      }
+    ],
+    "example": "#!/bin/bash\nENV=\"$1\"\ncase \"$ENV\" in\n  prod|production) echo \"Deploying to PRODUCTION\"; REPLICAS=5;;\n  staging)         echo \"Deploying to STAGING\"; REPLICAS=2;;\n  dev|local)       echo \"Deploying to DEV\"; REPLICAS=1;;\n  *)               echo \"Unknown env: $ENV. Use prod|staging|dev\"; exit 1;;\nesac\necho \"Replicas: $REPLICAS\"",
+    "output": "Deploying to STAGING\nReplicas: 2",
+    "tip": "Case statements are cleaner than long if/elif chains. Use pattern| syntax to handle aliases like prod|production in the same branch.",
+    "tags": [
+      "case",
+      "pattern-matching",
+      "conditionals",
+      "scripting"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "bash-subshell",
+    "category": "bash",
+    "command": "result=$(curl -s https://api.example.com/health); echo \"Got: $result\"",
+    "title": "Command substitution",
+    "difficulty": "beginner",
+    "description": "Capture the output of a command into a variable using $() syntax, allowing you to use command results in strings, conditionals, or further processing.",
+    "breakdown": [
+      {
+        "part": "$(... )",
+        "meaning": "Execute the command inside and capture its stdout"
+      },
+      {
+        "part": "curl -s",
+        "meaning": "Fetch URL silently (no progress bar)"
+      },
+      {
+        "part": "result=...",
+        "meaning": "Store captured output in the variable 'result'"
+      },
+      {
+        "part": "echo \"Got: $result\"",
+        "meaning": "Use the captured value in a string"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "$(command)",
+        "description": "Modern command substitution syntax (preferred)",
+        "source": "local"
+      },
+      {
+        "flag": "`command`",
+        "description": "Legacy backtick syntax (avoid: hard to nest)",
+        "source": "local"
+      },
+      {
+        "flag": "$(cmd1 $(cmd2))",
+        "description": "Nested substitution (clean with $() syntax)",
+        "source": "local"
+      },
+      {
+        "flag": "var=$(cmd) || exit 1",
+        "description": "Capture output and check for failure",
+        "source": "local"
+      }
+    ],
+    "example": "current_date=$(date +%Y-%m-%d)\nhostname=$(hostname -s)\nload=$(uptime | awk -F'average:' '{print $2}')\necho \"Report for $hostname on $current_date\"\necho \"Load: $load\"",
+    "output": "Report for web-prod-1 on 2025-03-15\nLoad:  0.42, 0.38, 0.35",
+    "tip": "Always prefer $() over backticks. $() nests cleanly and is easier to read. Combine with || to handle command failures gracefully.",
+    "tags": [
+      "subshell",
+      "command-substitution",
+      "variables",
+      "scripting"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "bash-test",
+    "category": "bash",
+    "command": "[[ -d /path ]] && [[ -w /path ]] && echo \"writable dir\"",
+    "title": "Test expressions",
+    "difficulty": "beginner",
+    "description": "Use [[ ]] test expressions to check file attributes, compare strings, and chain conditions with logical operators for safe scripting.",
+    "breakdown": [
+      {
+        "part": "[[ -d /path ]]",
+        "meaning": "Test if /path exists and is a directory"
+      },
+      {
+        "part": "&&",
+        "meaning": "Logical AND: run next command only if previous succeeded"
+      },
+      {
+        "part": "[[ -w /path ]]",
+        "meaning": "Test if /path is writable by the current user"
+      },
+      {
+        "part": "echo \"writable dir\"",
+        "meaning": "Prints only if both tests pass"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-f FILE",
+        "description": "True if FILE exists and is a regular file",
+        "source": "local"
+      },
+      {
+        "flag": "-d DIR",
+        "description": "True if DIR exists and is a directory",
+        "source": "local"
+      },
+      {
+        "flag": "-r FILE",
+        "description": "True if FILE is readable",
+        "source": "local"
+      },
+      {
+        "flag": "-w FILE",
+        "description": "True if FILE is writable",
+        "source": "local"
+      },
+      {
+        "flag": "-x FILE",
+        "description": "True if FILE is executable",
+        "source": "local"
+      },
+      {
+        "flag": "-s FILE",
+        "description": "True if FILE exists and is not empty",
+        "source": "local"
+      },
+      {
+        "flag": "-z STRING",
+        "description": "True if STRING is empty (zero length)",
+        "source": "local"
+      },
+      {
+        "flag": "-n STRING",
+        "description": "True if STRING is non-empty",
+        "source": "local"
+      }
+    ],
+    "example": "LOG_DIR=\"/var/log/myapp\"\nif [[ -d \"$LOG_DIR\" ]] && [[ -w \"$LOG_DIR\" ]]; then\n  echo \"Log directory is ready\"\nelif [[ ! -d \"$LOG_DIR\" ]]; then\n  echo \"Creating log directory...\"\n  mkdir -p \"$LOG_DIR\"\nelse\n  echo \"ERROR: $LOG_DIR exists but is not writable\"\n  exit 1\nfi",
+    "output": "Log directory is ready",
+    "tip": "Prefer [[ ]] over [ ] in bash scripts. [[ ]] supports regex (=~), glob matching, and does not require quoting variables to prevent word splitting.",
+    "tags": [
+      "test",
+      "conditionals",
+      "file-checks",
+      "scripting"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "bash-redirect",
+    "category": "bash",
+    "command": "command > out.log 2>&1",
+    "title": "I/O redirection",
+    "difficulty": "intermediate",
+    "description": "Redirect standard output and standard error to files or combine them, essential for logging, background jobs, and silencing noisy commands.",
+    "breakdown": [
+      {
+        "part": "command",
+        "meaning": "Any command whose output you want to redirect"
+      },
+      {
+        "part": "> out.log",
+        "meaning": "Redirect stdout (fd 1) to out.log, overwriting it"
+      },
+      {
+        "part": "2>&1",
+        "meaning": "Redirect stderr (fd 2) to the same destination as stdout (fd 1)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "> file",
+        "description": "Redirect stdout to file (overwrite)",
+        "source": "local"
+      },
+      {
+        "flag": ">> file",
+        "description": "Redirect stdout to file (append)",
+        "source": "local"
+      },
+      {
+        "flag": "2> file",
+        "description": "Redirect stderr to file",
+        "source": "local"
+      },
+      {
+        "flag": "2>&1",
+        "description": "Redirect stderr to wherever stdout is going",
+        "source": "local"
+      },
+      {
+        "flag": "&> file",
+        "description": "Redirect both stdout and stderr to file (bash shorthand)",
+        "source": "local"
+      },
+      {
+        "flag": "&>> file",
+        "description": "Append both stdout and stderr to file",
+        "source": "local"
+      },
+      {
+        "flag": "< file",
+        "description": "Read stdin from file",
+        "source": "local"
+      },
+      {
+        "flag": ">/dev/null 2>&1",
+        "description": "Discard all output completely",
+        "source": "local"
+      }
+    ],
+    "example": "echo \"=== Deploy started at $(date) ===\" > /var/log/deploy.log\n./deploy.sh >> /var/log/deploy.log 2>&1\nstatus=$?\necho \"=== Deploy finished with code $status ===\" >> /var/log/deploy.log\ntail -3 /var/log/deploy.log",
+    "output": "=== Deploy started at Sat Mar 15 10:30:00 UTC 2025 ===\nPulling latest code... done.\n=== Deploy finished with code 0 ===",
+    "tip": "Order matters: '2>&1 > file' is NOT the same as '> file 2>&1'. The latter is correct for capturing both streams. Use &> as a shorter alternative in bash.",
+    "tags": [
+      "redirection",
+      "stdout",
+      "stderr",
+      "logging",
+      "scripting"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl"
+    ]
+  },
+  {
+    "id": "bash-while-loop",
+    "category": "bash",
+    "title": "While loop",
+    "difficulty": "intermediate",
+    "description": "Execute a block of commands repeatedly while a condition is true — commonly used for reading files line-by-line or polling until a condition changes.",
+    "command": "while read -r line; do echo \"$line\"; done < file.txt",
+    "breakdown": [
+      {
+        "part": "while read -r line",
+        "meaning": "Read each line from input into $line"
+      },
+      {
+        "part": "do ... done",
+        "meaning": "The body of the loop"
+      },
+      {
+        "part": "< file.txt",
+        "meaning": "Redirect file as input to the loop"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "read -r",
+        "description": "Read a line without interpreting backslashes",
+        "source": "local"
+      }
+    ],
+    "example": "while read -r line; do\n  echo \"$line\"\ndone < file.txt\n\n# Infinite loop with break\nwhile true; do\n  read -rp \"Enter value: \" val\n  [[ \"$val\" == \"quit\" ]] && break\ndone",
+    "output": "line one\nline two\nline three",
+    "tip": "Use 'while IFS= read -r line; do ... done < file' to safely read files — IFS= preserves leading whitespace and -r prevents backslash interpretation.",
+    "tags": [
+      "while",
+      "loop",
+      "iterate",
+      "read file",
+      "repeat"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "bash-string-ops",
+    "category": "bash",
+    "title": "String manipulation",
+    "difficulty": "intermediate",
+    "description": "Manipulate strings using bash parameter expansion — extract substrings, strip prefixes/suffixes, and perform substitutions without spawning external tools.",
+    "command": "echo \"${var#prefix}\"",
+    "breakdown": [
+      {
+        "part": "${var#prefix}",
+        "meaning": "Remove shortest prefix match from start of $var"
+      },
+      {
+        "part": "${var%suffix}",
+        "meaning": "Remove shortest suffix match from end"
+      },
+      {
+        "part": "${var/old/new}",
+        "meaning": "Replace first occurrence of old with new"
+      }
+    ],
+    "flags": [],
+    "example": "file=\"/home/user/report.txt\"\necho \"${file##*/}\"        # report.txt  (basename)\necho \"${file%.*}\"         # /home/user/report  (strip ext)\necho \"${file/user/admin}\" # /home/admin/report.txt\n\nstr=\"Hello World\"\necho \"${#str}\"            # 11  (length)\necho \"${str,,}\"           # hello world  (lowercase)\necho \"${str^^}\"           # HELLO WORLD  (uppercase)",
+    "output": "report.txt\n/home/user/report\n/home/admin/report.txt\n11\nhello world\nHELLO WORLD",
+    "tip": "Use ${var:-default} to provide a fallback if var is unset. Use ${var//old/new} for global substitution without calling sed.",
+    "tags": [
+      "string",
+      "substring",
+      "replace",
+      "trim",
+      "length",
+      "uppercase",
+      "lowercase",
+      "parameter expansion"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "bash-arithmetic",
+    "category": "bash",
+    "title": "Arithmetic operations",
+    "difficulty": "beginner",
+    "description": "Perform integer arithmetic directly in bash using (( )) or $(( )) — avoids spawning expr or bc for simple calculations.",
+    "command": "echo $(( 2 + 3 * 4 ))",
+    "breakdown": [
+      {
+        "part": "$(( ))",
+        "meaning": "Arithmetic expansion — evaluates and substitutes the result"
+      },
+      {
+        "part": "2 + 3 * 4",
+        "meaning": "Standard arithmetic with operator precedence"
+      }
+    ],
+    "flags": [],
+    "example": "x=10\ny=3\necho $(( x + y ))    # 13\necho $(( x * y ))    # 30\necho $(( x / y ))    # 3  (integer division)\necho $(( x % y ))    # 1  (modulo)\n\n# Increment\n(( x++ ))\necho $x              # 11\n\n# Conditional check\n(( x > 5 )) && echo \"big\"",
+    "output": "13\n30\n3\n1\n11\nbig",
+    "tip": "Use (( )) for conditional arithmetic: 'if (( count > 0 ))'. Use $(( )) for assignment: 'total=$(( a + b ))'. For floats, use awk or bc.",
+    "tags": [
+      "math",
+      "arithmetic",
+      "calculate",
+      "integer",
+      "modulo",
+      "increment"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "bash-read-input",
+    "category": "bash",
+    "title": "Read user input",
+    "difficulty": "beginner",
+    "description": "Read user input interactively or line-by-line from a file or pipe — the primary way to make scripts interactive or process streams.",
+    "command": "read -rp \"Enter name: \" name && echo \"Hello, $name\"",
+    "breakdown": [
+      {
+        "part": "read",
+        "meaning": "Read a line from standard input"
+      },
+      {
+        "part": "-r",
+        "meaning": "Raw mode — do not interpret backslashes"
+      },
+      {
+        "part": "-p \"...\"",
+        "meaning": "Display a prompt string before reading"
+      },
+      {
+        "part": "name",
+        "meaning": "Variable to store the input"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-r",
+        "description": "Disable backslash interpretation",
+        "source": "local"
+      },
+      {
+        "flag": "-p <prompt>",
+        "description": "Display prompt without a newline",
+        "source": "local"
+      },
+      {
+        "flag": "-s",
+        "description": "Silent mode — hide input (for passwords)",
+        "source": "local"
+      },
+      {
+        "flag": "-t <secs>",
+        "description": "Timeout after N seconds",
+        "source": "local"
+      }
+    ],
+    "example": "read -rp \"Enter name: \" name\necho \"Hello, $name\"\n\n# Silent password input\nread -rsp \"Password: \" pass\necho\necho \"Got password (length ${#pass})\"",
+    "output": "Enter name: Alice\nHello, Alice",
+    "tip": "Always use 'read -r' to prevent backslash interpretation. Use '-s' for silent input (passwords). Set IFS= before read to preserve leading/trailing whitespace.",
+    "tags": [
+      "input",
+      "prompt",
+      "interactive",
+      "user input",
+      "read",
+      "stdin"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "bash-exit-codes",
+    "category": "bash",
+    "title": "Exit codes and error handling",
+    "difficulty": "intermediate",
+    "description": "Every command returns an exit code: 0 means success, non-zero means failure — bash scripts use these to control flow and signal errors to callers.",
+    "command": "set -euo pipefail",
+    "breakdown": [
+      {
+        "part": "set -e",
+        "meaning": "Exit immediately if any command returns non-zero"
+      },
+      {
+        "part": "set -u",
+        "meaning": "Treat unset variables as errors"
+      },
+      {
+        "part": "set -o pipefail",
+        "meaning": "Fail if any command in a pipe fails"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-e",
+        "description": "Exit on first error",
+        "source": "local"
+      },
+      {
+        "flag": "-u",
+        "description": "Error on unset variables",
+        "source": "local"
+      },
+      {
+        "flag": "-o pipefail",
+        "description": "Propagate pipe failures",
+        "source": "local"
+      }
+    ],
+    "example": "set -euo pipefail\n\n# Check exit code manually\nif ! cp src.txt dest.txt; then\n  echo \"Copy failed\" >&2\n  exit 1\nfi\n\n# Trap errors\ntrap 'echo \"Error on line $LINENO\"' ERR\n\n# Run command, ignore failure\nrm file.txt || true",
+    "output": "Error on line 5",
+    "tip": "Add 'set -e' at the top of scripts to exit immediately on any error. Use 'set -o pipefail' so pipes propagate failures — without it, 'false | true' exits 0.",
+    "tags": [
+      "exit code",
+      "error handling",
+      "set -e",
+      "pipefail",
+      "trap",
+      "failure",
+      "robust"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos",
+      "wsl",
+      "alpine"
+    ],
+    "manPage": "1"
+  }
+]

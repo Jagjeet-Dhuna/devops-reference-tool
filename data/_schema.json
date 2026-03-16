@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "category", "command", "title", "difficulty", "description", "breakdown", "example", "output", "tip", "tags"],
+    "properties": {
+      "id": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$",
+        "description": "Unique slug identifier"
+      },
+      "category": {
+        "type": "string",
+        "enum": ["linux", "bash", "terraform", "docker", "kubernetes", "git", "networking", "ansible", "distros", "powershell", "aws", "azure"]
+      },
+      "command": {
+        "type": "string",
+        "minLength": 1
+      },
+      "title": {
+        "type": "string",
+        "minLength": 1
+      },
+      "difficulty": {
+        "type": "string",
+        "enum": ["beginner", "intermediate", "advanced"]
+      },
+      "description": {
+        "type": "string",
+        "minLength": 10
+      },
+      "breakdown": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "required": ["part", "meaning"],
+          "properties": {
+            "part": { "type": "string", "minLength": 1 },
+            "meaning": { "type": "string", "minLength": 1 }
+          }
+        }
+      },
+      "flags": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["flag", "description", "source"],
+          "properties": {
+            "flag": { "type": "string" },
+            "description": { "type": "string" },
+            "source": { "type": "string", "enum": ["local", "mankier"] }
+          }
+        }
+      },
+      "example": {
+        "type": "string",
+        "minLength": 1
+      },
+      "output": {
+        "type": "string"
+      },
+      "tip": {
+        "type": "string"
+      },
+      "tags": {
+        "type": "array",
+        "items": { "type": "string" },
+        "minItems": 1
+      },
+      "package": {
+        "type": "string",
+        "description": "The package that provides this command (e.g. coreutils, iproute2, jq)"
+      },
+      "os": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": ["linux", "macos", "windows", "wsl", "alpine", "debian", "ubuntu", "rhel", "fedora", "arch"]
+        },
+        "description": "OS/distro compatibility"
+      },
+      "manPage": {
+        "type": "string"
+      },
+      "relatedCommands": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "additionalProperties": false
+  }
+}

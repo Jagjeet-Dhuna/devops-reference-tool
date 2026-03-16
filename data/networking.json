@@ -1,0 +1,1185 @@
+[
+  {
+    "id": "ping-check",
+    "category": "networking",
+    "command": "ping -c 4 -W 2 8.8.8.8",
+    "title": "Check host reachability",
+    "difficulty": "beginner",
+    "description": "Send 4 ICMP echo packets to a host with a 2-second timeout to test connectivity and measure round-trip latency.",
+    "breakdown": [
+      {
+        "part": "ping",
+        "meaning": "Send ICMP ECHO_REQUEST packets to a network host"
+      },
+      {
+        "part": "-c 4",
+        "meaning": "Stop after sending 4 packets"
+      },
+      {
+        "part": "-W 2",
+        "meaning": "Timeout in seconds for each reply"
+      },
+      {
+        "part": "8.8.8.8",
+        "meaning": "Target host — Google's public DNS server"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-c",
+        "description": "Stop after sending N packets",
+        "source": "local"
+      },
+      {
+        "flag": "-W",
+        "description": "Time to wait for a response in seconds",
+        "source": "local"
+      },
+      {
+        "flag": "-i",
+        "description": "Interval in seconds between packets (default 1)",
+        "source": "local"
+      },
+      {
+        "flag": "-s",
+        "description": "Specify the number of data bytes to send",
+        "source": "local"
+      },
+      {
+        "flag": "-t",
+        "description": "Set IP TTL (time to live) value",
+        "source": "local"
+      }
+    ],
+    "example": "ping -c 4 google.com",
+    "output": "PING google.com (142.250.80.46) 56(84) bytes of data.\n64 bytes from lga34s32-in-f14.1e100.net (142.250.80.46): icmp_seq=1 ttl=118 time=12.3 ms\n64 bytes from lga34s32-in-f14.1e100.net (142.250.80.46): icmp_seq=2 ttl=118 time=11.8 ms\n64 bytes from lga34s32-in-f14.1e100.net (142.250.80.46): icmp_seq=3 ttl=118 time=12.1 ms\n64 bytes from lga34s32-in-f14.1e100.net (142.250.80.46): icmp_seq=4 ttl=118 time=11.9 ms\n\n--- google.com ping statistics ---\n4 packets transmitted, 4 received, 0% packet loss, time 3005ms\nrtt min/avg/max/mdev = 11.8/12.025/12.3/0.192 ms",
+    "tip": "0% packet loss with consistent RTT means the path is healthy. High mdev (deviation) suggests an unstable link. Use 'ping -f host' (flood ping) to stress test — requires root.",
+    "tags": [
+      "icmp",
+      "connectivity",
+      "latency"
+    ],
+    "manPage": "8"
+  },
+  {
+    "id": "curl-request",
+    "category": "networking",
+    "command": "curl -X POST -H 'Content-Type: application/json' -d '{\"key\":\"value\"}' https://api.example.com/data",
+    "title": "HTTP POST with JSON",
+    "difficulty": "intermediate",
+    "description": "Transfer data to or from a server using URLs — supports HTTP, HTTPS, FTP, and dozens of other protocols with extensive flag support.",
+    "breakdown": [
+      {
+        "part": "curl",
+        "meaning": "Transfer data from or to a server"
+      },
+      {
+        "part": "-X POST",
+        "meaning": "Use POST HTTP method"
+      },
+      {
+        "part": "-H 'Content-Type: application/json'",
+        "meaning": "Set request header"
+      },
+      {
+        "part": "-d '{...}'",
+        "meaning": "Request body data (JSON payload)"
+      },
+      {
+        "part": "https://api.example.com/data",
+        "meaning": "Target URL"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-X, --request",
+        "description": "Specify request method (GET, POST, PUT, DELETE)",
+        "source": "local"
+      },
+      {
+        "flag": "-H, --header",
+        "description": "Add a custom header to the request",
+        "source": "local"
+      },
+      {
+        "flag": "-d, --data",
+        "description": "Send data in a POST request",
+        "source": "local"
+      },
+      {
+        "flag": "-o, --output",
+        "description": "Write output to file instead of stdout",
+        "source": "local"
+      },
+      {
+        "flag": "-s, --silent",
+        "description": "Silent mode — don't show progress meter",
+        "source": "local"
+      },
+      {
+        "flag": "-v, --verbose",
+        "description": "Make the operation more talkative",
+        "source": "local"
+      }
+    ],
+    "example": "curl -s -X GET https://httpbin.org/ip | jq .",
+    "output": "{\n  \"origin\": \"203.0.113.42\"\n}",
+    "tip": "Pipe to 'jq .' for pretty JSON. Use -w '%{http_code}' to see only the status code.",
+    "tags": [
+      "http",
+      "api",
+      "requests"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "wget-download",
+    "category": "networking",
+    "command": "wget -c -P /tmp https://example.com/file.tar.gz",
+    "title": "Download file (resumable)",
+    "difficulty": "beginner",
+    "description": "Download a file to a specific directory with resume support — if the download is interrupted, it continues from where it left off.",
+    "breakdown": [
+      {
+        "part": "wget",
+        "meaning": "Non-interactive network downloader"
+      },
+      {
+        "part": "-c",
+        "meaning": "Continue/resume a partially downloaded file"
+      },
+      {
+        "part": "-P /tmp",
+        "meaning": "Save files to the /tmp directory"
+      },
+      {
+        "part": "https://example.com/file.tar.gz",
+        "meaning": "URL of the file to download"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-c",
+        "description": "Resume a partially downloaded file",
+        "source": "local"
+      },
+      {
+        "flag": "-P",
+        "description": "Set directory prefix for saved files",
+        "source": "local"
+      },
+      {
+        "flag": "-q",
+        "description": "Quiet mode — no output",
+        "source": "local"
+      },
+      {
+        "flag": "-r",
+        "description": "Recursive download",
+        "source": "local"
+      },
+      {
+        "flag": "--limit-rate",
+        "description": "Limit download speed (e.g. --limit-rate=1m)",
+        "source": "local"
+      },
+      {
+        "flag": "-O",
+        "description": "Write output to a specific filename",
+        "source": "local"
+      }
+    ],
+    "example": "wget -c -q -O /tmp/ubuntu.iso https://releases.ubuntu.com/latest/ubuntu-desktop-amd64.iso",
+    "output": "",
+    "tip": "Use '--spider' to check if a URL exists without downloading. Combine with '-b' to download in background and '-a download.log' to log progress.",
+    "tags": [
+      "download",
+      "http",
+      "files"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "ip-addr",
+    "category": "networking",
+    "command": "ip addr show",
+    "title": "Show network interfaces",
+    "difficulty": "beginner",
+    "description": "Display all network interfaces and their IP addresses, including IPv4 and IPv6 assignments, MAC addresses, and interface state.",
+    "breakdown": [
+      {
+        "part": "ip",
+        "meaning": "Modern Linux networking tool (iproute2 suite)"
+      },
+      {
+        "part": "addr",
+        "meaning": "Address management subcommand"
+      },
+      {
+        "part": "show",
+        "meaning": "Display addresses (default action, can be omitted)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "show [dev]",
+        "description": "Show addresses for a specific interface, e.g. 'ip addr show eth0'",
+        "source": "local"
+      },
+      {
+        "flag": "add",
+        "description": "Assign an IP: ip addr add 192.168.1.10/24 dev eth0",
+        "source": "local"
+      },
+      {
+        "flag": "del",
+        "description": "Remove an IP: ip addr del 192.168.1.10/24 dev eth0",
+        "source": "local"
+      },
+      {
+        "flag": "-4",
+        "description": "Show IPv4 addresses only",
+        "source": "local"
+      },
+      {
+        "flag": "-6",
+        "description": "Show IPv6 addresses only",
+        "source": "local"
+      },
+      {
+        "flag": "-br",
+        "description": "Brief output — one interface per line",
+        "source": "local"
+      }
+    ],
+    "example": "ip -br addr show",
+    "output": "lo               UNKNOWN        127.0.0.1/8 ::1/128\neth0             UP             192.168.1.50/24 fe80::a00:27ff:fe4b:1f3d/64\ndocker0          DOWN           172.17.0.1/16",
+    "tip": "Use 'ip -br addr' for a compact summary. 'ip addr show dev eth0' filters to one interface. Replaces the deprecated 'ifconfig' command.",
+    "tags": [
+      "interfaces",
+      "ip",
+      "iproute2"
+    ],
+    "os": [
+      "linux"
+    ],
+    "manPage": "8"
+  },
+  {
+    "id": "ip-route",
+    "category": "networking",
+    "command": "ip route show",
+    "title": "Show routing table",
+    "difficulty": "intermediate",
+    "description": "Display the kernel routing table — which network destinations are reachable via which gateways and interfaces.",
+    "breakdown": [
+      {
+        "part": "ip",
+        "meaning": "Modern Linux networking tool (iproute2 suite)"
+      },
+      {
+        "part": "route",
+        "meaning": "Routing table management subcommand"
+      },
+      {
+        "part": "show",
+        "meaning": "Display routes (default action)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "show",
+        "description": "Display all routes",
+        "source": "local"
+      },
+      {
+        "flag": "get <IP>",
+        "description": "Show which route would be used to reach an IP: ip route get 8.8.8.8",
+        "source": "local"
+      },
+      {
+        "flag": "add",
+        "description": "Add a route: ip route add 10.0.0.0/8 via 192.168.1.1",
+        "source": "local"
+      },
+      {
+        "flag": "del",
+        "description": "Delete a route: ip route del 10.0.0.0/8",
+        "source": "local"
+      },
+      {
+        "flag": "default",
+        "description": "Add default gateway: ip route add default via 192.168.1.1",
+        "source": "local"
+      }
+    ],
+    "example": "ip route get 8.8.8.8",
+    "output": "default via 192.168.1.1 dev eth0 proto dhcp src 192.168.1.50 metric 100\n192.168.1.0/24 dev eth0 proto kernel scope link src 192.168.1.50 metric 100\n172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown",
+    "tip": "'ip route get 8.8.8.8' is the fastest way to check which interface and gateway will be used for a specific destination. Useful for debugging routing issues on multi-homed hosts.",
+    "tags": [
+      "routing",
+      "gateway",
+      "iproute2"
+    ],
+    "os": [
+      "linux"
+    ],
+    "manPage": "8"
+  },
+  {
+    "id": "ifconfig",
+    "category": "networking",
+    "command": "ifconfig -a",
+    "title": "Interface configuration (legacy)",
+    "difficulty": "beginner",
+    "description": "Display configuration for all network interfaces, including those that are currently down. The classic tool — modern systems prefer 'ip addr'.",
+    "breakdown": [
+      {
+        "part": "ifconfig",
+        "meaning": "Configure or display network interface parameters"
+      },
+      {
+        "part": "-a",
+        "meaning": "Show all interfaces including those that are down"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-a",
+        "description": "Display all interfaces including inactive ones",
+        "source": "local"
+      },
+      {
+        "flag": "<iface> up/down",
+        "description": "Bring an interface up or down: ifconfig eth0 down",
+        "source": "local"
+      },
+      {
+        "flag": "<iface> <IP>",
+        "description": "Assign IP: ifconfig eth0 192.168.1.100 netmask 255.255.255.0",
+        "source": "local"
+      }
+    ],
+    "example": "ifconfig eth0",
+    "output": "eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500\n        inet 192.168.1.50  netmask 255.255.255.0  broadcast 192.168.1.255\n        inet6 fe80::a00:27ff:fe4b:1f3d  prefixlen 64  scopeid 0x20<link>\n        ether 08:00:27:4b:1f:3d  txqueuelen 1000  (Ethernet)\n        RX packets 12453  bytes 9823456 (9.8 MB)\n        TX packets 8234  bytes 6123456 (6.1 MB)",
+    "tip": "'ifconfig' is deprecated on modern Linux — use 'ip addr show' instead. Still the default on macOS and BSD systems. Install with 'apt install net-tools' if missing.",
+    "tags": [
+      "interfaces",
+      "ip",
+      "legacy"
+    ],
+    "package": "net-tools",
+    "manPage": "8"
+  },
+  {
+    "id": "ss-listening",
+    "category": "networking",
+    "command": "ss -tlnp",
+    "title": "Show listening ports",
+    "difficulty": "intermediate",
+    "description": "Display socket statistics including listening ports and established connections — a faster, more informative replacement for netstat.",
+    "breakdown": [
+      {
+        "part": "ss",
+        "meaning": "Socket statistics — replaces netstat"
+      },
+      {
+        "part": "-t",
+        "meaning": "TCP sockets only"
+      },
+      {
+        "part": "-l",
+        "meaning": "Listening sockets only"
+      },
+      {
+        "part": "-n",
+        "meaning": "Numeric — don't resolve service names"
+      },
+      {
+        "part": "-p",
+        "meaning": "Show process using the socket"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-t",
+        "description": "Display TCP sockets",
+        "source": "local"
+      },
+      {
+        "flag": "-u",
+        "description": "Display UDP sockets",
+        "source": "local"
+      },
+      {
+        "flag": "-l",
+        "description": "Display listening sockets",
+        "source": "local"
+      },
+      {
+        "flag": "-n",
+        "description": "Do not resolve service names",
+        "source": "local"
+      },
+      {
+        "flag": "-p",
+        "description": "Show process using socket",
+        "source": "local"
+      }
+    ],
+    "example": "ss -tlnp",
+    "output": "State    Recv-Q  Send-Q  Local Address:Port  Peer Address:Port  Process\nLISTEN   0       128     0.0.0.0:22          0.0.0.0:*          users:((\"sshd\",pid=1234))\nLISTEN   0       511     0.0.0.0:80          0.0.0.0:*          users:((\"nginx\",pid=5678))\nLISTEN   0       128     0.0.0.0:443         0.0.0.0:*          users:((\"nginx\",pid=5678))",
+    "tip": "Use 'ss -tlnp' to show TCP listening sockets with process names. Use 'ss -s' for a summary count by socket state.",
+    "tags": [
+      "ports",
+      "sockets",
+      "monitoring"
+    ],
+    "manPage": "8"
+  },
+  {
+    "id": "netstat-ports",
+    "category": "networking",
+    "command": "netstat -tulpn",
+    "title": "Show open ports (netstat)",
+    "difficulty": "beginner",
+    "description": "List all listening TCP and UDP ports with the processes using them. Classic tool — use 'ss' on modern systems.",
+    "breakdown": [
+      {
+        "part": "netstat",
+        "meaning": "Network statistics — shows connections, routes, interfaces"
+      },
+      {
+        "part": "-t",
+        "meaning": "TCP connections"
+      },
+      {
+        "part": "-u",
+        "meaning": "UDP connections"
+      },
+      {
+        "part": "-l",
+        "meaning": "Listening sockets only"
+      },
+      {
+        "part": "-p",
+        "meaning": "Show PID/program name"
+      },
+      {
+        "part": "-n",
+        "meaning": "Show numeric addresses instead of resolving hostnames"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-t",
+        "description": "Show TCP connections",
+        "source": "local"
+      },
+      {
+        "flag": "-u",
+        "description": "Show UDP connections",
+        "source": "local"
+      },
+      {
+        "flag": "-l",
+        "description": "Show only listening sockets",
+        "source": "local"
+      },
+      {
+        "flag": "-p",
+        "description": "Show PID and program name",
+        "source": "local"
+      },
+      {
+        "flag": "-n",
+        "description": "Show numerical addresses",
+        "source": "local"
+      },
+      {
+        "flag": "-r",
+        "description": "Display routing table",
+        "source": "local"
+      }
+    ],
+    "example": "netstat -tulpn | grep :80",
+    "output": "Proto  Recv-Q  Send-Q  Local Address     Foreign Address  State   PID/Program\ntcp        0       0  0.0.0.0:22        0.0.0.0:*        LISTEN  1234/sshd\ntcp        0       0  0.0.0.0:80        0.0.0.0:*        LISTEN  5678/nginx\ntcp        0       0  0.0.0.0:443       0.0.0.0:*        LISTEN  5678/nginx\nudp        0       0  0.0.0.0:53        0.0.0.0:*                9012/systemd-r",
+    "tip": "Prefer 'ss -tulpn' on modern Linux — it's faster and has more features. Install netstat with 'apt install net-tools'. Pipe through grep to filter for a specific port.",
+    "tags": [
+      "ports",
+      "connections",
+      "legacy"
+    ],
+    "package": "net-tools",
+    "manPage": "8"
+  },
+  {
+    "id": "dig-dns",
+    "category": "networking",
+    "command": "dig +short example.com A",
+    "title": "DNS lookup (dig)",
+    "difficulty": "beginner",
+    "description": "Query DNS servers for records — returns detailed resolver information including TTL, server used, and query time.",
+    "breakdown": [
+      {
+        "part": "dig",
+        "meaning": "DNS lookup utility"
+      },
+      {
+        "part": "+short",
+        "meaning": "Show only the answer, not full DNS response"
+      },
+      {
+        "part": "example.com",
+        "meaning": "Domain name to query"
+      },
+      {
+        "part": "A",
+        "meaning": "Query type — A record (IPv4 address)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "+short",
+        "description": "Show concise answer only",
+        "source": "local"
+      },
+      {
+        "flag": "+trace",
+        "description": "Trace delegation path from root servers",
+        "source": "local"
+      },
+      {
+        "flag": "A",
+        "description": "Query A (IPv4) records",
+        "source": "local"
+      },
+      {
+        "flag": "AAAA",
+        "description": "Query AAAA (IPv6) records",
+        "source": "local"
+      },
+      {
+        "flag": "MX",
+        "description": "Query mail exchange records",
+        "source": "local"
+      },
+      {
+        "flag": "NS",
+        "description": "Query name server records",
+        "source": "local"
+      }
+    ],
+    "example": "dig +short google.com A",
+    "output": "142.250.80.46",
+    "tip": "Use 'dig @8.8.8.8 example.com' to query a specific resolver. Use '+short' for a clean one-line answer. Use 'dig -x 1.2.3.4' for reverse DNS lookup.",
+    "tags": [
+      "dns",
+      "lookup",
+      "resolution"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "nslookup",
+    "category": "networking",
+    "command": "nslookup -type=MX gmail.com",
+    "title": "DNS name resolution",
+    "difficulty": "beginner",
+    "description": "Query DNS servers to resolve domain names or look up specific record types like MX (mail), TXT, or CNAME.",
+    "breakdown": [
+      {
+        "part": "nslookup",
+        "meaning": "Query Internet name servers interactively"
+      },
+      {
+        "part": "-type=MX",
+        "meaning": "Record type to query (MX = mail exchanger)"
+      },
+      {
+        "part": "gmail.com",
+        "meaning": "Domain name to query"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-type=A",
+        "description": "Look up IPv4 address records (default)",
+        "source": "local"
+      },
+      {
+        "flag": "-type=MX",
+        "description": "Look up mail exchanger records",
+        "source": "local"
+      },
+      {
+        "flag": "-type=TXT",
+        "description": "Look up text records (SPF, DKIM, verification tokens)",
+        "source": "local"
+      },
+      {
+        "flag": "-type=NS",
+        "description": "Look up name server records",
+        "source": "local"
+      },
+      {
+        "flag": "-type=CNAME",
+        "description": "Look up canonical name (alias) records",
+        "source": "local"
+      }
+    ],
+    "example": "nslookup -type=MX gmail.com 8.8.8.8",
+    "output": "Server:  8.8.8.8\nAddress: 8.8.8.8#53\n\nNon-authoritative answer:\ngmail.com  mail exchanger = 5 gmail-smtp-in.l.google.com.\ngmail.com  mail exchanger = 10 alt1.gmail-smtp-in.l.google.com.\ngmail.com  mail exchanger = 20 alt2.gmail-smtp-in.l.google.com.",
+    "tip": "nslookup is available on Windows, macOS, and Linux — useful for cross-platform DNS debugging. For advanced queries prefer 'dig'. Specify a server at the end to bypass your default resolver.",
+    "tags": [
+      "dns",
+      "lookup",
+      "mx"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "host-lookup",
+    "category": "networking",
+    "command": "host -a example.com",
+    "title": "Simple DNS lookup (host)",
+    "difficulty": "beginner",
+    "description": "Perform a comprehensive DNS lookup showing all record types for a domain — a quick alternative to dig with cleaner output.",
+    "breakdown": [
+      {
+        "part": "host",
+        "meaning": "DNS lookup utility — simpler output than dig"
+      },
+      {
+        "part": "-a",
+        "meaning": "All records — equivalent to querying type ANY"
+      },
+      {
+        "part": "example.com",
+        "meaning": "Domain name to query"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-a",
+        "description": "Query all record types",
+        "source": "local"
+      },
+      {
+        "flag": "-t A",
+        "description": "Query A records (IPv4)",
+        "source": "local"
+      },
+      {
+        "flag": "-t MX",
+        "description": "Query mail exchanger records",
+        "source": "local"
+      },
+      {
+        "flag": "-t NS",
+        "description": "Query name server records",
+        "source": "local"
+      },
+      {
+        "flag": "-v",
+        "description": "Verbose output — similar to dig",
+        "source": "local"
+      }
+    ],
+    "example": "host google.com",
+    "output": "google.com has address 142.250.80.46\ngoogle.com has IPv6 address 2607:f8b0:4004:c1b::65\ngoogle.com mail is handled by 10 smtp.google.com.",
+    "tip": "'host <IP>' does a reverse DNS lookup to find the hostname for an IP address. Use 'host -t TXT domain' to check SPF and DKIM records for email troubleshooting.",
+    "tags": [
+      "dns",
+      "lookup",
+      "reverse"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "traceroute",
+    "category": "networking",
+    "command": "traceroute -n 8.8.8.8",
+    "title": "Trace network path",
+    "difficulty": "intermediate",
+    "description": "Show each hop between your host and the destination, measuring latency at each step to identify where delays or packet loss occur.",
+    "breakdown": [
+      {
+        "part": "traceroute",
+        "meaning": "Print the route packets take to a network host"
+      },
+      {
+        "part": "-n",
+        "meaning": "Print hop addresses numerically, don't resolve hostnames"
+      },
+      {
+        "part": "8.8.8.8",
+        "meaning": "Destination host"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-n",
+        "description": "Don't resolve hostnames (faster output)",
+        "source": "local"
+      },
+      {
+        "flag": "-m",
+        "description": "Set max hops (default 30): traceroute -m 15 host",
+        "source": "local"
+      },
+      {
+        "flag": "-w",
+        "description": "Wait time for a response in seconds (default 5)",
+        "source": "local"
+      },
+      {
+        "flag": "-T",
+        "description": "Use TCP SYN packets instead of UDP (bypasses some firewalls)",
+        "source": "local"
+      },
+      {
+        "flag": "-I",
+        "description": "Use ICMP ECHO instead of UDP (requires root)",
+        "source": "local"
+      }
+    ],
+    "example": "traceroute -n google.com",
+    "output": "traceroute to google.com (142.250.80.46), 30 hops max, 60 byte packets\n 1  192.168.1.1       1.234 ms  1.123 ms  1.098 ms\n 2  10.0.0.1          8.456 ms  8.234 ms  8.567 ms\n 3  72.14.215.165    12.345 ms  12.123 ms  12.456 ms\n 4  142.250.80.46    13.234 ms  12.987 ms  13.012 ms",
+    "tip": "A '*' means no response received — could be a firewall dropping probes, not necessarily a fault. Use 'mtr' for a live combined traceroute + ping view. On macOS, 'traceroute' uses UDP by default; add '-I' for ICMP.",
+    "tags": [
+      "routing",
+      "latency",
+      "hops"
+    ],
+    "manPage": "8"
+  },
+  {
+    "id": "mtr-trace",
+    "category": "networking",
+    "command": "mtr --report -n 8.8.8.8",
+    "title": "Network diagnostic (MTR)",
+    "difficulty": "intermediate",
+    "description": "Run a combined traceroute and continuous ping to every hop, printing a statistical report — the most useful single command for diagnosing network path issues.",
+    "breakdown": [
+      {
+        "part": "mtr",
+        "meaning": "Matt's Traceroute — combines traceroute and ping"
+      },
+      {
+        "part": "--report",
+        "meaning": "Non-interactive mode — run N cycles then print a report"
+      },
+      {
+        "part": "-n",
+        "meaning": "Show numeric IPs, don't resolve hostnames"
+      },
+      {
+        "part": "8.8.8.8",
+        "meaning": "Destination host"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--report",
+        "description": "Generate a report after N cycles (default 10)",
+        "source": "local"
+      },
+      {
+        "flag": "--report-cycles N",
+        "description": "Number of pings per hop to include in report",
+        "source": "local"
+      },
+      {
+        "flag": "-n",
+        "description": "No DNS resolution",
+        "source": "local"
+      },
+      {
+        "flag": "--tcp",
+        "description": "Use TCP SYN packets instead of ICMP",
+        "source": "local"
+      },
+      {
+        "flag": "--port",
+        "description": "Set destination port for TCP mode",
+        "source": "local"
+      }
+    ],
+    "example": "mtr --report --report-cycles 20 -n google.com",
+    "output": "Start: 2024-03-14T10:30:00+0000\nHOST: myserver                    Loss%   Snt   Last   Avg  Best  Wrst StDev\n  1.|-- 192.168.1.1               0.0%    20    1.2   1.3   1.1   1.8   0.2\n  2.|-- 10.0.0.1                  0.0%    20    8.4   8.5   8.1   9.2   0.3\n  3.|-- 72.14.215.165             0.0%    20   12.3  12.4  12.1  13.1   0.3\n  4.|-- 142.250.80.46             0.0%    20   13.1  13.2  12.9  13.8   0.2",
+    "tip": "Packet loss only at a middle hop (not subsequent hops) usually means that router rate-limits ICMP, not a real path problem. Loss that persists to the destination is the real issue. Run with '--tcp' to test specific ports through firewalls.",
+    "tags": [
+      "traceroute",
+      "latency",
+      "diagnostics"
+    ],
+    "package": "mtr",
+    "manPage": "8"
+  },
+  {
+    "id": "netcat",
+    "category": "networking",
+    "command": "nc -zv host 80-443",
+    "title": "Port scan with netcat",
+    "difficulty": "intermediate",
+    "description": "Scan a range of ports on a host to check which ones are open, useful for quick connectivity testing and troubleshooting.",
+    "breakdown": [
+      {
+        "part": "nc",
+        "meaning": "Netcat — versatile networking utility for reading/writing across connections"
+      },
+      {
+        "part": "-z",
+        "meaning": "Zero I/O mode — scan for open ports without sending data"
+      },
+      {
+        "part": "-v",
+        "meaning": "Verbose — show connection status for each port"
+      },
+      {
+        "part": "host",
+        "meaning": "The target hostname or IP address"
+      },
+      {
+        "part": "80-443",
+        "meaning": "Port range to scan (from port 80 to port 443)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-z",
+        "description": "Port scanning mode — don't send any data",
+        "source": "local"
+      },
+      {
+        "flag": "-v",
+        "description": "Verbose output",
+        "source": "local"
+      },
+      {
+        "flag": "-l",
+        "description": "Listen mode — wait for incoming connections",
+        "source": "local"
+      },
+      {
+        "flag": "-p",
+        "description": "Specify the source port",
+        "source": "local"
+      },
+      {
+        "flag": "-w",
+        "description": "Timeout for connections in seconds",
+        "source": "local"
+      },
+      {
+        "flag": "-u",
+        "description": "Use UDP instead of TCP",
+        "source": "local"
+      }
+    ],
+    "example": "nc -zv 192.168.1.100 80-443",
+    "output": "Connection to 192.168.1.100 80 port [tcp/http] succeeded!\nConnection to 192.168.1.100 81 port [tcp/*] failed: Connection refused\nConnection to 192.168.1.100 443 port [tcp/https] succeeded!",
+    "tip": "Use netcat as a simple chat server: run 'nc -l 1234' on one machine and 'nc host 1234' on another. You can also transfer files with 'nc -l 1234 > file.txt' and 'nc host 1234 < file.txt'.",
+    "tags": [
+      "netcat",
+      "port-scan",
+      "connectivity"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "nmap",
+    "category": "networking",
+    "command": "nmap -sV -p 1-1000 target",
+    "title": "Network scanner",
+    "difficulty": "advanced",
+    "description": "Scan ports 1 through 1000 on a target host, detecting open ports and identifying the services and versions running on them.",
+    "breakdown": [
+      {
+        "part": "nmap",
+        "meaning": "Network exploration tool and security scanner"
+      },
+      {
+        "part": "-sV",
+        "meaning": "Service version detection — probe open ports to determine service info"
+      },
+      {
+        "part": "-p 1-1000",
+        "meaning": "Scan port range 1 to 1000"
+      },
+      {
+        "part": "target",
+        "meaning": "The target host IP address or hostname"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-sV",
+        "description": "Probe open ports to determine service/version info",
+        "source": "local"
+      },
+      {
+        "flag": "-sS",
+        "description": "TCP SYN scan (stealth scan, requires root)",
+        "source": "local"
+      },
+      {
+        "flag": "-sT",
+        "description": "TCP connect scan (full connection, no root needed)",
+        "source": "local"
+      },
+      {
+        "flag": "-p",
+        "description": "Specify port range (e.g., -p 80,443 or -p 1-65535)",
+        "source": "local"
+      },
+      {
+        "flag": "-O",
+        "description": "Enable OS detection",
+        "source": "local"
+      },
+      {
+        "flag": "-A",
+        "description": "Aggressive scan: OS detection, version, scripts, traceroute",
+        "source": "local"
+      },
+      {
+        "flag": "-oN",
+        "description": "Save output in normal format to a file",
+        "source": "local"
+      },
+      {
+        "flag": "--top-ports",
+        "description": "Scan the N most common ports",
+        "source": "local"
+      }
+    ],
+    "example": "nmap -sV -p 1-1000 192.168.1.100",
+    "output": "Starting Nmap 7.94 ( https://nmap.org ) at 2024-03-14 10:30 UTC\nNmap scan report for 192.168.1.100\nHost is up (0.0045s latency).\nNot shown: 996 closed tcp ports (conn-refused)\nPORT    STATE SERVICE  VERSION\n22/tcp  open  ssh      OpenSSH 8.9p1 Ubuntu 3ubuntu0.6\n80/tcp  open  http     nginx 1.24.0\n443/tcp open  ssl/http nginx 1.24.0\n3306/tcp open mysql    MySQL 8.0.36\n\nService detection performed. Please report any incorrect results at https://nmap.org/submit/\nNmap done: 1 IP address (1 host up) scanned in 12.45 seconds",
+    "tip": "Use --top-ports 100 for a quick scan of the most commonly open ports. Always get authorization before scanning networks you don't own. Use -oN report.txt to save results for documentation.",
+    "tags": [
+      "scanner",
+      "ports",
+      "security"
+    ],
+    "manPage": "1"
+  },
+  {
+    "id": "tcpdump",
+    "category": "networking",
+    "command": "tcpdump -i eth0 -n port 80",
+    "title": "Packet capture",
+    "difficulty": "advanced",
+    "description": "Capture and display network packets on a specific interface, filtered by port, showing raw traffic for debugging network issues.",
+    "breakdown": [
+      {
+        "part": "tcpdump",
+        "meaning": "Command-line packet analyzer"
+      },
+      {
+        "part": "-i eth0",
+        "meaning": "Capture packets on the eth0 network interface"
+      },
+      {
+        "part": "-n",
+        "meaning": "Don't resolve hostnames — show numeric IP addresses"
+      },
+      {
+        "part": "port 80",
+        "meaning": "BPF filter — only capture packets on port 80 (HTTP)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-i",
+        "description": "Specify the network interface to capture on",
+        "source": "local"
+      },
+      {
+        "flag": "-n",
+        "description": "Don't resolve hostnames to speed up output",
+        "source": "local"
+      },
+      {
+        "flag": "-c",
+        "description": "Stop after capturing the specified number of packets",
+        "source": "local"
+      },
+      {
+        "flag": "-w",
+        "description": "Write raw packets to a file (pcap format)",
+        "source": "local"
+      },
+      {
+        "flag": "-r",
+        "description": "Read packets from a previously saved pcap file",
+        "source": "local"
+      },
+      {
+        "flag": "-A",
+        "description": "Print each packet in ASCII (useful for HTTP traffic)",
+        "source": "local"
+      },
+      {
+        "flag": "-X",
+        "description": "Print each packet in hex and ASCII",
+        "source": "local"
+      },
+      {
+        "flag": "-s",
+        "description": "Set the snapshot length (bytes per packet to capture)",
+        "source": "local"
+      }
+    ],
+    "example": "tcpdump -i eth0 -n port 80 -c 5",
+    "output": "tcpdump: verbose output suppressed, use -v for more detail\nlistening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes\n10:30:01.123456 IP 192.168.1.50.54321 > 93.184.216.34.80: Flags [S], seq 1234567890, win 65535, length 0\n10:30:01.145678 IP 93.184.216.34.80 > 192.168.1.50.54321: Flags [S.], seq 987654321, ack 1234567891, win 65535, length 0\n10:30:01.145789 IP 192.168.1.50.54321 > 93.184.216.34.80: Flags [.], ack 1, win 65535, length 0\n10:30:01.146012 IP 192.168.1.50.54321 > 93.184.216.34.80: Flags [P.], seq 1:78, ack 1, win 65535, length 77: HTTP: GET / HTTP/1.1\n10:30:01.167890 IP 93.184.216.34.80 > 192.168.1.50.54321: Flags [.], ack 78, win 65535, length 0\n5 packets captured\n5 packets received by filter\n0 packets dropped by kernel",
+    "tip": "Save captures to a file with '-w capture.pcap' and analyze later in Wireshark. Use compound filters like 'tcpdump -i eth0 src host 10.0.0.1 and dst port 443' for precise filtering. Always use -c to limit capture count in production.",
+    "tags": [
+      "capture",
+      "packets",
+      "debugging"
+    ],
+    "manPage": "8"
+  },
+  {
+    "id": "iptables-list",
+    "category": "networking",
+    "command": "iptables -L -n -v --line-numbers",
+    "title": "List firewall rules (iptables)",
+    "difficulty": "advanced",
+    "description": "Display all current iptables firewall rules across all chains with packet counts, byte counts, and line numbers for reference.",
+    "breakdown": [
+      {
+        "part": "iptables",
+        "meaning": "Administration tool for Linux packet filter firewall (netfilter)"
+      },
+      {
+        "part": "-L",
+        "meaning": "List all rules in the selected chain (default: all chains)"
+      },
+      {
+        "part": "-n",
+        "meaning": "Numeric output — don't resolve addresses to hostnames"
+      },
+      {
+        "part": "-v",
+        "meaning": "Verbose — show packet and byte counters, interface info"
+      },
+      {
+        "part": "--line-numbers",
+        "meaning": "Show rule line numbers (needed for deleting specific rules)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-L",
+        "description": "List rules (add chain name to filter: -L INPUT)",
+        "source": "local"
+      },
+      {
+        "flag": "-A",
+        "description": "Append rule to chain: iptables -A INPUT -p tcp --dport 22 -j ACCEPT",
+        "source": "local"
+      },
+      {
+        "flag": "-D",
+        "description": "Delete rule by line number: iptables -D INPUT 3",
+        "source": "local"
+      },
+      {
+        "flag": "-I",
+        "description": "Insert rule at position: iptables -I INPUT 1 -p tcp --dport 80 -j ACCEPT",
+        "source": "local"
+      },
+      {
+        "flag": "-F",
+        "description": "Flush (delete all rules in chain): iptables -F INPUT",
+        "source": "local"
+      },
+      {
+        "flag": "-P",
+        "description": "Set default policy: iptables -P INPUT DROP",
+        "source": "local"
+      }
+    ],
+    "example": "iptables -L INPUT -n -v --line-numbers",
+    "output": "Chain INPUT (policy ACCEPT 0 packets, 0 bytes)\nnum   pkts bytes target     prot opt in     out     source               destination\n1     1234  98K  ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22\n2      567  45K  ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80\n3      234  18K  ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:443\n4        0     0  DROP       all  --  *      *       10.0.0.5             0.0.0.0/0",
+    "tip": "iptables rules are lost on reboot — save with 'iptables-save > /etc/iptables/rules.v4' and restore with 'iptables-restore'. On modern Ubuntu, prefer 'ufw' for simple firewall management. Use '-t nat' to inspect NAT/masquerade rules.",
+    "tags": [
+      "firewall",
+      "rules",
+      "security"
+    ],
+    "os": [
+      "linux"
+    ],
+    "manPage": "8"
+  },
+  {
+    "id": "ufw-status",
+    "category": "networking",
+    "command": "ufw status verbose",
+    "title": "Firewall status (UFW)",
+    "difficulty": "beginner",
+    "description": "Display the current UFW firewall status, default policies, and all active rules in a readable format.",
+    "breakdown": [
+      {
+        "part": "ufw",
+        "meaning": "Uncomplicated Firewall — frontend for iptables"
+      },
+      {
+        "part": "status",
+        "meaning": "Show whether ufw is active/inactive and list rules"
+      },
+      {
+        "part": "verbose",
+        "meaning": "Include default policies in the output"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "status verbose",
+        "description": "Show status with default policies",
+        "source": "local"
+      },
+      {
+        "flag": "enable / disable",
+        "description": "Turn the firewall on or off",
+        "source": "local"
+      },
+      {
+        "flag": "allow <port>",
+        "description": "Allow traffic: ufw allow 22/tcp",
+        "source": "local"
+      },
+      {
+        "flag": "deny <port>",
+        "description": "Block traffic: ufw deny 3306",
+        "source": "local"
+      },
+      {
+        "flag": "delete <rule>",
+        "description": "Remove a rule: ufw delete allow 80",
+        "source": "local"
+      },
+      {
+        "flag": "reset",
+        "description": "Reset all rules to defaults (disables ufw)",
+        "source": "local"
+      }
+    ],
+    "example": "ufw allow 22/tcp && ufw enable && ufw status verbose",
+    "output": "Status: active\nLogging: on (low)\nDefault: deny (incoming), allow (outgoing), disabled (routed)\nNew profiles: skip\n\nTo                         Action      From\n--                         ------      ----\n22/tcp                     ALLOW IN    Anywhere\n80/tcp                     ALLOW IN    Anywhere\n443/tcp                    ALLOW IN    Anywhere\n22/tcp (v6)                ALLOW IN    Anywhere (v6)\n80/tcp (v6)                ALLOW IN    Anywhere (v6)\n443/tcp (v6)               ALLOW IN    Anywhere (v6)",
+    "tip": "Always allow SSH (port 22) before enabling ufw on a remote server — otherwise you'll lock yourself out. Use 'ufw allow from 192.168.1.0/24' to allow a whole subnet. 'ufw app list' shows named application profiles.",
+    "tags": [
+      "firewall",
+      "security",
+      "ubuntu"
+    ],
+    "os": [
+      "linux"
+    ],
+    "manPage": "8"
+  }
+]

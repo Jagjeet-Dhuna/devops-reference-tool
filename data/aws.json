@@ -1,0 +1,1052 @@
+[
+  {
+    "id": "aws-configure",
+    "category": "aws",
+    "command": "aws configure",
+    "title": "Configure credentials",
+    "difficulty": "beginner",
+    "description": "Set up AWS CLI credentials, default region, and output format — run once after installing awscli to authenticate all subsequent commands.",
+    "breakdown": [
+      {
+        "part": "aws",
+        "meaning": "AWS CLI entry point"
+      },
+      {
+        "part": "configure",
+        "meaning": "Interactively set access key, secret key, region, and output format"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--profile NAME",
+        "description": "Store credentials under a named profile instead of the default",
+        "source": "local"
+      },
+      {
+        "flag": "list",
+        "description": "Show current configuration values without changing them",
+        "source": "local"
+      },
+      {
+        "flag": "set key value",
+        "description": "Set a single config value non-interactively (e.g. aws configure set region us-east-1)",
+        "source": "local"
+      },
+      {
+        "flag": "list-profiles",
+        "description": "Print all configured profile names",
+        "source": "local"
+      }
+    ],
+    "example": "aws configure --profile prod",
+    "output": "AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE\nAWS Secret Access Key [None]: ****\nDefault region name [None]: us-east-1\nDefault output format [None]: json",
+    "tip": "Use named profiles (--profile prod) rather than overwriting the default to manage multiple accounts safely. In EC2, ECS, or Lambda, prefer IAM roles over static access keys — the SDK picks them up automatically without any configuration.",
+    "tags": [
+      "credentials",
+      "configuration",
+      "auth",
+      "setup"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "aws-sts-identity",
+    "category": "aws",
+    "command": "aws sts get-caller-identity",
+    "title": "Check current identity",
+    "difficulty": "beginner",
+    "description": "Return the AWS account ID, ARN, and user ID for the currently active credentials — the fastest way to verify which account and identity is in use.",
+    "breakdown": [
+      {
+        "part": "aws sts",
+        "meaning": "AWS Security Token Service — manages temporary credentials and identity"
+      },
+      {
+        "part": "get-caller-identity",
+        "meaning": "Return the account ID, user ID, and ARN for the current credentials"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--profile NAME",
+        "description": "Use a specific named profile",
+        "source": "local"
+      },
+      {
+        "flag": "--output text",
+        "description": "Plain text output for shell scripting",
+        "source": "local"
+      },
+      {
+        "flag": "--query 'Account'",
+        "description": "Extract just the account ID field using JMESPath",
+        "source": "local"
+      }
+    ],
+    "example": "aws sts get-caller-identity --profile prod --query 'Account' --output text",
+    "output": "{\n    \"UserId\": \"AIDAIOSFODNN7EXAMPLE\",\n    \"Account\": \"123456789012\",\n    \"Arn\": \"arn:aws:iam::123456789012:user/alice\"\n}",
+    "tip": "Run this before any destructive operation to confirm you are acting in the correct account and region. Combine with --query 'Account' --output text to extract just the account ID for use in shell scripts or CI validation checks.",
+    "tags": [
+      "identity",
+      "iam",
+      "auth",
+      "debugging"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "aws-profile",
+    "category": "aws",
+    "command": "aws configure list-profiles",
+    "title": "List and switch profiles",
+    "difficulty": "beginner",
+    "description": "List all configured AWS CLI profiles — use --profile on any command or set AWS_PROFILE to switch between accounts and roles without reconfiguring.",
+    "breakdown": [
+      {
+        "part": "aws configure",
+        "meaning": "AWS CLI configuration management"
+      },
+      {
+        "part": "list-profiles",
+        "meaning": "Print the names of all profiles in ~/.aws/config and ~/.aws/credentials"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--profile NAME",
+        "description": "Use the named profile for a single command",
+        "source": "local"
+      },
+      {
+        "flag": "AWS_PROFILE=NAME",
+        "description": "Environment variable to set the active profile for an entire shell session",
+        "source": "local"
+      }
+    ],
+    "example": "AWS_PROFILE=prod aws s3 ls",
+    "output": "default\ndev\nprod\nstaging",
+    "tip": "Set AWS_PROFILE as a shell environment variable to apply a profile for the whole session without repeating --profile on every command. Add 'role_arn' and 'source_profile' to a profile in ~/.aws/config to automatically assume a role when that profile is used.",
+    "tags": [
+      "profiles",
+      "credentials",
+      "configuration",
+      "multi-account"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "aws-s3-ls",
+    "category": "aws",
+    "command": "aws s3 ls s3://my-bucket --recursive --human-readable",
+    "title": "List S3 buckets and objects",
+    "difficulty": "beginner",
+    "description": "List S3 buckets or the contents of a bucket — use --recursive to traverse all prefixes, --human-readable for legible file sizes.",
+    "breakdown": [
+      {
+        "part": "aws s3 ls",
+        "meaning": "List S3 buckets or objects in a bucket"
+      },
+      {
+        "part": "s3://my-bucket",
+        "meaning": "Target bucket (omit to list all buckets)"
+      },
+      {
+        "part": "--recursive",
+        "meaning": "List all objects under all prefixes, not just the top level"
+      },
+      {
+        "part": "--human-readable",
+        "meaning": "Display sizes in KB, MB, GB instead of raw bytes"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--recursive",
+        "description": "List all objects in all subdirectories (prefixes)",
+        "source": "local"
+      },
+      {
+        "flag": "--human-readable",
+        "description": "Show sizes as KB/MB/GB",
+        "source": "local"
+      },
+      {
+        "flag": "--summarize",
+        "description": "Show total object count and size at the end",
+        "source": "local"
+      },
+      {
+        "flag": "--page-size N",
+        "description": "Number of objects per API page — reduce if hitting timeout errors on large buckets",
+        "source": "local"
+      }
+    ],
+    "example": "aws s3 ls s3://my-bucket/logs/ --recursive --summarize --human-readable",
+    "output": "2025-03-15 10:30:45   14.7 MiB logs/app-2025-03-15.log\n2025-03-14 10:30:45    8.3 MiB logs/app-2025-03-14.log\n\nTotal Objects: 2\n   Total Size: 23.0 MiB",
+    "tip": "Omit the bucket argument to list all buckets: 'aws s3 ls'. Use --page-size to avoid timeout errors on very large buckets. For programmatic use, prefer 'aws s3api list-objects-v2' which gives full control over pagination.",
+    "tags": [
+      "s3",
+      "storage",
+      "list",
+      "buckets"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "aws-s3-cp",
+    "category": "aws",
+    "command": "aws s3 cp ./build s3://my-bucket/releases/v1.0 --recursive",
+    "title": "Copy files to/from S3",
+    "difficulty": "beginner",
+    "description": "Copy files between the local filesystem and S3, or between two S3 locations — handles single files or entire directory trees with --recursive.",
+    "breakdown": [
+      {
+        "part": "aws s3 cp",
+        "meaning": "Copy a file or directory to/from S3 or between S3 locations"
+      },
+      {
+        "part": "./build",
+        "meaning": "Local source directory"
+      },
+      {
+        "part": "s3://my-bucket/releases/v1.0",
+        "meaning": "S3 destination with prefix (folder)"
+      },
+      {
+        "part": "--recursive",
+        "meaning": "Copy all files in the directory, preserving structure"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--recursive",
+        "description": "Copy an entire directory tree",
+        "source": "local"
+      },
+      {
+        "flag": "--exclude PATTERN",
+        "description": "Exclude files matching a glob pattern",
+        "source": "local"
+      },
+      {
+        "flag": "--include PATTERN",
+        "description": "Include files matching a pattern (after exclude)",
+        "source": "local"
+      },
+      {
+        "flag": "--dryrun",
+        "description": "Preview what would be copied without transferring anything",
+        "source": "local"
+      },
+      {
+        "flag": "--sse AES256",
+        "description": "Enable server-side encryption at rest",
+        "source": "local"
+      },
+      {
+        "flag": "--cache-control VALUE",
+        "description": "Set Cache-Control header for static asset caching",
+        "source": "local"
+      }
+    ],
+    "example": "aws s3 cp s3://my-bucket/config/app.json . --profile prod",
+    "output": "copy: ./build/index.html to s3://my-bucket/releases/v1.0/index.html\ncopy: ./build/main.js to s3://my-bucket/releases/v1.0/main.js\ncopy: ./build/styles.css to s3://my-bucket/releases/v1.0/styles.css",
+    "tip": "Use --dryrun to preview operations before executing, especially for destructive or large transfers. Add --cache-control 'max-age=31536000,immutable' for versioned static assets and --sse AES256 for encryption at rest.",
+    "tags": [
+      "s3",
+      "copy",
+      "upload",
+      "download"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "aws-s3-sync",
+    "category": "aws",
+    "command": "aws s3 sync ./dist s3://my-bucket --delete",
+    "title": "Sync directory to S3",
+    "difficulty": "intermediate",
+    "description": "Synchronise a local directory to S3 by uploading new or changed files and optionally deleting objects that no longer exist locally — the standard pattern for static site deployment.",
+    "breakdown": [
+      {
+        "part": "aws s3 sync",
+        "meaning": "Sync files between local and S3 — only transfers what has changed"
+      },
+      {
+        "part": "./dist",
+        "meaning": "Local source directory to sync from"
+      },
+      {
+        "part": "s3://my-bucket",
+        "meaning": "Destination S3 bucket or prefix"
+      },
+      {
+        "part": "--delete",
+        "meaning": "Remove S3 objects that no longer exist in the local source"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--delete",
+        "description": "Delete objects in destination that are absent from source",
+        "source": "local"
+      },
+      {
+        "flag": "--dryrun",
+        "description": "Preview the sync without making any changes",
+        "source": "local"
+      },
+      {
+        "flag": "--exclude PATTERN",
+        "description": "Skip files matching a glob (e.g. --exclude '*.DS_Store')",
+        "source": "local"
+      },
+      {
+        "flag": "--acl public-read",
+        "description": "Set object ACL — use for publicly accessible static sites",
+        "source": "local"
+      },
+      {
+        "flag": "--cache-control VALUE",
+        "description": "Set Cache-Control header on uploaded objects",
+        "source": "local"
+      }
+    ],
+    "example": "aws s3 sync s3://source-bucket s3://dest-bucket --source-region us-east-1 --region eu-west-1",
+    "output": "upload: dist/index.html to s3://my-bucket/index.html\nupload: dist/app.js to s3://my-bucket/app.js\ndelete: s3://my-bucket/old-chunk-abc123.js",
+    "tip": "Always run --dryrun first when using --delete — it can permanently remove S3 objects if the source path is wrong. Use --exclude '*.map' to skip source maps and --cache-control 'no-cache' for HTML files alongside 'max-age=31536000' for hashed assets.",
+    "tags": [
+      "s3",
+      "sync",
+      "deployment",
+      "static-site"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "aws-ec2-list",
+    "category": "aws",
+    "command": "aws ec2 describe-instances --filters \"Name=instance-state-name,Values=running\" --output table",
+    "title": "List EC2 instances",
+    "difficulty": "intermediate",
+    "description": "List EC2 instances with their IDs, state, type, and IP addresses — filter by state, tags, or attributes to narrow the results.",
+    "breakdown": [
+      {
+        "part": "aws ec2 describe-instances",
+        "meaning": "Retrieve instance metadata for all or specified EC2 instances"
+      },
+      {
+        "part": "--filters \"Name=instance-state-name,Values=running\"",
+        "meaning": "Only return instances in the 'running' state"
+      },
+      {
+        "part": "--output table",
+        "meaning": "Render results as an ASCII table instead of JSON"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--filters Name=X,Values=Y",
+        "description": "Filter by state, tag, VPC, instance type, and many other attributes",
+        "source": "local"
+      },
+      {
+        "flag": "--instance-ids i-xxx",
+        "description": "Query specific instance IDs directly",
+        "source": "local"
+      },
+      {
+        "flag": "--query 'Reservations[*].Instances[*].[InstanceId,State.Name]'",
+        "description": "JMESPath expression to extract specific fields from nested JSON",
+        "source": "local"
+      },
+      {
+        "flag": "--output table|json|text",
+        "description": "Output format — use text for shell scripting, table for human review",
+        "source": "local"
+      }
+    ],
+    "example": "aws ec2 describe-instances --filters \"Name=tag:Env,Values=prod\" --query 'Reservations[*].Instances[*].[InstanceId,PrivateIpAddress,State.Name]' --output table",
+    "output": "-----------------------------------------------------------------------------\n|                       DescribeInstances                                   |\n+----------------------+----------------+-----------+\n|  i-0a1b2c3d4e5f6789 |  10.0.1.45     |  running  |\n|  i-0fedcba987654321 |  10.0.1.67     |  running  |\n+----------------------+----------------+-----------+",
+    "tip": "Use --query with JMESPath to flatten the nested Reservations[*].Instances[*] structure and extract only the fields you need. Filter by tag with 'Name=tag:Name,Values=my-server' to find instances by their Name tag.",
+    "tags": [
+      "ec2",
+      "instances",
+      "list",
+      "compute"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "aws-ec2-start",
+    "category": "aws",
+    "command": "aws ec2 start-instances --instance-ids i-1234567890abcdef0",
+    "title": "Start EC2 instance",
+    "difficulty": "intermediate",
+    "description": "Start one or more stopped EC2 instances by ID — instances must be in the 'stopped' state, not 'terminated' or 'pending'.",
+    "breakdown": [
+      {
+        "part": "aws ec2 start-instances",
+        "meaning": "Send a start request to one or more stopped instances"
+      },
+      {
+        "part": "--instance-ids i-1234567890abcdef0",
+        "meaning": "One or more instance IDs — space-separated for multiple"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--instance-ids ID [ID...]",
+        "description": "One or more instance IDs to start",
+        "source": "local"
+      },
+      {
+        "flag": "--dry-run",
+        "description": "Verify permissions without actually starting the instance",
+        "source": "local"
+      }
+    ],
+    "example": "aws ec2 start-instances --instance-ids i-1234567890abcdef0 && aws ec2 wait instance-running --instance-ids i-1234567890abcdef0",
+    "output": "{\n    \"StartingInstances\": [\n        {\n            \"InstanceId\": \"i-1234567890abcdef0\",\n            \"PreviousState\": {\"Code\": 80, \"Name\": \"stopped\"},\n            \"CurrentState\": {\"Code\": 0, \"Name\": \"pending\"}\n        }\n    ]\n}",
+    "tip": "Chain with 'aws ec2 wait instance-running --instance-ids i-xxx' to block the script until the instance is fully running before the next step. Use SSM Session Manager or EC2 Instance Connect to connect without opening port 22.",
+    "tags": [
+      "ec2",
+      "start",
+      "instances",
+      "compute"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "aws-ec2-stop",
+    "category": "aws",
+    "command": "aws ec2 stop-instances --instance-ids i-1234567890abcdef0",
+    "title": "Stop EC2 instance",
+    "difficulty": "intermediate",
+    "description": "Gracefully stop one or more running EC2 instances — compute billing stops, but attached EBS volumes continue to accrue storage charges.",
+    "breakdown": [
+      {
+        "part": "aws ec2 stop-instances",
+        "meaning": "Send a stop request to one or more running instances"
+      },
+      {
+        "part": "--instance-ids i-1234567890abcdef0",
+        "meaning": "One or more instance IDs to stop"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--instance-ids ID [ID...]",
+        "description": "One or more instance IDs to stop",
+        "source": "local"
+      },
+      {
+        "flag": "--hibernate",
+        "description": "Hibernate instead of stop — saves RAM contents to EBS for faster resume",
+        "source": "local"
+      },
+      {
+        "flag": "--force",
+        "description": "Force stop without waiting for graceful OS shutdown",
+        "source": "local"
+      }
+    ],
+    "example": "aws ec2 stop-instances --instance-ids i-1234567890abcdef0 && aws ec2 wait instance-stopped --instance-ids i-1234567890abcdef0",
+    "output": "{\n    \"StoppingInstances\": [\n        {\n            \"InstanceId\": \"i-1234567890abcdef0\",\n            \"PreviousState\": {\"Code\": 16, \"Name\": \"running\"},\n            \"CurrentState\": {\"Code\": 64, \"Name\": \"stopping\"}\n        }\n    ]\n}",
+    "tip": "Use 'aws ec2 wait instance-stopped' to block until fully stopped before taking a snapshot or detaching volumes. Use --hibernate to preserve the instance's memory state for faster restarts on supported instance types.",
+    "tags": [
+      "ec2",
+      "stop",
+      "instances",
+      "compute"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "aws-eks-kubeconfig",
+    "category": "aws",
+    "command": "aws eks update-kubeconfig --name my-cluster --region us-east-1",
+    "title": "Configure kubectl for EKS",
+    "difficulty": "intermediate",
+    "description": "Add or update a kubectl context for an EKS cluster in ~/.kube/config, enabling immediate kubectl access authenticated via AWS credentials.",
+    "breakdown": [
+      {
+        "part": "aws eks update-kubeconfig",
+        "meaning": "Merge an EKS cluster context into the local kubeconfig file"
+      },
+      {
+        "part": "--name my-cluster",
+        "meaning": "Name of the EKS cluster to configure access for"
+      },
+      {
+        "part": "--region us-east-1",
+        "meaning": "AWS region where the cluster is deployed"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--name CLUSTER",
+        "description": "EKS cluster name",
+        "source": "local"
+      },
+      {
+        "flag": "--region REGION",
+        "description": "AWS region of the cluster",
+        "source": "local"
+      },
+      {
+        "flag": "--alias NAME",
+        "description": "Set a short context name instead of the full cluster ARN",
+        "source": "local"
+      },
+      {
+        "flag": "--profile NAME",
+        "description": "Use a specific AWS CLI profile for authentication",
+        "source": "local"
+      },
+      {
+        "flag": "--kubeconfig PATH",
+        "description": "Write to a specific kubeconfig file instead of ~/.kube/config",
+        "source": "local"
+      }
+    ],
+    "example": "aws eks update-kubeconfig --name prod-cluster --region us-east-1 --alias prod --profile prod",
+    "output": "Added new context arn:aws:eks:us-east-1:123456789012:cluster/prod-cluster to /home/user/.kube/config",
+    "tip": "Use --alias to give the context a short name (e.g. prod) instead of the full ARN — makes switching with 'kubectl config use-context prod' much faster. Use --profile to bind the context to a specific AWS profile with the right IAM permissions.",
+    "tags": [
+      "eks",
+      "kubernetes",
+      "kubeconfig",
+      "cluster"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "aws-ecr-login",
+    "category": "aws",
+    "command": "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 123456789012.dkr.ecr.us-east-1.amazonaws.com",
+    "title": "Authenticate to ECR",
+    "difficulty": "intermediate",
+    "description": "Authenticate Docker to push and pull images from an Elastic Container Registry — the token is valid for 12 hours and must be refreshed in CI pipelines.",
+    "breakdown": [
+      {
+        "part": "aws ecr get-login-password",
+        "meaning": "Generate a temporary ECR authentication token"
+      },
+      {
+        "part": "--region us-east-1",
+        "meaning": "Region of the ECR registry"
+      },
+      {
+        "part": "| docker login --username AWS --password-stdin",
+        "meaning": "Pipe the token directly into Docker login — avoids the password appearing in shell history"
+      },
+      {
+        "part": "123456789012.dkr.ecr.us-east-1.amazonaws.com",
+        "meaning": "ECR registry URL: account-id.dkr.ecr.region.amazonaws.com"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--region REGION",
+        "description": "AWS region of the ECR registry",
+        "source": "local"
+      },
+      {
+        "flag": "--profile NAME",
+        "description": "AWS profile to use for authentication",
+        "source": "local"
+      }
+    ],
+    "example": "aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 123456789012.dkr.ecr.eu-west-1.amazonaws.com",
+    "output": "Login Succeeded",
+    "tip": "Never use the deprecated 'aws ecr get-login' (eval-based) approach. ECR tokens expire after 12 hours — refresh in CI before every push. In ECS and CodeBuild, the execution role automatically authenticates to ECR without this step.",
+    "tags": [
+      "ecr",
+      "docker",
+      "registry",
+      "auth"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "aws-iam-user",
+    "category": "aws",
+    "command": "aws iam get-user",
+    "title": "Get IAM user details",
+    "difficulty": "beginner",
+    "description": "Retrieve details about the current IAM user including the ARN, path, creation date, and password last used — useful for confirming identity and auditing access.",
+    "breakdown": [
+      {
+        "part": "aws iam",
+        "meaning": "IAM (Identity and Access Management) service commands"
+      },
+      {
+        "part": "get-user",
+        "meaning": "Return details for the current user, or a named user with --user-name"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--user-name NAME",
+        "description": "Get details for a specific user instead of the calling user",
+        "source": "local"
+      },
+      {
+        "flag": "list-users",
+        "description": "List all IAM users in the account",
+        "source": "local"
+      },
+      {
+        "flag": "list-attached-user-policies --user-name NAME",
+        "description": "Show managed policies attached to a user",
+        "source": "local"
+      }
+    ],
+    "example": "aws iam list-attached-user-policies --user-name alice",
+    "output": "{\n    \"User\": {\n        \"UserId\": \"AIDAIOSFODNN7EXAMPLE\",\n        \"UserName\": \"alice\",\n        \"Arn\": \"arn:aws:iam::123456789012:user/alice\",\n        \"CreateDate\": \"2023-01-15T10:30:00Z\",\n        \"PasswordLastUsed\": \"2025-03-15T09:00:00Z\"\n    }\n}",
+    "tip": "For roles rather than users (e.g. when running in EC2 or Lambda), use 'aws sts get-caller-identity' instead — get-user fails for role-based sessions. Use 'aws iam list-attached-user-policies' to audit what a user can do.",
+    "tags": [
+      "iam",
+      "user",
+      "identity",
+      "permissions"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "aws-lambda-invoke",
+    "category": "aws",
+    "command": "aws lambda invoke --function-name my-function --payload '{\"key\": \"value\"}' response.json",
+    "title": "Invoke Lambda function",
+    "difficulty": "intermediate",
+    "description": "Synchronously invoke a Lambda function with a JSON payload and write the response to a file — useful for testing functions and triggering serverless jobs from scripts.",
+    "breakdown": [
+      {
+        "part": "aws lambda invoke",
+        "meaning": "Call a Lambda function and wait for the response"
+      },
+      {
+        "part": "--function-name my-function",
+        "meaning": "Function name, ARN, or partial ARN of the Lambda to invoke"
+      },
+      {
+        "part": "--payload '{\"key\": \"value\"}'",
+        "meaning": "JSON event payload passed to the function handler"
+      },
+      {
+        "part": "response.json",
+        "meaning": "Output file where the function's response body is written"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--function-name NAME|ARN",
+        "description": "Lambda function name or ARN",
+        "source": "local"
+      },
+      {
+        "flag": "--payload JSON",
+        "description": "JSON event object passed to the handler",
+        "source": "local"
+      },
+      {
+        "flag": "--invocation-type Event",
+        "description": "Async invocation — returns immediately without waiting for the response",
+        "source": "local"
+      },
+      {
+        "flag": "--qualifier VERSION",
+        "description": "Invoke a specific version or alias",
+        "source": "local"
+      },
+      {
+        "flag": "--log-type Tail",
+        "description": "Include the last 4KB of CloudWatch logs in the response (base64-encoded)",
+        "source": "local"
+      }
+    ],
+    "example": "aws lambda invoke --function-name my-function --payload '{\"action\":\"process\"}' --log-type Tail out.json && cat out.json",
+    "output": "{\n    \"StatusCode\": 200,\n    \"ExecutedVersion\": \"$LATEST\"\n}",
+    "tip": "Use --invocation-type Event for fire-and-forget async invocations that do not need a response. Use --log-type Tail to get the last 4KB of CloudWatch logs inline in the CLI response — decode them with: echo LOG_BASE64 | base64 -d.",
+    "tags": [
+      "lambda",
+      "serverless",
+      "invoke",
+      "functions"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "aws-logs-tail",
+    "category": "aws",
+    "command": "aws logs tail /aws/lambda/my-function --follow",
+    "title": "Tail CloudWatch logs",
+    "difficulty": "beginner",
+    "description": "Stream real-time log output from a CloudWatch log group — equivalent to tail -f for AWS services including Lambda, ECS, API Gateway, and EC2.",
+    "breakdown": [
+      {
+        "part": "aws logs tail",
+        "meaning": "Stream recent and live log events from a CloudWatch log group"
+      },
+      {
+        "part": "/aws/lambda/my-function",
+        "meaning": "Log group name — Lambda groups follow the /aws/lambda/function-name pattern"
+      },
+      {
+        "part": "--follow",
+        "meaning": "Stay connected and print new log events as they arrive (like tail -f)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--follow",
+        "description": "Keep streaming new events rather than exiting after current logs",
+        "source": "local"
+      },
+      {
+        "flag": "--since DURATION",
+        "description": "Start from this far back (e.g. 30m, 1h, 2d)",
+        "source": "local"
+      },
+      {
+        "flag": "--format short|detailed",
+        "description": "Log line format — short strips request IDs for cleaner output",
+        "source": "local"
+      },
+      {
+        "flag": "--filter-pattern PATTERN",
+        "description": "CloudWatch filter pattern to show only matching log events",
+        "source": "local"
+      }
+    ],
+    "example": "aws logs tail /aws/ecs/my-service --follow --format short --since 1h --filter-pattern ERROR",
+    "output": "2025-03-15T10:30:45 START RequestId: abc-123-def\n2025-03-15T10:30:45 Processing 47 records...\n2025-03-15T10:30:46 END RequestId: abc-123-def\n2025-03-15T10:30:46 REPORT Duration: 234.56ms  Billed: 235ms  Memory: 256MB  Max: 87MB",
+    "tip": "Use --since 30m to avoid replaying hours of history on startup. Use --filter-pattern 'ERROR' to show only error lines — this is a server-side filter that reduces output volume. Use --format short to strip request ID noise from Lambda logs.",
+    "tags": [
+      "cloudwatch",
+      "logs",
+      "monitoring",
+      "tail"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "aws-ssm-parameter",
+    "category": "aws",
+    "command": "aws ssm get-parameter --name /app/prod/db-password --with-decryption",
+    "title": "Read SSM parameter",
+    "difficulty": "intermediate",
+    "description": "Retrieve a value from AWS Systems Manager Parameter Store — use --with-decryption for SecureString parameters encrypted with KMS.",
+    "breakdown": [
+      {
+        "part": "aws ssm get-parameter",
+        "meaning": "Retrieve a single parameter from SSM Parameter Store"
+      },
+      {
+        "part": "--name /app/prod/db-password",
+        "meaning": "Full parameter path — hierarchical paths with / are recommended for organisation"
+      },
+      {
+        "part": "--with-decryption",
+        "meaning": "Decrypt SecureString parameters using KMS — required to read the plaintext value"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--name PATH",
+        "description": "Full parameter name or path",
+        "source": "local"
+      },
+      {
+        "flag": "--with-decryption",
+        "description": "Decrypt SecureString values — requires kms:Decrypt permission",
+        "source": "local"
+      },
+      {
+        "flag": "--query 'Parameter.Value'",
+        "description": "Extract just the value using JMESPath",
+        "source": "local"
+      },
+      {
+        "flag": "get-parameters-by-path --path /app/prod/",
+        "description": "Retrieve all parameters under a path prefix",
+        "source": "local"
+      }
+    ],
+    "example": "aws ssm get-parameter --name /app/prod/db-password --with-decryption --query 'Parameter.Value' --output text",
+    "output": "{\n    \"Parameter\": {\n        \"Name\": \"/app/prod/db-password\",\n        \"Type\": \"SecureString\",\n        \"Value\": \"my-secret-password\",\n        \"Version\": 3,\n        \"LastModifiedDate\": \"2025-03-15T10:30:00Z\"\n    }\n}",
+    "tip": "Use --query 'Parameter.Value' --output text to get just the value for injection into scripts or environment variables. Use 'get-parameters-by-path --path /app/prod/ --recursive --with-decryption' to bulk-fetch all params for an environment at once.",
+    "tags": [
+      "ssm",
+      "parameter-store",
+      "secrets",
+      "configuration"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "aws-secretsmanager",
+    "category": "aws",
+    "command": "aws secretsmanager get-secret-value --secret-id prod/myapp/database",
+    "title": "Read Secrets Manager secret",
+    "difficulty": "intermediate",
+    "description": "Retrieve a secret from AWS Secrets Manager — returns the secret string or binary along with ARN, version metadata, and rotation status.",
+    "breakdown": [
+      {
+        "part": "aws secretsmanager",
+        "meaning": "AWS Secrets Manager service — stores and rotates credentials, API keys, and certificates"
+      },
+      {
+        "part": "get-secret-value",
+        "meaning": "Retrieve the current value of a secret"
+      },
+      {
+        "part": "--secret-id prod/myapp/database",
+        "meaning": "Secret name or ARN — hierarchical names like prod/app/db are recommended"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--secret-id NAME|ARN",
+        "description": "Secret name or full ARN",
+        "source": "local"
+      },
+      {
+        "flag": "--version-id ID",
+        "description": "Retrieve a specific version of the secret",
+        "source": "local"
+      },
+      {
+        "flag": "--query 'SecretString'",
+        "description": "Extract just the secret value field",
+        "source": "local"
+      }
+    ],
+    "example": "aws secretsmanager get-secret-value --secret-id prod/myapp/database --query 'SecretString' --output text | jq '.password'",
+    "output": "{\n    \"Name\": \"prod/myapp/database\",\n    \"ARN\": \"arn:aws:secretsmanager:us-east-1:123456789012:secret:prod/myapp/database-AbCdEf\",\n    \"SecretString\": \"{\\\"username\\\":\\\"admin\\\",\\\"password\\\":\\\"supersecret\\\"}\",\n    \"VersionId\": \"abc-123-def\"\n}",
+    "tip": "Pipe --query 'SecretString' --output text into jq to extract individual fields from JSON secrets. In Lambda and ECS, use the SDK to fetch secrets directly at runtime — the execution role handles auth without any CLI config.",
+    "tags": [
+      "secrets",
+      "credentials",
+      "secretsmanager",
+      "security"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "aws-cloudformation-status",
+    "category": "aws",
+    "command": "aws cloudformation describe-stacks --stack-name my-stack --query 'Stacks[0].StackStatus' --output text",
+    "title": "Check CloudFormation stack",
+    "difficulty": "intermediate",
+    "description": "Describe a CloudFormation stack to check its deployment status, outputs, and parameters — useful for monitoring deployments and extracting resource values.",
+    "breakdown": [
+      {
+        "part": "aws cloudformation describe-stacks",
+        "meaning": "Get metadata for one or all CloudFormation stacks"
+      },
+      {
+        "part": "--stack-name my-stack",
+        "meaning": "The stack to inspect — omit to list all stacks"
+      },
+      {
+        "part": "--query 'Stacks[0].StackStatus'",
+        "meaning": "Extract the status field: CREATE_COMPLETE, UPDATE_FAILED, ROLLBACK_IN_PROGRESS, etc."
+      },
+      {
+        "part": "--output text",
+        "meaning": "Print plain text — removes JSON wrapper, suitable for scripting"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--stack-name NAME",
+        "description": "Target a specific stack by name or ID",
+        "source": "local"
+      },
+      {
+        "flag": "--query 'Stacks[0].Outputs'",
+        "description": "Extract stack outputs (exported resource IDs, URLs, ARNs)",
+        "source": "local"
+      },
+      {
+        "flag": "describe-stack-events --stack-name NAME",
+        "description": "See per-resource events — essential for diagnosing stuck or failed stacks",
+        "source": "local"
+      },
+      {
+        "flag": "wait stack-update-complete",
+        "description": "Block until stack update finishes — use in deployment scripts",
+        "source": "local"
+      }
+    ],
+    "example": "aws cloudformation describe-stack-events --stack-name my-stack --query 'StackEvents[?ResourceStatus==`UPDATE_FAILED`].[LogicalResourceId,ResourceStatusReason]' --output table",
+    "output": "UPDATE_COMPLETE",
+    "tip": "Use 'aws cloudformation wait stack-update-complete --stack-name my-stack' to block a deployment script until the update finishes. When a stack gets stuck, 'describe-stack-events' with a filter on UPDATE_FAILED is the fastest path to the error message.",
+    "tags": [
+      "cloudformation",
+      "iac",
+      "deployment",
+      "stacks"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  },
+  {
+    "id": "aws-rds-list",
+    "category": "aws",
+    "command": "aws rds describe-db-instances --query 'DBInstances[*].[DBInstanceIdentifier,DBInstanceStatus,Endpoint.Address,DBInstanceClass]' --output table",
+    "title": "List RDS instances",
+    "difficulty": "intermediate",
+    "description": "List all RDS database instances in the region with their identifiers, status, endpoint hostnames, and instance types.",
+    "breakdown": [
+      {
+        "part": "aws rds describe-db-instances",
+        "meaning": "Retrieve metadata for all or specified RDS instances in the current region"
+      },
+      {
+        "part": "--query 'DBInstances[*].[...]'",
+        "meaning": "JMESPath expression selecting specific fields from the nested response"
+      },
+      {
+        "part": "--output table",
+        "meaning": "Render as an ASCII table for human-readable output"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--db-instance-identifier ID",
+        "description": "Query a specific RDS instance by ID",
+        "source": "local"
+      },
+      {
+        "flag": "--filters Name=db-instance-id,Values=X",
+        "description": "Filter results by instance attributes",
+        "source": "local"
+      },
+      {
+        "flag": "--query 'DBInstances[0].Endpoint.Address'",
+        "description": "Extract the hostname of the first instance for connection strings",
+        "source": "local"
+      }
+    ],
+    "example": "aws rds describe-db-instances --db-instance-identifier my-db --query 'DBInstances[0].Endpoint.Address' --output text",
+    "output": "----------------------------------------------------------------------\n|              DescribeDBInstances                                   |\n+------------------+-----------+-----------------------------+-----------+\n|  my-prod-db      | available | my-prod-db.xxx.us-east-1.rds| db.t3.medium |\n+------------------+-----------+-----------------------------+-----------+",
+    "tip": "Use --db-instance-identifier to query a single instance. Extract the connection string with '--query DBInstances[0].Endpoint.Address --output text' — pipe into a psql or mysql connection command for automation.",
+    "tags": [
+      "rds",
+      "database",
+      "instances",
+      "sql"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows",
+      "wsl"
+    ]
+  }
+]
