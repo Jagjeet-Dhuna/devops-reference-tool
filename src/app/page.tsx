@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
 import { Command } from "@/lib/types";
 import { useCommands } from "@/hooks/use-commands";
 import { categories } from "@/lib/categories";
@@ -12,13 +12,15 @@ import { Footer } from "@/components/layout/footer";
 import { CommandList } from "@/components/commands/command-list";
 import { DetailPanel } from "@/components/commands/detail-panel";
 
-const MOBILE_OS = ["linux", "macos", "alpine", "wsl"];
+const MOBILE_OS = ["linux", "macos", "windows", "alpine", "wsl"];
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [activeOs, setActiveOs] = useState<string | null>(null);
   const [selectedCommand, setSelectedCommand] = useState<Command | null>(null);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const { commands, loading } = useCommands({
     category: activeCategory || undefined,
@@ -82,76 +84,102 @@ export default function Home() {
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         commandCount={commands.length}
+        sidebarOpen={sidebarOpen}
+        onToggleSidebar={() => setSidebarOpen(o => !o)}
       />
 
       {/* ── Mobile filter bars (hidden on sm+) ─────────────────────────────── */}
       <div className="sm:hidden border-b border-zinc-800 bg-[#0a0a0c]">
-        {/* Category chips */}
-        <div className="flex overflow-x-auto gap-1.5 px-3 pt-2 pb-1.5 no-scrollbar">
-          <button
-            onClick={() => handleCategoryChange(null)}
-            className={cn(
-              "shrink-0 px-3 py-1 rounded-full text-xs font-mono border transition-colors",
-              activeCategory === null
-                ? "bg-zinc-700 text-zinc-100 border-zinc-600"
-                : "text-zinc-400 border-zinc-700 hover:border-zinc-500"
+        {/* Toggle row */}
+        <button
+          onClick={() => setFiltersOpen(o => !o)}
+          className="w-full flex items-center justify-between px-3 py-2"
+        >
+          <span className="text-xs font-mono text-zinc-500">Filters</span>
+          <div className="flex items-center gap-2">
+            {(activeCategory || activeOs) && (
+              <span className="text-xs font-mono text-zinc-400">
+                {[activeCategory, activeOs].filter(Boolean).join(" · ")}
+              </span>
             )}
-          >
-            All
-          </button>
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => handleCategoryChange(cat.id)}
-              className={cn(
-                "shrink-0 px-3 py-1 rounded-full text-xs font-mono border transition-colors",
-                activeCategory === cat.id
-                  ? "border-transparent"
-                  : "text-zinc-400 border-zinc-700 hover:border-zinc-500"
-              )}
-              style={
-                activeCategory === cat.id
-                  ? {
-                      backgroundColor: `${cat.color}22`,
-                      color: cat.color,
-                      borderColor: `${cat.color}44`,
-                    }
-                  : undefined
-              }
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
+            {filtersOpen
+              ? <ChevronUp className="h-3.5 w-3.5 text-zinc-500" />
+              : <ChevronDown className="h-3.5 w-3.5 text-zinc-500" />
+            }
+          </div>
+        </button>
 
-        {/* OS filter chips */}
-        <div className="flex overflow-x-auto gap-1.5 px-3 pb-2 no-scrollbar">
-          <button
-            onClick={() => setActiveOs(null)}
-            className={cn(
-              "shrink-0 px-2.5 py-0.5 rounded text-[11px] font-mono border transition-colors",
-              activeOs === null
-                ? "bg-zinc-800 text-zinc-200 border-zinc-600"
-                : "text-zinc-500 border-zinc-800"
-            )}
-          >
-            All OS
-          </button>
-          {MOBILE_OS.map((os) => (
-            <button
-              key={os}
-              onClick={() => setActiveOs(activeOs === os ? null : os)}
-              className={cn(
-                "shrink-0 px-2.5 py-0.5 rounded text-[11px] font-mono border transition-colors",
-                activeOs === os
-                  ? "bg-violet-500/15 text-violet-300 border-violet-500/30"
-                  : "text-zinc-500 border-zinc-800"
-              )}
-            >
-              {os}
-            </button>
-          ))}
-        </div>
+        {/* Collapsible chip rows */}
+        {filtersOpen && (
+          <>
+            {/* Category chips */}
+            <div className="flex overflow-x-auto gap-1.5 px-3 pb-1.5 no-scrollbar">
+              <button
+                onClick={() => handleCategoryChange(null)}
+                className={cn(
+                  "shrink-0 px-3 py-1 rounded-full text-xs font-mono border transition-colors",
+                  activeCategory === null
+                    ? "bg-zinc-700 text-zinc-100 border-zinc-600"
+                    : "text-zinc-400 border-zinc-700 hover:border-zinc-500"
+                )}
+              >
+                All
+              </button>
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => handleCategoryChange(cat.id)}
+                  className={cn(
+                    "shrink-0 px-3 py-1 rounded-full text-xs font-mono border transition-colors",
+                    activeCategory === cat.id
+                      ? "border-transparent"
+                      : "text-zinc-400 border-zinc-700 hover:border-zinc-500"
+                  )}
+                  style={
+                    activeCategory === cat.id
+                      ? {
+                          backgroundColor: `${cat.color}22`,
+                          color: cat.color,
+                          borderColor: `${cat.color}44`,
+                        }
+                      : undefined
+                  }
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+
+            {/* OS filter chips */}
+            <div className="flex overflow-x-auto gap-1.5 px-3 pb-2 no-scrollbar">
+              <button
+                onClick={() => setActiveOs(null)}
+                className={cn(
+                  "shrink-0 px-2.5 py-0.5 rounded text-[11px] font-mono border transition-colors",
+                  activeOs === null
+                    ? "bg-zinc-800 text-zinc-200 border-zinc-600"
+                    : "text-zinc-500 border-zinc-800"
+                )}
+              >
+                All OS
+              </button>
+              {MOBILE_OS.map((os) => (
+                <button
+                  key={os}
+                  onClick={() => setActiveOs(activeOs === os ? null : os)}
+                  className={cn(
+                    "shrink-0 px-2.5 py-0.5 rounded text-[11px] font-mono border transition-colors",
+                    activeOs === os
+                      ? "bg-violet-500/15 text-violet-300 border-violet-500/30"
+                      : "text-zinc-500 border-zinc-800"
+                  )}
+                >
+                  {os}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
       </div>
 
       <div className="flex flex-1 overflow-hidden">
@@ -162,6 +190,7 @@ export default function Home() {
           commandCounts={allCounts}
           activeOs={activeOs}
           onOsChange={setActiveOs}
+          isOpen={sidebarOpen}
         />
 
         {/* Command list — desktop middle panel */}
