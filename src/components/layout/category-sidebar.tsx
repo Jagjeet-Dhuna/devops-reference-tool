@@ -60,7 +60,6 @@ interface CategorySidebarProps {
   commandCounts: Record<string, number>;
   activeOs: string | null;
   onOsChange: (os: string | null) => void;
-  isOpen: boolean;
 }
 
 export function CategorySidebar({
@@ -69,13 +68,9 @@ export function CategorySidebar({
   commandCounts,
   activeOs,
   onOsChange,
-  isOpen,
 }: CategorySidebarProps) {
   return (
-    <aside className={cn(
-      "hidden sm:flex flex-col overflow-hidden border-r border-zinc-800 bg-[#0a0a0c] shrink-0 transition-[width] duration-200",
-      isOpen ? "w-14 lg:w-48" : "w-0 border-r-0"
-    )}>
+    <aside className="hidden sm:flex flex-col w-14 lg:w-48 overflow-hidden border-r border-zinc-800 bg-[#0a0a0c] shrink-0">
       <div className="p-2 lg:p-3">
         <button
           onClick={() => onCategoryChange(null)}

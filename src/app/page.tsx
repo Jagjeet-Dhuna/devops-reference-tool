@@ -19,7 +19,6 @@ export default function Home() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [activeOs, setActiveOs] = useState<string | null>(null);
   const [selectedCommand, setSelectedCommand] = useState<Command | null>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   const { commands, loading } = useCommands({
@@ -84,12 +83,10 @@ export default function Home() {
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         commandCount={commands.length}
-        sidebarOpen={sidebarOpen}
-        onToggleSidebar={() => setSidebarOpen(o => !o)}
       />
 
-      {/* ── Mobile filter bars (hidden on sm+) ─────────────────────────────── */}
-      <div className="sm:hidden border-b border-zinc-800 bg-[#0a0a0c]">
+      {/* ── Mobile + portrait tablet filter bars (hidden on lg+) ───────────── */}
+      <div className="lg:hidden border-b border-zinc-800 bg-[#0a0a0c]">
         {/* Toggle row */}
         <button
           onClick={() => setFiltersOpen(o => !o)}
@@ -190,11 +187,10 @@ export default function Home() {
           commandCounts={allCounts}
           activeOs={activeOs}
           onOsChange={setActiveOs}
-          isOpen={sidebarOpen}
         />
 
-        {/* Command list — desktop middle panel */}
-        <div className="h-full w-72 lg:w-80 border-r border-zinc-800 bg-[#0c0c0e] overflow-hidden shrink-0 hidden sm:block">
+        {/* Command list — shown alongside detail only at lg+ */}
+        <div className="h-full w-72 lg:w-80 border-r border-zinc-800 bg-[#0c0c0e] overflow-hidden shrink-0 hidden lg:block">
           <CommandList
             commands={commands}
             activeCommandId={selectedCommand?.id || null}
@@ -206,8 +202,8 @@ export default function Home() {
 
         {/* Main content */}
         <main className="flex-1 overflow-hidden bg-[#0e0e10]">
-          {/* Mobile: full-screen list or detail */}
-          <div className="sm:hidden h-full flex flex-col">
+          {/* Mobile + portrait tablet: full-screen list or detail */}
+          <div className="lg:hidden h-full flex flex-col">
             {selectedCommand ? (
               <>
                 {/* Back bar */}
@@ -234,8 +230,8 @@ export default function Home() {
             )}
           </div>
 
-          {/* Desktop: always show detail panel */}
-          <div className="hidden sm:block h-full">
+          {/* Desktop (lg+): always show detail panel */}
+          <div className="hidden lg:block h-full">
             <DetailPanel command={selectedCommand} />
           </div>
         </main>

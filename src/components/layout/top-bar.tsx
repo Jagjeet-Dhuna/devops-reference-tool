@@ -2,18 +2,16 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { Search, Terminal, GitPullRequest, X, PanelLeft, PanelLeftClose } from "lucide-react";
+import { Search, Terminal, GitPullRequest, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 interface TopBarProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
   commandCount: number;
-  sidebarOpen?: boolean;
-  onToggleSidebar?: () => void;
 }
 
-export function TopBar({ searchQuery, onSearchChange, commandCount, sidebarOpen, onToggleSidebar }: TopBarProps) {
+export function TopBar({ searchQuery, onSearchChange, commandCount }: TopBarProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -36,20 +34,6 @@ export function TopBar({ searchQuery, onSearchChange, commandCount, sidebarOpen,
   return (
     <header className="border-b border-zinc-800 bg-[#0c0c0e] px-3 sm:px-4 py-2.5 sm:py-3">
       <div className="flex items-center gap-2 sm:gap-3">
-        {/* Sidebar toggle — tablet/desktop only */}
-        {onToggleSidebar && (
-          <button
-            onClick={onToggleSidebar}
-            className="hidden sm:flex items-center justify-center h-8 w-8 rounded-md text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800 transition-colors shrink-0"
-            aria-label={sidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
-          >
-            {sidebarOpen
-              ? <PanelLeftClose className="h-4 w-4" />
-              : <PanelLeft className="h-4 w-4" />
-            }
-          </button>
-        )}
-
         {/* Logo */}
         <div className="flex items-center gap-2 shrink-0">
           <Terminal className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-500" />
