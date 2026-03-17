@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { loadCommands, filterCommands } from "@/lib/commands";
+import { loadCommands } from "@/lib/commands";
+import { filterCommands } from "@/lib/command-utils";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);

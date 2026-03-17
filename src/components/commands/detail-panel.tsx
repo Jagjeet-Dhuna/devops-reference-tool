@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Copy, Check, ExternalLink, Package, Monitor, GitPullRequest } from "lucide-react";
 import { Command } from "@/lib/types";
 import { categories } from "@/lib/categories";
-import { deriveApiName } from "@/lib/commands";
+import { deriveApiName } from "@/lib/command-utils";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";

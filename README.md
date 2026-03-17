@@ -1,12 +1,14 @@
 # DevOps Reference Tool
 
-I built this mostly for myself — I wanted a clean, fast way to look up commands, read flag explanations, and explore CLI tools from any device (especially a tablet or phone where copy-pasting from a terminal isn't an option). It grew from there into something I thought might be useful to others too.
+I built this for myself. When I'm on a tablet or away from my main machine, I wanted somewhere fast and clean to look up commands, check what flags do, and not have to dig through man pages. It grew into something that felt worth sharing.
 
-**Built with AI assistance.** The majority of this tool — code, command data, and content — was built in collaboration with [Claude](https://claude.ai) by Anthropic. The ideas, direction, and editorial judgment are mine; Claude did the heavy lifting.
+Most of the code and content was put together with AI assistance, built using Claude Code. The direction and editorial calls are mine.
+
+If it's useful to you, add to it. More commands, more categories, whatever's missing for your workflow.
 
 ---
 
-A searchable command reference for DevOps engineers and sysadmins. Browse 300+ real-world commands across 12 categories — with breakdowns, flags, examples, and practical tips for each one.
+A searchable reference for DevOps engineers and sysadmins. Browse 300+ real-world commands across 12 categories, with breakdowns, flags, examples, and practical tips.
 
 ## Categories
 
@@ -27,18 +29,18 @@ A searchable command reference for DevOps engineers and sysadmins. Browse 300+ r
 
 ## Features
 
-- **Search** across all commands, descriptions, and tags instantly
-- **Keyboard navigation** — arrow keys to move, Enter to select, `/` to search
-- **Command breakdown** — every flag and argument explained inline
-- **External sources** — pulls in cheat.sh and tldr-pages examples where available
-- **Shareable URLs** — every command has its own link at `/c/[id]`
-- **OS badges** — see which commands work on Linux, macOS, Windows, WSL
-- **Package info** — know what to install before you run it
-- **Difficulty levels** — beginner, intermediate, advanced
+- Search across all commands, descriptions, and tags instantly
+- Keyboard navigation: arrow keys to move, Enter to select, `/` to search
+- Command breakdown: every flag and argument explained inline
+- External sources: pulls in cheat.sh and tldr-pages examples where available
+- Shareable URLs: every command has its own link at `/c/[id]`
+- OS badges: see which commands work on Linux, macOS, Windows, WSL
+- Package info: know what to install before you run it
+- Difficulty levels: beginner, intermediate, advanced
 
 ## Contributing
 
-If this is useful to you, feel free to add more commands or entire new sections. All command data lives in `data/[category].json` — it's plain JSON, no build step needed to add entries.
+All command data lives in `data/[category].json`. It's plain JSON with no build step needed to add entries.
 
 Each command follows this structure:
 
@@ -66,7 +68,7 @@ Each command follows this structure:
 }
 ```
 
-To add a new category, add an entry to `src/lib/categories.ts` and a matching `data/[category].json` file — it's picked up automatically.
+To add a new category, add an entry to `src/lib/categories.ts` and a matching `data/[category].json` file. It gets picked up automatically.
 
 ## Running Locally
 
@@ -83,6 +85,7 @@ Open [http://localhost:3000](http://localhost:3000).
 - [TypeScript](https://www.typescriptlang.org)
 - [Tailwind CSS v4](https://tailwindcss.com)
 - [Shadcn/ui](https://ui.shadcn.com)
+- [Claude Code](https://claude.ai/code) (built with)
 
 ## License
 
