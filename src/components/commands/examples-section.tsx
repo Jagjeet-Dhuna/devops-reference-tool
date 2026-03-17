@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 interface ExamplesSectionProps {
   commandId: string;
   localExample: string;
+  category?: string;
 }
 
 // Render cheat.sh plain-text format:
@@ -93,21 +94,22 @@ function TldrView({ content }: { content: string }) {
 }
 
 // Render curated examples: plain text lines, each line is a command
-function CuratedView({ content }: { content: string }) {
+function CuratedView({ content, prompt }: { content: string; prompt: string }) {
   const lines = content.split("\n").filter((l) => l.trim());
   if (!lines.length) return <p className="text-zinc-500 text-xs font-mono">No example provided.</p>;
   return (
     <div className="space-y-1">
       {lines.map((line, i) => (
         <code key={i} className="block text-emerald-400 text-xs font-mono bg-[#0a0a0c] px-3 py-1.5 rounded border border-zinc-800">
-          $ {line.trim()}
+          {prompt} {line.trim()}
         </code>
       ))}
     </div>
   );
 }
 
-export function ExamplesSection({ commandId, localExample }: ExamplesSectionProps) {
+export function ExamplesSection({ commandId, localExample, category }: ExamplesSectionProps) {
+  const prompt = category === "powershell" ? ">" : "$";
   // null = not yet fetched; "" = fetched but empty; string = has content
   const [cheatshContent, setCheatshContent] = useState<string | null>(null);
   const [tldrContent, setTldrContent] = useState<string | null>(null);
@@ -171,7 +173,7 @@ export function ExamplesSection({ commandId, localExample }: ExamplesSectionProp
         </p>
 
         <TabsContent value="curated" className="mt-0">
-          <CuratedView content={localExample} />
+          <CuratedView content={localExample} prompt={prompt} />
         </TabsContent>
 
         {hasCheatsh && (

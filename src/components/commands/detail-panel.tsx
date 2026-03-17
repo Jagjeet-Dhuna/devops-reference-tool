@@ -113,7 +113,7 @@ export function DetailPanel({ command }: DetailPanelProps) {
         <div className="relative group">
           <div className="rounded-md border border-zinc-800 bg-[#0a0a0c] p-3 sm:p-4 overflow-x-auto">
             <code className="text-xs sm:text-sm text-emerald-400 font-mono whitespace-nowrap">
-              $ {command.command}
+              {command.category === "powershell" ? ">" : "$"} {command.command}
             </code>
           </div>
           <button
@@ -155,7 +155,7 @@ export function DetailPanel({ command }: DetailPanelProps) {
           <h4 className="text-sm font-medium text-zinc-300 font-mono mb-2">
             Examples
           </h4>
-          <ExamplesSection commandId={apiName} localExample={command.example} />
+          <ExamplesSection commandId={apiName} localExample={command.example} category={command.category} />
         </div>
 
         <Separator className="bg-zinc-800" />
