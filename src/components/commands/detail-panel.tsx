@@ -68,7 +68,7 @@ export function DetailPanel({ command }: DetailPanelProps) {
 
   return (
     <ScrollArea className="h-full">
-      <div className="p-4 sm:p-6 space-y-5 sm:space-y-6 max-w-3xl">
+      <div className="p-4 sm:p-6 space-y-5 sm:space-y-6">
         {/* Header */}
         <div>
           <div className="flex items-center justify-between gap-2 mb-2">

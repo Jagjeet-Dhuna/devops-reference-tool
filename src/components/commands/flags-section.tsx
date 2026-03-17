@@ -72,11 +72,11 @@ export function FlagsSection({ commandId, localFlags = [] }: FlagsSectionProps) 
           ))}
         </div>
       ) : (
-        <div className="space-y-1">
+        <div className="divide-y divide-zinc-800/50">
           {displayFlags.map((flag, i) => (
             <div
               key={i}
-              className="flex items-start gap-2 sm:gap-3 py-1.5 px-2 rounded hover:bg-zinc-800/30"
+              className="flex items-start gap-2 sm:gap-3 py-2 px-2 hover:bg-zinc-800/30"
             >
               <code className="text-cyan-400 font-mono text-xs shrink-0 w-[110px] sm:w-[150px] break-all leading-relaxed">
                 {flag.flag}
