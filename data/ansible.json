@@ -62,7 +62,11 @@
     "tags": [
       "playbook",
       "automation",
-      "deployment"
+      "deployment",
+      "run",
+      "execute",
+      "provision",
+      "apply"
     ],
     "package": "ansible",
     "os": [
@@ -124,7 +128,11 @@
     "tags": [
       "ad-hoc",
       "ping",
-      "connectivity"
+      "connectivity",
+      "quick",
+      "one-off",
+      "run command",
+      "direct"
     ],
     "package": "ansible",
     "os": [
@@ -187,7 +195,11 @@
     "tags": [
       "security",
       "encryption",
-      "secrets"
+      "secrets",
+      "encrypt",
+      "decrypt",
+      "protect",
+      "password"
     ],
     "package": "ansible",
     "os": [
@@ -256,7 +268,9 @@
       "galaxy",
       "roles",
       "dependencies",
-      "community"
+      "community",
+      "install",
+      "download roles"
     ],
     "package": "ansible",
     "os": [
@@ -320,7 +334,9 @@
       "inventory",
       "hosts",
       "groups",
-      "debugging"
+      "debugging",
+      "list hosts",
+      "servers"
     ],
     "package": "ansible",
     "os": [
@@ -385,7 +401,9 @@
       "linting",
       "best-practices",
       "quality",
-      "ci-cd"
+      "ci-cd",
+      "check",
+      "validate"
     ],
     "package": "ansible",
     "os": [
@@ -463,7 +481,9 @@
       "copy",
       "files",
       "ad-hoc",
-      "configuration"
+      "configuration",
+      "transfer",
+      "upload"
     ],
     "package": "ansible",
     "os": [
@@ -526,7 +546,10 @@
       "service",
       "systemd",
       "ad-hoc",
-      "infrastructure"
+      "infrastructure",
+      "start",
+      "stop",
+      "restart"
     ],
     "package": "ansible",
     "os": [
@@ -580,7 +603,9 @@
       "facts",
       "setup",
       "system-info",
-      "debugging"
+      "debugging",
+      "gather",
+      "info"
     ],
     "package": "ansible",
     "os": [
@@ -658,7 +683,9 @@
       "template",
       "jinja2",
       "configuration",
-      "playbook"
+      "playbook",
+      "render",
+      "generate"
     ],
     "package": "ansible",
     "os": [
@@ -720,7 +747,9 @@
       "check-mode",
       "dry-run",
       "diff",
-      "safety"
+      "safety",
+      "preview",
+      "what will change"
     ],
     "package": "ansible",
     "os": [
@@ -783,7 +812,9 @@
       "tags",
       "selective-run",
       "playbook",
-      "workflow"
+      "workflow",
+      "partial",
+      "subset"
     ],
     "package": "ansible",
     "os": [
@@ -850,7 +881,9 @@
       "become",
       "sudo",
       "privilege-escalation",
-      "security"
+      "security",
+      "root",
+      "admin"
     ],
     "package": "ansible",
     "os": [
@@ -913,7 +946,9 @@
       "vault",
       "encryption",
       "secrets",
-      "security"
+      "security",
+      "inline",
+      "variable"
     ],
     "package": "ansible",
     "os": [
@@ -958,7 +993,9 @@
       "register",
       "variables",
       "output",
-      "conditionals"
+      "conditionals",
+      "capture",
+      "result"
     ],
     "package": "ansible",
     "os": [
@@ -1003,7 +1040,9 @@
       "loop",
       "iteration",
       "packages",
-      "playbook"
+      "playbook",
+      "repeat",
+      "foreach"
     ],
     "package": "ansible",
     "os": [
@@ -1048,7 +1087,9 @@
       "when",
       "conditionals",
       "facts",
-      "playbook"
+      "playbook",
+      "if",
+      "condition"
     ],
     "package": "ansible",
     "os": [
@@ -1093,7 +1134,9 @@
       "handlers",
       "notify",
       "service",
-      "playbook"
+      "playbook",
+      "trigger",
+      "restart"
     ],
     "package": "ansible",
     "os": [

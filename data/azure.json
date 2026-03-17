@@ -50,7 +50,10 @@
       "auth",
       "login",
       "credentials",
-      "setup"
+      "setup",
+      "authenticate",
+      "sign in",
+      "azure cli"
     ],
     "package": "azure-cli",
     "os": [
@@ -308,7 +311,10 @@
       "vm",
       "compute",
       "list",
-      "virtual-machines"
+      "virtual-machines",
+      "servers",
+      "instances",
+      "running"
     ],
     "package": "azure-cli",
     "os": [
@@ -363,7 +369,9 @@
       "vm",
       "start",
       "compute",
-      "virtual-machines"
+      "virtual-machines",
+      "power on",
+      "boot"
     ],
     "package": "azure-cli",
     "os": [
@@ -418,7 +426,9 @@
       "vm",
       "stop",
       "deallocate",
-      "cost"
+      "cost",
+      "shut down",
+      "power off"
     ],
     "package": "azure-cli",
     "os": [
@@ -555,7 +565,10 @@
       "aks",
       "kubernetes",
       "kubeconfig",
-      "cluster"
+      "cluster",
+      "connect",
+      "kubectl",
+      "access"
     ],
     "package": "azure-cli",
     "os": [
@@ -606,7 +619,10 @@
       "acr",
       "docker",
       "registry",
-      "auth"
+      "auth",
+      "login",
+      "authenticate",
+      "container registry"
     ],
     "package": "azure-cli",
     "os": [
@@ -721,7 +737,10 @@
       "keyvault",
       "secrets",
       "security",
-      "credentials"
+      "credentials",
+      "password",
+      "get secret",
+      "retrieve"
     ],
     "package": "azure-cli",
     "os": [
@@ -841,7 +860,9 @@
       "rbac",
       "permissions",
       "roles",
-      "security"
+      "security",
+      "who has access",
+      "access control"
     ],
     "package": "azure-cli",
     "os": [
@@ -896,7 +917,10 @@
       "monitoring",
       "logs",
       "kql",
-      "log-analytics"
+      "log-analytics",
+      "query",
+      "debug",
+      "search logs"
     ],
     "package": "azure-cli",
     "os": [
@@ -1079,7 +1103,10 @@
       "azure-ad",
       "users",
       "identity",
-      "iam"
+      "iam",
+      "create user",
+      "add user",
+      "new user"
     ],
     "package": "azure-cli",
     "os": [
@@ -1311,7 +1338,9 @@
       "service-principal",
       "rbac",
       "automation",
-      "cicd"
+      "cicd",
+      "service account",
+      "app registration"
     ],
     "package": "azure-cli",
     "os": [

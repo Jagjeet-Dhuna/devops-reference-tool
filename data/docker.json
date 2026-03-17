@@ -66,7 +66,11 @@
     "tags": [
       "containers",
       "run",
-      "ports"
+      "ports",
+      "start",
+      "launch",
+      "create",
+      "new"
     ],
     "manPage": "1",
     "package": "docker",
@@ -130,7 +134,9 @@
     "tags": [
       "images",
       "build",
-      "dockerfile"
+      "dockerfile",
+      "create image",
+      "compile"
     ],
     "package": "docker",
     "os": [
@@ -193,7 +199,10 @@
     "tags": [
       "compose",
       "multi-container",
-      "orchestration"
+      "orchestration",
+      "start",
+      "launch",
+      "services"
     ],
     "package": "docker",
     "os": [
@@ -265,7 +274,12 @@
     "tags": [
       "debug",
       "shell",
-      "interactive"
+      "interactive",
+      "enter",
+      "bash",
+      "sh",
+      "access",
+      "container shell"
     ],
     "package": "docker",
     "os": [
@@ -338,7 +352,10 @@
     "tags": [
       "containers",
       "list",
-      "status"
+      "status",
+      "running",
+      "show",
+      "active"
     ],
     "package": "docker",
     "os": [
@@ -406,7 +423,11 @@
     "tags": [
       "logs",
       "debug",
-      "monitoring"
+      "monitoring",
+      "output",
+      "stdout",
+      "stderr",
+      "view logs"
     ],
     "package": "docker",
     "os": [
@@ -479,7 +500,9 @@
     "tags": [
       "networking",
       "bridge",
-      "dns"
+      "dns",
+      "network",
+      "connect"
     ],
     "package": "docker",
     "os": [
@@ -538,7 +561,9 @@
     "tags": [
       "volumes",
       "storage",
-      "persistence"
+      "persistence",
+      "mount",
+      "data"
     ],
     "package": "docker",
     "os": [
@@ -601,7 +626,10 @@
     "tags": [
       "cleanup",
       "maintenance",
-      "disk-space"
+      "disk-space",
+      "clear",
+      "free space",
+      "remove unused"
     ],
     "package": "docker",
     "os": [
@@ -659,7 +687,9 @@
     "tags": [
       "inspect",
       "debug",
-      "metadata"
+      "metadata",
+      "details",
+      "info"
     ],
     "package": "docker",
     "os": [
@@ -713,7 +743,9 @@
     "tags": [
       "files",
       "copy",
-      "transfer"
+      "transfer",
+      "upload",
+      "download"
     ],
     "package": "docker",
     "os": [
@@ -785,7 +817,9 @@
       "registry",
       "push",
       "tag",
-      "deploy"
+      "deploy",
+      "publish",
+      "upload image"
     ],
     "package": "docker",
     "os": [
@@ -827,7 +861,8 @@
       "download",
       "image",
       "registry",
-      "fetch"
+      "fetch",
+      "get image"
     ],
     "package": "docker",
     "os": [
@@ -870,7 +905,8 @@
       "halt",
       "kill",
       "shutdown",
-      "terminate"
+      "terminate",
+      "end"
     ],
     "package": "docker",
     "os": [
@@ -961,7 +997,8 @@
       "delete",
       "clean",
       "rmi",
-      "image"
+      "image",
+      "delete image"
     ],
     "package": "docker",
     "os": [
@@ -1056,7 +1093,8 @@
       "list",
       "show",
       "local",
-      "repository"
+      "repository",
+      "available"
     ],
     "package": "docker",
     "os": [

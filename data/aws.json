@@ -45,7 +45,10 @@
       "credentials",
       "configuration",
       "auth",
-      "setup"
+      "setup",
+      "login",
+      "authenticate",
+      "access key"
     ],
     "package": "awscli",
     "os": [
@@ -96,7 +99,10 @@
       "identity",
       "iam",
       "auth",
-      "debugging"
+      "debugging",
+      "who am i",
+      "current user",
+      "account"
     ],
     "package": "awscli",
     "os": [
@@ -142,7 +148,9 @@
       "profiles",
       "credentials",
       "configuration",
-      "multi-account"
+      "multi-account",
+      "switch",
+      "env"
     ],
     "package": "awscli",
     "os": [
@@ -206,7 +214,10 @@
       "s3",
       "storage",
       "list",
-      "buckets"
+      "buckets",
+      "files",
+      "objects",
+      "browse"
     ],
     "package": "awscli",
     "os": [
@@ -280,7 +291,10 @@
       "s3",
       "copy",
       "upload",
-      "download"
+      "download",
+      "transfer",
+      "files",
+      "objects"
     ],
     "package": "awscli",
     "os": [
@@ -349,7 +363,9 @@
       "s3",
       "sync",
       "deployment",
-      "static-site"
+      "static-site",
+      "upload folder",
+      "deploy"
     ],
     "package": "awscli",
     "os": [
@@ -409,7 +425,10 @@
       "ec2",
       "instances",
       "list",
-      "compute"
+      "compute",
+      "servers",
+      "virtual machines",
+      "running"
     ],
     "package": "awscli",
     "os": [
@@ -455,7 +474,10 @@
       "ec2",
       "start",
       "instances",
-      "compute"
+      "compute",
+      "launch",
+      "boot",
+      "power on"
     ],
     "package": "awscli",
     "os": [
@@ -506,7 +528,10 @@
       "ec2",
       "stop",
       "instances",
-      "compute"
+      "compute",
+      "shutdown",
+      "power off",
+      "halt"
     ],
     "package": "awscli",
     "os": [
@@ -571,7 +596,10 @@
       "eks",
       "kubernetes",
       "kubeconfig",
-      "cluster"
+      "cluster",
+      "connect",
+      "access",
+      "kubectl"
     ],
     "package": "awscli",
     "os": [
@@ -625,7 +653,10 @@
       "ecr",
       "docker",
       "registry",
-      "auth"
+      "auth",
+      "login",
+      "authenticate",
+      "push image"
     ],
     "package": "awscli",
     "os": [
@@ -676,7 +707,9 @@
       "iam",
       "user",
       "identity",
-      "permissions"
+      "permissions",
+      "create user",
+      "access"
     ],
     "package": "awscli",
     "os": [
@@ -745,7 +778,10 @@
       "lambda",
       "serverless",
       "invoke",
-      "functions"
+      "functions",
+      "run",
+      "trigger",
+      "call"
     ],
     "package": "awscli",
     "os": [
@@ -805,7 +841,10 @@
       "cloudwatch",
       "logs",
       "monitoring",
-      "tail"
+      "tail",
+      "view logs",
+      "stream",
+      "debug"
     ],
     "package": "awscli",
     "os": [
@@ -865,7 +904,9 @@
       "ssm",
       "parameter-store",
       "secrets",
-      "configuration"
+      "configuration",
+      "env vars",
+      "config"
     ],
     "package": "awscli",
     "os": [
@@ -920,7 +961,9 @@
       "secrets",
       "credentials",
       "secretsmanager",
-      "security"
+      "security",
+      "password",
+      "api key"
     ],
     "package": "awscli",
     "os": [
@@ -984,7 +1027,10 @@
       "cloudformation",
       "iac",
       "deployment",
-      "stacks"
+      "stacks",
+      "status",
+      "check",
+      "progress"
     ],
     "package": "awscli",
     "os": [
@@ -1039,7 +1085,10 @@
       "rds",
       "database",
       "instances",
-      "sql"
+      "sql",
+      "list",
+      "postgres",
+      "mysql"
     ],
     "package": "awscli",
     "os": [

@@ -57,7 +57,10 @@
     "tags": [
       "history",
       "branches",
-      "visualization"
+      "visualization",
+      "log",
+      "commits",
+      "view history"
     ],
     "manPage": "1",
     "package": "git",
@@ -117,7 +120,10 @@
     "tags": [
       "rebase",
       "history",
-      "cleanup"
+      "cleanup",
+      "squash",
+      "edit commits",
+      "interactive"
     ],
     "package": "git",
     "os": [
@@ -181,7 +187,11 @@
     "tags": [
       "stash",
       "temporary",
-      "workflow"
+      "workflow",
+      "save",
+      "put away",
+      "hide changes",
+      "shelf"
     ],
     "package": "git",
     "os": [
@@ -231,7 +241,10 @@
     "tags": [
       "cherry-pick",
       "commits",
-      "branches"
+      "branches",
+      "pick",
+      "apply commit",
+      "port"
     ],
     "package": "git",
     "os": [
@@ -299,7 +312,10 @@
     "tags": [
       "bisect",
       "debugging",
-      "binary-search"
+      "binary-search",
+      "find bug",
+      "regression",
+      "which commit"
     ],
     "package": "git",
     "os": [
@@ -358,7 +374,11 @@
     "tags": [
       "reset",
       "undo",
-      "HEAD"
+      "HEAD",
+      "unstage",
+      "go back",
+      "uncommit",
+      "revert changes"
     ],
     "package": "git",
     "os": [
@@ -418,7 +438,10 @@
     "tags": [
       "diff",
       "changes",
-      "review"
+      "review",
+      "compare",
+      "what changed",
+      "modified"
     ],
     "package": "git",
     "os": [
@@ -487,7 +510,10 @@
     "tags": [
       "branch",
       "list",
-      "management"
+      "management",
+      "branches",
+      "create",
+      "delete"
     ],
     "package": "git",
     "os": [
@@ -547,7 +573,10 @@
     "tags": [
       "remote",
       "origin",
-      "upstream"
+      "upstream",
+      "repository",
+      "url",
+      "server"
     ],
     "package": "git",
     "os": [
@@ -611,7 +640,9 @@
     "tags": [
       "merge",
       "branches",
-      "integration"
+      "integration",
+      "combine",
+      "join"
     ],
     "package": "git",
     "os": [
@@ -679,7 +710,10 @@
     "tags": [
       "tag",
       "release",
-      "versioning"
+      "versioning",
+      "version",
+      "label",
+      "mark"
     ],
     "package": "git",
     "os": [
@@ -743,7 +777,10 @@
     "tags": [
       "reflog",
       "recovery",
-      "history"
+      "history",
+      "undo",
+      "recover",
+      "lost commits"
     ],
     "package": "git",
     "os": [

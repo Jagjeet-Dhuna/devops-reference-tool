@@ -41,6 +41,14 @@ export default function Home() {
     setSelectedCommand(null);
   };
 
+  // Auto-return to list when user types a new search while viewing a command
+  useEffect(() => {
+    if (searchQuery && selectedCommand) {
+      setSelectedCommand(null);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchQuery]);
+
   // Keyboard arrow navigation
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {

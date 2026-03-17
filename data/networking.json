@@ -57,7 +57,13 @@
     "tags": [
       "icmp",
       "connectivity",
-      "latency"
+      "latency",
+      "ping",
+      "check",
+      "test",
+      "reachable",
+      "alive",
+      "network"
     ],
     "manPage": "8"
   },
@@ -128,7 +134,13 @@
     "tags": [
       "http",
       "api",
-      "requests"
+      "requests",
+      "download",
+      "fetch",
+      "rest",
+      "post",
+      "json",
+      "test"
     ],
     "manPage": "1"
   },
@@ -195,7 +207,10 @@
     "tags": [
       "download",
       "http",
-      "files"
+      "files",
+      "fetch",
+      "save",
+      "get"
     ],
     "manPage": "1"
   },
@@ -258,7 +273,11 @@
     "tags": [
       "interfaces",
       "ip",
-      "iproute2"
+      "iproute2",
+      "address",
+      "network",
+      "eth0",
+      "configure"
     ],
     "os": [
       "linux"
@@ -319,7 +338,10 @@
     "tags": [
       "routing",
       "gateway",
-      "iproute2"
+      "iproute2",
+      "route",
+      "network path",
+      "default gateway"
     ],
     "os": [
       "linux"
@@ -366,7 +388,10 @@
     "tags": [
       "interfaces",
       "ip",
-      "legacy"
+      "legacy",
+      "address",
+      "network",
+      "mac"
     ],
     "package": "net-tools",
     "manPage": "8"
@@ -433,7 +458,12 @@
     "tags": [
       "ports",
       "sockets",
-      "monitoring"
+      "monitoring",
+      "open ports",
+      "listening",
+      "connections",
+      "what is listening",
+      "port check"
     ],
     "manPage": "8"
   },
@@ -508,7 +538,10 @@
     "tags": [
       "ports",
       "connections",
-      "legacy"
+      "legacy",
+      "open ports",
+      "listening",
+      "network"
     ],
     "package": "net-tools",
     "manPage": "8"
@@ -576,7 +609,12 @@
     "tags": [
       "dns",
       "lookup",
-      "resolution"
+      "resolution",
+      "resolve",
+      "domain",
+      "ip address",
+      "nameserver",
+      "nslookup"
     ],
     "manPage": "1"
   },
@@ -634,7 +672,10 @@
     "tags": [
       "dns",
       "lookup",
-      "mx"
+      "mx",
+      "resolve",
+      "domain",
+      "windows"
     ],
     "manPage": "1"
   },
@@ -692,7 +733,9 @@
     "tags": [
       "dns",
       "lookup",
-      "reverse"
+      "reverse",
+      "resolve",
+      "domain"
     ],
     "manPage": "1"
   },
@@ -750,7 +793,11 @@
     "tags": [
       "routing",
       "latency",
-      "hops"
+      "hops",
+      "route",
+      "network path",
+      "debug",
+      "trace"
     ],
     "manPage": "8"
   },
@@ -812,7 +859,11 @@
     "tags": [
       "traceroute",
       "latency",
-      "diagnostics"
+      "diagnostics",
+      "route",
+      "network path",
+      "packet loss",
+      "debug"
     ],
     "package": "mtr",
     "manPage": "8"
@@ -884,7 +935,11 @@
     "tags": [
       "netcat",
       "port-scan",
-      "connectivity"
+      "connectivity",
+      "test port",
+      "check port",
+      "tcp",
+      "open"
     ],
     "manPage": "1"
   },
@@ -961,7 +1016,12 @@
     "tags": [
       "scanner",
       "ports",
-      "security"
+      "security",
+      "scan",
+      "discover",
+      "port scan",
+      "network scan",
+      "probe"
     ],
     "manPage": "1"
   },
@@ -1038,7 +1098,12 @@
     "tags": [
       "capture",
       "packets",
-      "debugging"
+      "debugging",
+      "sniff",
+      "traffic",
+      "monitor network",
+      "wireshark",
+      "pcap"
     ],
     "manPage": "8"
   },
@@ -1109,7 +1174,12 @@
     "tags": [
       "firewall",
       "rules",
-      "security"
+      "security",
+      "block",
+      "allow",
+      "deny",
+      "filter",
+      "linux firewall"
     ],
     "os": [
       "linux"
@@ -1175,7 +1245,12 @@
     "tags": [
       "firewall",
       "security",
-      "ubuntu"
+      "ubuntu",
+      "block",
+      "allow",
+      "deny",
+      "ports",
+      "rules"
     ],
     "os": [
       "linux"

@@ -23,19 +23,60 @@ export function loadCommands(category?: string): Command[] {
   return commands;
 }
 
+const STOP_WORDS = new Set([
+  "how", "to", "do", "i", "a", "an", "the", "in", "into", "for", "with",
+  "on", "at", "of", "is", "it", "my", "can", "use", "get", "what", "does",
+  "where", "why", "when", "which", "who", "will", "me", "please", "want",
+  "need", "show", "list",
+]);
+
 export function searchCommands(
   commands: Command[],
   query: string
 ): Command[] {
-  const q = query.toLowerCase();
-  return commands.filter(
-    (c) =>
-      c.title.toLowerCase().includes(q) ||
-      c.command.toLowerCase().includes(q) ||
-      c.description.toLowerCase().includes(q) ||
-      c.tags.some((t) => t.toLowerCase().includes(q)) ||
-      (c.package?.toLowerCase().includes(q) ?? false)
-  );
+  const words = query
+    .toLowerCase()
+    .split(/\s+/)
+    .map((w) => w.replace(/[^a-z0-9-]/g, ""))
+    .filter((w) => w.length >= 2 && !STOP_WORDS.has(w));
+
+  // Fallback to full-string match if query has no scoring words (e.g. "how to")
+  if (words.length === 0) {
+    const q = query.toLowerCase();
+    return commands.filter(
+      (c) =>
+        c.title.toLowerCase().includes(q) ||
+        c.command.toLowerCase().includes(q) ||
+        c.description.toLowerCase().includes(q) ||
+        c.tags.some((t) => t.toLowerCase().includes(q)) ||
+        (c.package?.toLowerCase().includes(q) ?? false)
+    );
+  }
+
+  const scored = commands.map((c) => {
+    const title = c.title.toLowerCase();
+    const command = c.command.toLowerCase();
+    const tags = c.tags.map((t) => t.toLowerCase());
+    const category = c.category.toLowerCase();
+    const pkg = (c.package ?? "").toLowerCase();
+    const description = c.description.toLowerCase();
+
+    let score = 0;
+    for (const word of words) {
+      if (title.includes(word))                  score += 10;
+      if (command.includes(word))                score += 8;
+      if (tags.some((t) => t.includes(word)))    score += 6;
+      if (category.includes(word))               score += 5;
+      if (pkg.includes(word))                    score += 4;
+      if (description.includes(word))            score += 2;
+    }
+    return { c, score };
+  });
+
+  return scored
+    .filter((s) => s.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .map((s) => s.c);
 }
 
 export function filterCommands(

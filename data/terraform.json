@@ -39,7 +39,12 @@
     "tags": [
       "init",
       "setup",
-      "providers"
+      "providers",
+      "initialise",
+      "initialize",
+      "download",
+      "modules",
+      "begin"
     ],
     "package": "terraform",
     "os": [
@@ -99,7 +104,11 @@
     "tags": [
       "plan",
       "preview",
-      "changes"
+      "changes",
+      "dry-run",
+      "what will happen",
+      "check",
+      "diff"
     ],
     "package": "terraform",
     "os": [
@@ -154,7 +163,11 @@
     "tags": [
       "apply",
       "deploy",
-      "infrastructure"
+      "infrastructure",
+      "create",
+      "provision",
+      "run",
+      "execute"
     ],
     "package": "terraform",
     "os": [
@@ -218,7 +231,11 @@
     "tags": [
       "destroy",
       "teardown",
-      "cleanup"
+      "cleanup",
+      "delete",
+      "remove",
+      "tear down",
+      "infra delete"
     ],
     "package": "terraform",
     "os": [
@@ -286,7 +303,9 @@
     "tags": [
       "state",
       "inspect",
-      "management"
+      "management",
+      "current state",
+      "view state"
     ],
     "package": "terraform",
     "os": [
@@ -349,7 +368,9 @@
     "tags": [
       "import",
       "migration",
-      "existing-infrastructure"
+      "existing-infrastructure",
+      "bring in",
+      "adopt"
     ],
     "package": "terraform",
     "os": [
@@ -403,7 +424,9 @@
     "tags": [
       "output",
       "values",
-      "variables"
+      "variables",
+      "print",
+      "show values"
     ],
     "package": "terraform",
     "os": [
@@ -471,7 +494,10 @@
     "tags": [
       "workspace",
       "environments",
-      "state-isolation"
+      "state-isolation",
+      "env",
+      "staging",
+      "prod"
     ],
     "package": "terraform",
     "os": [
@@ -530,7 +556,9 @@
     "tags": [
       "format",
       "style",
-      "linting"
+      "linting",
+      "format code",
+      "prettier"
     ],
     "package": "terraform",
     "os": [
@@ -575,7 +603,10 @@
     "tags": [
       "validate",
       "syntax",
-      "errors"
+      "errors",
+      "check",
+      "lint",
+      "error check"
     ],
     "package": "terraform",
     "os": [
@@ -621,7 +652,9 @@
       "show",
       "plan",
       "state",
-      "inspection"
+      "inspection",
+      "view",
+      "read"
     ],
     "package": "terraform",
     "os": [
@@ -668,7 +701,9 @@
       "console",
       "repl",
       "debugging",
-      "expressions"
+      "expressions",
+      "test",
+      "interactive"
     ],
     "package": "terraform",
     "os": [
@@ -728,7 +763,9 @@
       "state",
       "refactoring",
       "rename",
-      "modules"
+      "modules",
+      "move",
+      "migrate"
     ],
     "package": "terraform",
     "os": [
@@ -774,7 +811,8 @@
       "replace",
       "taint",
       "recreation",
-      "drift"
+      "drift",
+      "force replace"
     ],
     "package": "terraform",
     "os": [
@@ -833,7 +871,8 @@
       "graph",
       "visualisation",
       "dependencies",
-      "debugging"
+      "debugging",
+      "dependency tree"
     ],
     "package": "terraform",
     "os": [
@@ -880,7 +919,8 @@
       "providers",
       "dependencies",
       "versions",
-      "init"
+      "init",
+      "plugins"
     ],
     "package": "terraform",
     "os": [
@@ -921,7 +961,9 @@
       "lock",
       "state",
       "unlock",
-      "recovery"
+      "recovery",
+      "stuck",
+      "locked"
     ],
     "package": "terraform",
     "os": [
@@ -972,7 +1014,9 @@
       "refresh",
       "drift",
       "state",
-      "reconcile"
+      "reconcile",
+      "sync",
+      "update state"
     ],
     "package": "terraform",
     "os": [
