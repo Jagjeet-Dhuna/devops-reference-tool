@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Copy, Check, ExternalLink, Package, Monitor, GitPullRequest } from "lucide-react";
 import { Command } from "@/lib/types";
 import { categories } from "@/lib/categories";
+import { deriveApiName } from "@/lib/commands";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -51,6 +52,7 @@ export function DetailPanel({ command }: DetailPanelProps) {
   }
 
   const category = categories.find((c) => c.id === command.category);
+  const apiName = deriveApiName(command.command);
 
   const difficultyStyle: Record<string, string> = {
     beginner: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
@@ -144,7 +146,7 @@ export function DetailPanel({ command }: DetailPanelProps) {
         <Separator className="bg-zinc-800" />
 
         {/* Flags */}
-        <FlagsSection commandId={command.id} localFlags={command.flags} />
+        <FlagsSection commandId={apiName} localFlags={command.flags} />
 
         <Separator className="bg-zinc-800" />
 
@@ -153,7 +155,7 @@ export function DetailPanel({ command }: DetailPanelProps) {
           <h4 className="text-sm font-medium text-zinc-300 font-mono mb-2">
             Examples
           </h4>
-          <ExamplesSection commandId={command.id} localExample={command.example} />
+          <ExamplesSection commandId={apiName} localExample={command.example} />
         </div>
 
         <Separator className="bg-zinc-800" />
@@ -222,7 +224,7 @@ export function DetailPanel({ command }: DetailPanelProps) {
         {/* Man page link */}
         {command.manPage && (
           <a
-            href={`https://www.mankier.com/${command.manPage}/${command.id}`}
+            href={`https://www.mankier.com/${command.manPage}/${apiName}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-xs text-zinc-500 hover:text-emerald-500 font-mono"

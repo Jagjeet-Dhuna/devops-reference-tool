@@ -78,7 +78,7 @@ export function FlagsSection({ commandId, localFlags = [] }: FlagsSectionProps) 
               key={i}
               className="flex items-start gap-2 sm:gap-3 py-1.5 px-2 rounded hover:bg-zinc-800/30"
             >
-              <code className="text-cyan-400 font-mono text-xs shrink-0 min-w-[90px] sm:min-w-[120px]">
+              <code className="text-cyan-400 font-mono text-xs shrink-0 w-[110px] sm:w-[150px] break-all leading-relaxed">
                 {flag.flag}
               </code>
               <span className="text-zinc-400 text-xs flex-1 min-w-0 break-words">{flag.description}</span>

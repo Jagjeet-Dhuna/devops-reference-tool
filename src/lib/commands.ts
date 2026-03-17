@@ -79,6 +79,40 @@ export function searchCommands(
     .map((s) => s.c);
 }
 
+// Multi-word CLI tools whose subcommand matters for tldr/man lookups
+const MULTI_WORD_TOOLS = new Set([
+  "git", "docker", "kubectl", "aws", "az", "terraform", "ansible",
+  "systemctl", "journalctl", "npm", "yarn", "pip", "pip3",
+  "cargo", "go", "helm", "vault",
+]);
+
+/**
+ * Derive the correct lookup name for tldr-pages, ManKier, and cheat.sh from
+ * the raw command string. Examples:
+ *   "ping -c 4 8.8.8.8"            → "ping"
+ *   "git log --oneline --graph"     → "git-log"
+ *   "docker run -d -p 8080:80 ..."  → "docker-run"
+ *   "kubectl get pods -n ns"        → "kubectl-get"
+ *   "aws configure"                 → "aws-configure"
+ */
+export function deriveApiName(commandString: string): string {
+  const tokens = commandString.split(/\s+/).filter((t) => t.length > 0);
+  // Strip flag tokens and value-only tokens
+  const nonFlags = tokens.filter(
+    (t) => !t.startsWith("-") && !t.startsWith("{") && !t.includes("=") && t !== "|" && t !== ">" && t !== "<"
+  );
+
+  if (nonFlags.length === 0) return tokens[0]?.toLowerCase() ?? commandString;
+
+  const base = nonFlags[0].toLowerCase();
+
+  if (MULTI_WORD_TOOLS.has(base) && nonFlags[1]) {
+    return `${base}-${nonFlags[1].toLowerCase()}`;
+  }
+
+  return base;
+}
+
 export function filterCommands(
   commands: Command[],
   options: {

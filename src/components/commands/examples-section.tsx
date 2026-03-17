@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { fetchExamples, fetchTldr } from "@/lib/api-client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Skeleton } from "@/components/ui/skeleton";
 
 interface ExamplesSectionProps {
   commandId: string;
@@ -109,60 +108,40 @@ function CuratedView({ content }: { content: string }) {
 }
 
 export function ExamplesSection({ commandId, localExample }: ExamplesSectionProps) {
+  // null = not yet fetched; "" = fetched but empty; string = has content
   const [cheatshContent, setCheatshContent] = useState<string | null>(null);
   const [tldrContent, setTldrContent] = useState<string | null>(null);
-  const [loadingCheatsh, setLoadingCheatsh] = useState(false);
-  const [loadingTldr, setLoadingTldr] = useState(false);
+  const [sourcesLoading, setSourcesLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("curated");
 
+  // Pre-fetch both sources in the background on mount so we can show/hide tabs
   useEffect(() => {
     setCheatshContent(null);
     setTldrContent(null);
+    setSourcesLoading(true);
     setActiveTab("curated");
+
+    let cancelled = false;
+
+    Promise.all([
+      fetchExamples(commandId).catch(() => []),
+      fetchTldr(commandId).catch(() => null),
+    ]).then(([examples, tldr]) => {
+      if (cancelled) return;
+      setCheatshContent(
+        Array.isArray(examples) && examples[0]?.content ? examples[0].content : ""
+      );
+      setTldrContent(typeof tldr === "string" && tldr ? tldr : "");
+      setSourcesLoading(false);
+    });
+
+    return () => { cancelled = true; };
   }, [commandId]);
 
-  const loadCheatsh = async () => {
-    if (cheatshContent !== null) return;
-    setLoadingCheatsh(true);
-    try {
-      const examples = await fetchExamples(commandId);
-      setCheatshContent(examples[0]?.content || "");
-    } catch {
-      setCheatshContent("");
-    } finally {
-      setLoadingCheatsh(false);
-    }
-  };
+  const hasCheatsh = typeof cheatshContent === "string" && cheatshContent.length > 0;
+  const hasTldr = typeof tldrContent === "string" && tldrContent.length > 0;
 
-  const loadTldr = async () => {
-    if (tldrContent !== null) return;
-    setLoadingTldr(true);
-    try {
-      const content = await fetchTldr(commandId);
-      setTldrContent(content || "");
-    } catch {
-      setTldrContent("");
-    } finally {
-      setLoadingTldr(false);
-    }
-  };
-
-  const handleTabChange = (tab: string) => {
-    setActiveTab(tab);
-    if (tab === "cheatsh") loadCheatsh();
-    if (tab === "tldr") loadTldr();
-  };
-
-  const LoadingSkeleton = () => (
-    <div className="space-y-3 pt-1">
-      {[...Array(3)].map((_, i) => (
-        <div key={i} className="space-y-1.5">
-          <Skeleton className="h-3 w-48 bg-zinc-800" />
-          <Skeleton className="h-7 w-full bg-zinc-800/60 rounded" />
-        </div>
-      ))}
-    </div>
-  );
+  const handleTabChange = (tab: string) => setActiveTab(tab);
 
   return (
     <div>
@@ -171,12 +150,17 @@ export function ExamplesSection({ commandId, localExample }: ExamplesSectionProp
           <TabsTrigger value="curated" className="font-mono text-xs data-[state=active]:bg-zinc-800">
             Curated
           </TabsTrigger>
-          <TabsTrigger value="cheatsh" className="font-mono text-xs data-[state=active]:bg-zinc-800">
-            cheat.sh
-          </TabsTrigger>
-          <TabsTrigger value="tldr" className="font-mono text-xs data-[state=active]:bg-zinc-800">
-            tldr
-          </TabsTrigger>
+          {/* Only render external source tabs when they have content */}
+          {!sourcesLoading && hasCheatsh && (
+            <TabsTrigger value="cheatsh" className="font-mono text-xs data-[state=active]:bg-zinc-800">
+              cheat.sh
+            </TabsTrigger>
+          )}
+          {!sourcesLoading && hasTldr && (
+            <TabsTrigger value="tldr" className="font-mono text-xs data-[state=active]:bg-zinc-800">
+              tldr
+            </TabsTrigger>
+          )}
         </TabsList>
 
         {/* Source descriptions */}
@@ -190,25 +174,17 @@ export function ExamplesSection({ commandId, localExample }: ExamplesSectionProp
           <CuratedView content={localExample} />
         </TabsContent>
 
-        <TabsContent value="cheatsh" className="mt-0">
-          {loadingCheatsh ? (
-            <LoadingSkeleton />
-          ) : cheatshContent === null ? (
-            <p className="text-zinc-600 text-xs font-mono">Loading…</p>
-          ) : (
-            <CheatshView content={cheatshContent} />
-          )}
-        </TabsContent>
+        {hasCheatsh && (
+          <TabsContent value="cheatsh" className="mt-0">
+            <CheatshView content={cheatshContent!} />
+          </TabsContent>
+        )}
 
-        <TabsContent value="tldr" className="mt-0">
-          {loadingTldr ? (
-            <LoadingSkeleton />
-          ) : tldrContent === null ? (
-            <p className="text-zinc-600 text-xs font-mono">Loading…</p>
-          ) : (
-            <TldrView content={tldrContent} />
-          )}
-        </TabsContent>
+        {hasTldr && (
+          <TabsContent value="tldr" className="mt-0">
+            <TldrView content={tldrContent!} />
+          </TabsContent>
+        )}
       </Tabs>
     </div>
   );
