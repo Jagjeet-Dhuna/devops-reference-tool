@@ -1,53 +1,46 @@
 # DevOps Reference Tool
 
-A fast, searchable command reference for DevOps engineers and sysadmins. Browse and search across 300+ real-world commands across 12 categories — with breakdowns, flags, examples, and practical tips for each one.
+I built this mostly for myself — I wanted a clean, fast way to look up commands, read flag explanations, and explore CLI tools from any device (especially a tablet or phone where copy-pasting from a terminal isn't an option). It grew from there into something I thought might be useful to others too.
+
+**Built with AI assistance.** The majority of this tool — code, command data, and content — was built in collaboration with [Claude](https://claude.ai) by Anthropic. The ideas, direction, and editorial judgment are mine; Claude did the heavy lifting.
+
+---
+
+A searchable command reference for DevOps engineers and sysadmins. Browse 300+ real-world commands across 12 categories — with breakdowns, flags, examples, and practical tips for each one.
 
 ## Categories
 
 | Category | Commands |
 |---|---|
 | Linux | 83 |
-| Git | 21 |
-| Docker | 18 |
-| Kubernetes | 17 |
+| Git | 26 |
+| Docker | 22 |
+| Kubernetes | 21 |
 | Terraform | 18 |
 | Ansible | 18 |
-| AWS CLI | 18 |
-| Azure CLI + PowerShell | 43 |
+| AWS CLI | 25 |
+| Azure CLI | 46 |
 | Networking | 18 |
-| Bash | 17 |
-| PowerShell | 15 |
+| Bash | 18 |
+| PowerShell | 17 |
 | Distros | 12 |
 
 ## Features
 
 - **Search** across all commands, descriptions, and tags instantly
-- **Keyboard navigation** — arrow keys to move, Enter to select
-- **Command breakdown** — every flag and argument explained
+- **Keyboard navigation** — arrow keys to move, Enter to select, `/` to search
+- **Command breakdown** — every flag and argument explained inline
+- **External sources** — pulls in cheat.sh and tldr-pages examples where available
 - **Shareable URLs** — every command has its own link at `/c/[id]`
 - **OS badges** — see which commands work on Linux, macOS, Windows, WSL
 - **Package info** — know what to install before you run it
 - **Difficulty levels** — beginner, intermediate, advanced
 
-## Tech Stack
+## Contributing
 
-- [Next.js 15](https://nextjs.org) (App Router)
-- [TypeScript](https://www.typescriptlang.org)
-- [Tailwind CSS v4](https://tailwindcss.com)
-- [Shadcn/ui](https://ui.shadcn.com)
+If this is useful to you, feel free to add more commands or entire new sections. All command data lives in `data/[category].json` — it's plain JSON, no build step needed to add entries.
 
-## Running Locally
-
-```bash
-npm install
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000).
-
-## Adding Commands
-
-Commands live in `data/[category].json`. Each entry follows this structure:
+Each command follows this structure:
 
 ```json
 {
@@ -74,6 +67,22 @@ Commands live in `data/[category].json`. Each entry follows this structure:
 ```
 
 To add a new category, add an entry to `src/lib/categories.ts` and a matching `data/[category].json` file — it's picked up automatically.
+
+## Running Locally
+
+```bash
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+## Tech Stack
+
+- [Next.js 15](https://nextjs.org) (App Router)
+- [TypeScript](https://www.typescriptlang.org)
+- [Tailwind CSS v4](https://tailwindcss.com)
+- [Shadcn/ui](https://ui.shadcn.com)
 
 ## License
 
