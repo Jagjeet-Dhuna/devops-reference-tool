@@ -1097,5 +1097,539 @@
       "windows",
       "wsl"
     ]
+  },
+  {
+    "id": "aws-sts-assume-role",
+    "category": "aws",
+    "command": "aws sts assume-role --role-arn arn:aws:iam::123456789012:role/DeployRole --role-session-name deploy-session",
+    "title": "Assume an IAM role",
+    "difficulty": "intermediate",
+    "description": "Request temporary credentials to act as a different IAM role — used in CI/CD pipelines and cross-account deployments to gain permissions without using long-lived access keys.",
+    "breakdown": [
+      {
+        "part": "aws sts",
+        "meaning": "AWS Security Token Service — issues temporary credentials"
+      },
+      {
+        "part": "assume-role",
+        "meaning": "Request temporary credentials for the specified role"
+      },
+      {
+        "part": "--role-arn",
+        "meaning": "The ARN of the IAM role to assume"
+      },
+      {
+        "part": "arn:aws:iam::123456789012:role/DeployRole",
+        "meaning": "Full ARN of the target role (account ID + role name)"
+      },
+      {
+        "part": "--role-session-name deploy-session",
+        "meaning": "A label for this session — appears in CloudTrail audit logs"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--role-arn ARN",
+        "description": "The IAM role to assume",
+        "source": "local"
+      },
+      {
+        "flag": "--role-session-name NAME",
+        "description": "Session identifier for CloudTrail audit logs",
+        "source": "local"
+      },
+      {
+        "flag": "--duration-seconds N",
+        "description": "Session duration in seconds (900–43200, default 3600)",
+        "source": "local"
+      },
+      {
+        "flag": "--external-id ID",
+        "description": "Required by some roles for cross-account access security",
+        "source": "local"
+      },
+      {
+        "flag": "--query 'Credentials'",
+        "description": "Extract only the credentials block from the response",
+        "source": "local"
+      }
+    ],
+    "example": "eval $(aws sts assume-role --role-arn arn:aws:iam::123456789012:role/DeployRole --role-session-name ci --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]' --output text | awk '{print \"export AWS_ACCESS_KEY_ID=\" $1 \"\\nexport AWS_SECRET_ACCESS_KEY=\" $2 \"\\nexport AWS_SESSION_TOKEN=\" $3}')",
+    "output": "{\n  \"Credentials\": {\n    \"AccessKeyId\": \"ASIA...\",\n    \"SecretAccessKey\": \"...\",\n    \"SessionToken\": \"...\",\n    \"Expiration\": \"2024-03-14T11:30:00Z\"\n  },\n  \"AssumedRoleUser\": {\n    \"AssumedRoleId\": \"AROA...:deploy-session\",\n    \"Arn\": \"arn:aws:sts::123456789012:assumed-role/DeployRole/deploy-session\"\n  }\n}",
+    "tip": "Export the returned credentials as environment variables to use them in subsequent AWS CLI calls. In GitHub Actions, use the aws-actions/configure-aws-credentials action instead — it handles assume-role automatically.",
+    "tags": [
+      "sts",
+      "assume role",
+      "cross account",
+      "temporary credentials",
+      "iam",
+      "ci cd",
+      "deploy",
+      "access key"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  {
+    "id": "aws-iam-create-role",
+    "category": "aws",
+    "command": "aws iam create-role --role-name LambdaExecRole --assume-role-policy-document file://trust-policy.json",
+    "title": "Create an IAM role",
+    "difficulty": "intermediate",
+    "description": "Create an IAM role with a trust policy that defines which AWS services or accounts can assume it — the first step before attaching permission policies.",
+    "breakdown": [
+      {
+        "part": "aws iam",
+        "meaning": "AWS Identity and Access Management service"
+      },
+      {
+        "part": "create-role",
+        "meaning": "Create a new IAM role"
+      },
+      {
+        "part": "--role-name LambdaExecRole",
+        "meaning": "The name for the new role"
+      },
+      {
+        "part": "--assume-role-policy-document",
+        "meaning": "Trust policy — who is allowed to assume this role"
+      },
+      {
+        "part": "file://trust-policy.json",
+        "meaning": "Read the policy JSON from a local file (file:// prefix required)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--role-name NAME",
+        "description": "Unique name for the IAM role",
+        "source": "local"
+      },
+      {
+        "flag": "--assume-role-policy-document",
+        "description": "Trust policy JSON (file:// or inline JSON string)",
+        "source": "local"
+      },
+      {
+        "flag": "--description TEXT",
+        "description": "Human-readable description of the role's purpose",
+        "source": "local"
+      },
+      {
+        "flag": "--max-session-duration N",
+        "description": "Maximum duration for sessions using this role (seconds)",
+        "source": "local"
+      },
+      {
+        "flag": "--tags Key=Env,Value=prod",
+        "description": "Tag the role for cost tracking and access control",
+        "source": "local"
+      }
+    ],
+    "example": "aws iam attach-role-policy --role-name LambdaExecRole --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+    "output": "{\n  \"Role\": {\n    \"RoleName\": \"LambdaExecRole\",\n    \"RoleId\": \"AROAIOSFODNN7EXAMPLE\",\n    \"Arn\": \"arn:aws:iam::123456789012:role/LambdaExecRole\",\n    \"CreateDate\": \"2024-03-14T10:30:00Z\"\n  }\n}",
+    "tip": "The trust policy and permission policies are separate. Trust policy (set here) controls who can assume the role. Permission policies (attached separately with attach-role-policy) control what the role can do. Both are required for the role to be useful.",
+    "tags": [
+      "iam",
+      "role",
+      "create role",
+      "trust policy",
+      "permissions",
+      "aws",
+      "security",
+      "service account"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  {
+    "id": "aws-iam-attach-role-policy",
+    "category": "aws",
+    "command": "aws iam attach-role-policy --role-name LambdaExecRole --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+    "title": "Attach policy to IAM role",
+    "difficulty": "intermediate",
+    "description": "Attach a managed IAM policy to a role, granting it the permissions defined in that policy — the second step after creating a role to give it actual access rights.",
+    "breakdown": [
+      {
+        "part": "aws iam",
+        "meaning": "AWS Identity and Access Management service"
+      },
+      {
+        "part": "attach-role-policy",
+        "meaning": "Attach a managed policy to a role"
+      },
+      {
+        "part": "--role-name LambdaExecRole",
+        "meaning": "The target IAM role to attach the policy to"
+      },
+      {
+        "part": "--policy-arn",
+        "meaning": "The ARN of the managed policy to attach"
+      },
+      {
+        "part": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+        "meaning": "AWS-managed policy that grants Lambda permission to write CloudWatch logs"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--role-name NAME",
+        "description": "The role to attach the policy to",
+        "source": "local"
+      },
+      {
+        "flag": "--policy-arn ARN",
+        "description": "ARN of the managed policy (AWS-managed or customer-managed)",
+        "source": "local"
+      },
+      {
+        "flag": "list-attached-role-policies --role-name NAME",
+        "description": "List all policies currently attached to a role",
+        "source": "local"
+      },
+      {
+        "flag": "detach-role-policy",
+        "description": "Remove a policy from a role without deleting the policy",
+        "source": "local"
+      },
+      {
+        "flag": "put-role-policy",
+        "description": "Attach an inline policy directly to the role (not reusable)",
+        "source": "local"
+      }
+    ],
+    "example": "aws iam list-attached-role-policies --role-name LambdaExecRole",
+    "output": "{\n  \"AttachedPolicies\": [\n    {\n      \"PolicyName\": \"AWSLambdaBasicExecutionRole\",\n      \"PolicyArn\": \"arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole\"\n    }\n  ]\n}",
+    "tip": "Prefer AWS-managed policies (arn:aws:iam::aws:policy/...) for common use cases — they are maintained by AWS. For custom permissions, create a customer-managed policy with aws iam create-policy first, then attach it here.",
+    "tags": [
+      "iam",
+      "policy",
+      "attach policy",
+      "role permissions",
+      "aws",
+      "security",
+      "managed policy",
+      "least privilege"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  {
+    "id": "aws-ec2-security-groups",
+    "category": "aws",
+    "command": "aws ec2 describe-security-groups --filters Name=vpc-id,Values=vpc-12345678 --query 'SecurityGroups[*].{ID:GroupId,Name:GroupName,Desc:Description}' --output table",
+    "title": "List EC2 security groups",
+    "difficulty": "intermediate",
+    "description": "List all security groups in a VPC with their IDs and descriptions — security groups act as virtual firewalls controlling inbound and outbound traffic for EC2 instances.",
+    "breakdown": [
+      {
+        "part": "aws ec2",
+        "meaning": "AWS Elastic Compute Cloud service"
+      },
+      {
+        "part": "describe-security-groups",
+        "meaning": "List security groups and their inbound/outbound rules"
+      },
+      {
+        "part": "--filters Name=vpc-id,Values=vpc-12345678",
+        "meaning": "Filter results to one specific VPC"
+      },
+      {
+        "part": "--query 'SecurityGroups[*].{...}'",
+        "meaning": "JMESPath query to reshape the output to only relevant fields"
+      },
+      {
+        "part": "--output table",
+        "meaning": "Format results as an ASCII table for readability"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--filters Name=group-name,Values=my-sg",
+        "description": "Filter by security group name",
+        "source": "local"
+      },
+      {
+        "flag": "--group-ids sg-abc123",
+        "description": "Look up a specific security group by ID",
+        "source": "local"
+      },
+      {
+        "flag": "--query",
+        "description": "JMESPath expression to filter and reshape output",
+        "source": "local"
+      },
+      {
+        "flag": "authorize-security-group-ingress",
+        "description": "Add an inbound rule to a security group",
+        "source": "local"
+      },
+      {
+        "flag": "revoke-security-group-ingress",
+        "description": "Remove an inbound rule from a security group",
+        "source": "local"
+      }
+    ],
+    "example": "aws ec2 authorize-security-group-ingress --group-id sg-12345678 --protocol tcp --port 443 --cidr 0.0.0.0/0",
+    "output": "-------------------------------------------------------\n|            DescribeSecurityGroups                   |\n+----------------+-------------------+----------------+\n|      Desc      |        ID         |      Name      |\n+----------------+-------------------+----------------+\n|  Web servers   |  sg-0a1b2c3d4e5f  |  web-sg        |\n|  Database tier |  sg-0f1e2d3c4b5a  |  db-sg         |\n+----------------+-------------------+----------------+",
+    "tip": "Security group rules are stateful — allow inbound on port 443 and response traffic is automatically allowed. Use --query to extract just the fields you need. Avoid 0.0.0.0/0 ingress rules except for public HTTP/HTTPS traffic.",
+    "tags": [
+      "security groups",
+      "vpc",
+      "firewall",
+      "ec2",
+      "inbound rules",
+      "aws",
+      "network security",
+      "sg"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  {
+    "id": "aws-ecs-tasks",
+    "category": "aws",
+    "command": "aws ecs list-tasks --cluster my-cluster --service-name api-service --query 'taskArns[]' --output text | xargs aws ecs describe-tasks --cluster my-cluster --tasks",
+    "title": "List and inspect ECS tasks",
+    "difficulty": "intermediate",
+    "description": "List running tasks in an ECS service and fetch their details — useful for checking task health, seeing which container image is running, and getting container exit codes after failures.",
+    "breakdown": [
+      {
+        "part": "aws ecs list-tasks",
+        "meaning": "Return the ARNs of tasks currently running in a cluster or service"
+      },
+      {
+        "part": "--cluster my-cluster",
+        "meaning": "Target ECS cluster name"
+      },
+      {
+        "part": "--service-name api-service",
+        "meaning": "Filter to tasks belonging to this service"
+      },
+      {
+        "part": "--query 'taskArns[]' --output text",
+        "meaning": "Extract just the ARN list as plain text for piping"
+      },
+      {
+        "part": "xargs aws ecs describe-tasks --cluster my-cluster --tasks",
+        "meaning": "Pass the ARNs to describe-tasks to get full task details"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "list-tasks --cluster NAME",
+        "description": "List task ARNs in a cluster",
+        "source": "local"
+      },
+      {
+        "flag": "describe-tasks --tasks ARN [ARN...]",
+        "description": "Get full details for one or more tasks",
+        "source": "local"
+      },
+      {
+        "flag": "--desired-status STOPPED",
+        "description": "List recently stopped tasks (useful for debugging failures)",
+        "source": "local"
+      },
+      {
+        "flag": "stop-task --task ARN",
+        "description": "Forcibly stop a running task",
+        "source": "local"
+      },
+      {
+        "flag": "run-task --cluster NAME --task-definition NAME",
+        "description": "Launch a one-off task from a task definition",
+        "source": "local"
+      }
+    ],
+    "example": "aws ecs list-tasks --cluster my-cluster --desired-status STOPPED --query 'taskArns[0]' --output text",
+    "output": "{\n  \"tasks\": [{\n    \"taskArn\": \"arn:aws:ecs:us-east-1:123456789012:task/my-cluster/abc123\",\n    \"lastStatus\": \"RUNNING\",\n    \"desiredStatus\": \"RUNNING\",\n    \"containers\": [{\n      \"name\": \"api\",\n      \"image\": \"registry.example.com/api:v2.1.0\",\n      \"lastStatus\": \"RUNNING\",\n      \"healthStatus\": \"HEALTHY\"\n    }]\n  }]\n}",
+    "tip": "To debug a failed task, list stopped tasks with --desired-status STOPPED then describe-tasks to see the stopCode and stoppedReason. Container exit codes appear in the containers[].exitCode field.",
+    "tags": [
+      "ecs",
+      "tasks",
+      "containers",
+      "aws",
+      "fargate",
+      "service",
+      "list tasks",
+      "debug"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  {
+    "id": "aws-route53-records",
+    "category": "aws",
+    "command": "aws route53 list-resource-record-sets --hosted-zone-id Z1234567890ABC --query 'ResourceRecordSets[?Type==`A`]' --output table",
+    "title": "List Route 53 DNS records",
+    "difficulty": "intermediate",
+    "description": "List DNS records in a Route 53 hosted zone — use this to audit DNS configuration, find record values, or verify that changes have propagated to Route 53.",
+    "breakdown": [
+      {
+        "part": "aws route53",
+        "meaning": "AWS Route 53 DNS service"
+      },
+      {
+        "part": "list-resource-record-sets",
+        "meaning": "Retrieve all DNS records in a hosted zone"
+      },
+      {
+        "part": "--hosted-zone-id Z1234567890ABC",
+        "meaning": "The unique ID of the hosted zone (find it with list-hosted-zones)"
+      },
+      {
+        "part": "--query 'ResourceRecordSets[?Type==`A`]'",
+        "meaning": "JMESPath filter — show only A records"
+      },
+      {
+        "part": "--output table",
+        "meaning": "Format as a readable ASCII table"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "list-hosted-zones",
+        "description": "List all hosted zones in your account with their IDs",
+        "source": "local"
+      },
+      {
+        "flag": "list-resource-record-sets --hosted-zone-id ID",
+        "description": "List all records in a zone",
+        "source": "local"
+      },
+      {
+        "flag": "change-resource-record-sets",
+        "description": "Create, update, or delete DNS records (uses a change batch JSON file)",
+        "source": "local"
+      },
+      {
+        "flag": "--query 'ResourceRecordSets[?Type==`CNAME`]'",
+        "description": "Filter to a specific record type",
+        "source": "local"
+      },
+      {
+        "flag": "test-dns-answer",
+        "description": "Simulate a DNS query against Route 53 to debug resolution",
+        "source": "local"
+      }
+    ],
+    "example": "aws route53 list-hosted-zones --query 'HostedZones[*].{Name:Name,ID:Id}' --output table",
+    "output": "--------------------------------------------------\n|          ListResourceRecordSets                |\n+----------+------------------+------------------+\n|  Name    |  TTL             |  Value           |\n+----------+------------------+------------------+\n|  app.    |  300             |  52.84.128.64    |\n|  api.    |  60              |  18.234.91.22    |\n+----------+------------------+------------------+",
+    "tip": "Get your hosted zone ID with: aws route53 list-hosted-zones --query 'HostedZones[?Name==`example.com.`].Id' --output text. Note Route 53 requires a trailing dot on zone names.",
+    "tags": [
+      "route53",
+      "dns",
+      "records",
+      "hosted zone",
+      "aws",
+      "domain",
+      "a record",
+      "cname",
+      "dns management"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  {
+    "id": "aws-cloudwatch-logs",
+    "category": "aws",
+    "command": "aws logs tail /aws/lambda/my-function --follow --since 5m",
+    "title": "Stream CloudWatch logs",
+    "difficulty": "beginner",
+    "description": "Follow live log output from a CloudWatch Logs group — the quickest way to debug Lambda functions, ECS tasks, or any AWS service writing to CloudWatch.",
+    "breakdown": [
+      {
+        "part": "aws logs",
+        "meaning": "AWS CloudWatch Logs service"
+      },
+      {
+        "part": "tail",
+        "meaning": "Stream the most recent log events from a log group"
+      },
+      {
+        "part": "/aws/lambda/my-function",
+        "meaning": "Log group name — Lambda functions write to /aws/lambda/function-name"
+      },
+      {
+        "part": "--follow",
+        "meaning": "Keep streaming new log events in real time (like tail -f)"
+      },
+      {
+        "part": "--since 5m",
+        "meaning": "Start from 5 minutes ago — accepts relative (5m, 1h) or absolute timestamps"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--follow",
+        "description": "Stream new log events continuously",
+        "source": "local"
+      },
+      {
+        "flag": "--since RELATIVE_OR_ABSOLUTE",
+        "description": "Start time: 5m, 1h, or 2024-01-01T00:00:00 format",
+        "source": "local"
+      },
+      {
+        "flag": "--format short",
+        "description": "Shorter timestamp format for easier reading",
+        "source": "local"
+      },
+      {
+        "flag": "--filter-pattern PATTERN",
+        "description": "Filter log events by a CloudWatch filter pattern",
+        "source": "local"
+      },
+      {
+        "flag": "list-log-groups",
+        "description": "List all log groups in the account",
+        "source": "local"
+      }
+    ],
+    "example": "aws logs tail /aws/lambda/my-function --since 1h --filter-pattern ERROR",
+    "output": "2024-03-14T10:30:01.123000+00:00 2024/03/14/[$LATEST]abc123 START RequestId: xyz789\n2024-03-14T10:30:01.234000+00:00 2024/03/14/[$LATEST]abc123 INFO Processing request\n2024-03-14T10:30:01.456000+00:00 2024/03/14/[$LATEST]abc123 END RequestId: xyz789\n2024-03-14T10:30:01.457000+00:00 2024/03/14/[$LATEST]abc123 REPORT Duration: 320ms",
+    "tip": "aws logs tail requires AWS CLI v2. For Lambda specifically, append --format short to get cleaner output. Use --filter-pattern ERROR to surface only error lines from a busy log group.",
+    "tags": [
+      "cloudwatch",
+      "logs",
+      "lambda",
+      "stream",
+      "debug",
+      "follow",
+      "aws",
+      "monitoring",
+      "tail logs"
+    ],
+    "package": "awscli",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
   }
 ]

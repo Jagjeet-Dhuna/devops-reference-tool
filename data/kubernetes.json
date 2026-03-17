@@ -1086,5 +1086,284 @@
       "windows"
     ],
     "manPage": "1"
+  },
+  {
+    "id": "kubectl-create-namespace",
+    "category": "kubernetes",
+    "command": "kubectl create namespace production",
+    "title": "Create a namespace",
+    "difficulty": "beginner",
+    "description": "Create a new Kubernetes namespace — namespaces are virtual clusters within a cluster that isolate resources, letting teams or environments share the same infrastructure safely.",
+    "breakdown": [
+      {
+        "part": "kubectl",
+        "meaning": "Kubernetes command-line tool"
+      },
+      {
+        "part": "create namespace",
+        "meaning": "Create a Namespace resource"
+      },
+      {
+        "part": "production",
+        "meaning": "The name for the new namespace"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "create namespace NAME",
+        "description": "Create a namespace imperatively",
+        "source": "local"
+      },
+      {
+        "flag": "--dry-run=client -o yaml",
+        "description": "Generate YAML manifest without creating — good for GitOps workflows",
+        "source": "local"
+      },
+      {
+        "flag": "delete namespace NAME",
+        "description": "Delete a namespace and ALL resources within it",
+        "source": "local"
+      },
+      {
+        "flag": "get namespaces",
+        "description": "List all namespaces in the cluster",
+        "source": "local"
+      }
+    ],
+    "example": "kubectl create namespace staging --dry-run=client -o yaml",
+    "output": "namespace/production created",
+    "tip": "Prefer declarative YAML for namespaces in production so they are tracked in git. Use kubectl create namespace name --dry-run=client -o yaml > ns.yaml to generate the YAML, then apply it with kubectl apply -f ns.yaml.",
+    "tags": [
+      "namespace",
+      "create",
+      "isolate",
+      "environment",
+      "multi-tenant",
+      "kubernetes",
+      "k8s",
+      "cluster"
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  {
+    "id": "kubectl-set-image",
+    "category": "kubernetes",
+    "command": "kubectl set image deployment/api api=registry.example.com/api:v2.1.0 -n production",
+    "title": "Update deployment image",
+    "difficulty": "intermediate",
+    "description": "Update the container image used by a running deployment, triggering a rolling update — the standard way to deploy a new application version without downtime.",
+    "breakdown": [
+      {
+        "part": "kubectl set image",
+        "meaning": "Update the image reference in a workload resource"
+      },
+      {
+        "part": "deployment/api",
+        "meaning": "Target resource type (deployment) and name (api)"
+      },
+      {
+        "part": "api=registry.example.com/api:v2.1.0",
+        "meaning": "Container name (api) = new image and tag to deploy"
+      },
+      {
+        "part": "-n production",
+        "meaning": "Namespace containing the deployment"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "deployment/NAME",
+        "description": "Target a deployment",
+        "source": "local"
+      },
+      {
+        "flag": "daemonset/NAME",
+        "description": "Target a daemonset",
+        "source": "local"
+      },
+      {
+        "flag": "--record",
+        "description": "Record the command in the rollout history (deprecated but still widely used)",
+        "source": "local"
+      },
+      {
+        "flag": "rollout status deployment/NAME",
+        "description": "Watch the rolling update progress",
+        "source": "local"
+      },
+      {
+        "flag": "rollout undo deployment/NAME",
+        "description": "Roll back to the previous image if the update fails",
+        "source": "local"
+      }
+    ],
+    "example": "kubectl rollout status deployment/api -n production",
+    "output": "deployment.apps/api image updated\nWaiting for deployment \"api\" rollout to finish: 1 out of 3 new replicas have been updated...\ndeployment \"api\" successfully rolled out",
+    "tip": "After updating, watch the rollout with kubectl rollout status deployment/NAME. If the new version has a problem, roll back instantly with kubectl rollout undo deployment/NAME. Always use an explicit image tag (never :latest) so rollbacks are deterministic.",
+    "tags": [
+      "deploy",
+      "rollout",
+      "image",
+      "update",
+      "upgrade",
+      "rolling update",
+      "kubernetes",
+      "k8s",
+      "release"
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  {
+    "id": "kubectl-drain",
+    "category": "kubernetes",
+    "command": "kubectl drain node01 --ignore-daemonsets --delete-emptydir-data",
+    "title": "Drain a node for maintenance",
+    "difficulty": "advanced",
+    "description": "Safely evict all pods from a node before taking it offline for maintenance — pods are rescheduled to other nodes, and the node is marked as unschedulable.",
+    "breakdown": [
+      {
+        "part": "kubectl drain",
+        "meaning": "Evict all evictable pods from a node and mark it unschedulable"
+      },
+      {
+        "part": "node01",
+        "meaning": "The name of the node to drain"
+      },
+      {
+        "part": "--ignore-daemonsets",
+        "meaning": "Skip DaemonSet-managed pods — they cannot be evicted and run on every node by design"
+      },
+      {
+        "part": "--delete-emptydir-data",
+        "meaning": "Allow eviction of pods using emptyDir volumes (local data will be lost)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--ignore-daemonsets",
+        "description": "Required if DaemonSets exist on the node",
+        "source": "local"
+      },
+      {
+        "flag": "--delete-emptydir-data",
+        "description": "Evict pods with emptyDir volumes (data is lost)",
+        "source": "local"
+      },
+      {
+        "flag": "--force",
+        "description": "Evict pods not managed by a controller (they will not be rescheduled)",
+        "source": "local"
+      },
+      {
+        "flag": "--grace-period N",
+        "description": "Override pod termination grace period in seconds",
+        "source": "local"
+      },
+      {
+        "flag": "uncordon NODE",
+        "description": "Mark the node schedulable again after maintenance",
+        "source": "local"
+      }
+    ],
+    "example": "kubectl uncordon node01",
+    "output": "node/node01 cordoned\nevicting pod default/web-7d9f4b8c5-x2p9q\nevicting pod default/api-6c8f5d9b4-r3k7m\nnode/node01 drained",
+    "tip": "After maintenance, run kubectl uncordon node01 to allow pods to be scheduled on the node again. Use kubectl cordon NODE if you just want to stop new pods scheduling without evicting existing ones.",
+    "tags": [
+      "drain",
+      "maintenance",
+      "evict",
+      "node",
+      "cordon",
+      "kubernetes",
+      "k8s",
+      "upgrade node",
+      "rolling maintenance"
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  {
+    "id": "kubectl-auth-cani",
+    "category": "kubernetes",
+    "command": "kubectl auth can-i create pods --namespace production",
+    "title": "Check RBAC permissions",
+    "difficulty": "intermediate",
+    "description": "Verify whether the current user or service account has permission to perform a specific Kubernetes action — essential for debugging RBAC access denied errors.",
+    "breakdown": [
+      {
+        "part": "kubectl auth can-i",
+        "meaning": "Check whether an action is allowed by RBAC policy"
+      },
+      {
+        "part": "create pods",
+        "meaning": "The verb (create) and resource (pods) to check"
+      },
+      {
+        "part": "--namespace production",
+        "meaning": "Check permission within this specific namespace"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--namespace NAME",
+        "description": "Check permissions in a specific namespace",
+        "source": "local"
+      },
+      {
+        "flag": "--as USERNAME",
+        "description": "Impersonate another user to test their permissions",
+        "source": "local"
+      },
+      {
+        "flag": "--as-group GROUP",
+        "description": "Impersonate a group",
+        "source": "local"
+      },
+      {
+        "flag": "--list",
+        "description": "List all actions you can perform in a namespace",
+        "source": "local"
+      },
+      {
+        "flag": "--subresource",
+        "description": "Check sub-resource access: --subresource=log (for pod/log)",
+        "source": "local"
+      }
+    ],
+    "example": "kubectl auth can-i --list --namespace production",
+    "output": "yes",
+    "tip": "Use --as to test another user's permissions: kubectl auth can-i delete pods --as=system:serviceaccount:production:my-sa. Use --list to see all allowed actions in a namespace without guessing individual verbs.",
+    "tags": [
+      "rbac",
+      "permissions",
+      "auth",
+      "access",
+      "authorization",
+      "can-i",
+      "roles",
+      "kubernetes",
+      "k8s",
+      "security"
+    ],
+    "package": "kubectl",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
   }
 ]

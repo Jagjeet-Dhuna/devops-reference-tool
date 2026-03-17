@@ -1104,5 +1104,271 @@
       "windows"
     ],
     "manPage": "1"
+  },
+  {
+    "id": "docker-compose-down",
+    "category": "docker",
+    "command": "docker compose down --volumes",
+    "title": "Stop and remove compose services",
+    "difficulty": "beginner",
+    "description": "Stop all containers defined in docker-compose.yml and remove them along with their networks — add --volumes to also delete named data volumes.",
+    "breakdown": [
+      {
+        "part": "docker compose",
+        "meaning": "Multi-container orchestration tool using a docker-compose.yml file"
+      },
+      {
+        "part": "down",
+        "meaning": "Stop and remove containers, networks, and optionally volumes"
+      },
+      {
+        "part": "--volumes",
+        "meaning": "Also delete named volumes declared under the volumes key"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--volumes",
+        "description": "Remove named volumes — WARNING: deletes all data in those volumes",
+        "source": "local"
+      },
+      {
+        "flag": "--rmi all",
+        "description": "Also remove all images used by services",
+        "source": "local"
+      },
+      {
+        "flag": "--remove-orphans",
+        "description": "Remove containers for services not in the compose file",
+        "source": "local"
+      },
+      {
+        "flag": "-t N",
+        "description": "Seconds to wait before forcibly killing containers (default 10)",
+        "source": "local"
+      }
+    ],
+    "example": "docker compose down",
+    "output": "[+] Running 3/3\n ✔ Container myapp-web-1   Removed\n ✔ Container myapp-db-1    Removed\n ✔ Network myapp_default   Removed",
+    "tip": "Without --volumes, named volumes persist so your database data survives a down. Add --volumes only when you want a completely fresh state — it permanently deletes all volume data.",
+    "tags": [
+      "compose",
+      "stop",
+      "remove",
+      "down",
+      "cleanup",
+      "teardown",
+      "docker compose",
+      "shutdown"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  {
+    "id": "docker-compose-logs",
+    "category": "docker",
+    "command": "docker compose logs -f --tail=100 web",
+    "title": "Stream service logs",
+    "difficulty": "beginner",
+    "description": "Follow live log output from one or all services in a Docker Compose project — the primary way to debug startup failures and watch for runtime errors.",
+    "breakdown": [
+      {
+        "part": "docker compose",
+        "meaning": "Multi-container orchestration tool"
+      },
+      {
+        "part": "logs",
+        "meaning": "Fetch log output from service containers"
+      },
+      {
+        "part": "-f",
+        "meaning": "Follow — stream new log lines in real time (like tail -f)"
+      },
+      {
+        "part": "--tail=100",
+        "meaning": "Start from the last 100 lines rather than the full history"
+      },
+      {
+        "part": "web",
+        "meaning": "Service name to filter — omit to see logs from all services"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-f, --follow",
+        "description": "Stream logs continuously",
+        "source": "local"
+      },
+      {
+        "flag": "--tail N",
+        "description": "Show only the last N lines",
+        "source": "local"
+      },
+      {
+        "flag": "--since TIME",
+        "description": "Show logs since a timestamp or relative time (e.g. 30m, 2024-01-01)",
+        "source": "local"
+      },
+      {
+        "flag": "--timestamps",
+        "description": "Add timestamps to each log line",
+        "source": "local"
+      },
+      {
+        "flag": "--no-color",
+        "description": "Disable colour output (useful for piping)",
+        "source": "local"
+      }
+    ],
+    "example": "docker compose logs --since 5m",
+    "output": "web-1  | 2024-03-14 10:30:01 - GET /health 200 3ms\nweb-1  | 2024-03-14 10:30:02 - POST /api/users 201 45ms\ndb-1   | 2024-03-14 10:30:03 - LOG: database system is ready",
+    "tip": "Omit the service name to stream logs from all services at once — useful for watching a full stack. Add --timestamps when diagnosing timing issues across services.",
+    "tags": [
+      "logs",
+      "compose",
+      "follow",
+      "stream",
+      "debug",
+      "tail",
+      "docker compose",
+      "stdout",
+      "stderr"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  {
+    "id": "docker-save-load",
+    "category": "docker",
+    "command": "docker save nginx:alpine | gzip > nginx.tar.gz",
+    "title": "Export image to file",
+    "difficulty": "intermediate",
+    "description": "Serialize a Docker image to a compressed tar archive — useful for transferring images to air-gapped machines or creating portable backups without a registry.",
+    "breakdown": [
+      {
+        "part": "docker save",
+        "meaning": "Stream a Docker image as a tar archive to stdout"
+      },
+      {
+        "part": "nginx:alpine",
+        "meaning": "The image name and tag to export"
+      },
+      {
+        "part": "|",
+        "meaning": "Pipe stdout to the next command"
+      },
+      {
+        "part": "gzip",
+        "meaning": "Compress the tar stream"
+      },
+      {
+        "part": "> nginx.tar.gz",
+        "meaning": "Redirect the compressed output to a file"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "docker save -o FILE IMAGE",
+        "description": "Save to a file directly without piping",
+        "source": "local"
+      },
+      {
+        "flag": "docker load -i FILE",
+        "description": "Load an image from a previously saved archive",
+        "source": "local"
+      },
+      {
+        "flag": "docker save IMAGE1 IMAGE2 > images.tar",
+        "description": "Export multiple images to one archive",
+        "source": "local"
+      }
+    ],
+    "example": "docker load -i nginx.tar.gz",
+    "output": "Loaded image: nginx:alpine",
+    "tip": "To copy an image between machines: save on source, scp the file, load on destination. This is slower than a registry push but works on isolated networks. docker export is different — it exports a container filesystem, not an image with layers.",
+    "tags": [
+      "save",
+      "export",
+      "archive",
+      "transfer",
+      "portable",
+      "backup",
+      "image file",
+      "air-gap",
+      "offline"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  {
+    "id": "docker-history",
+    "category": "docker",
+    "command": "docker history --no-trunc nginx:alpine",
+    "title": "Show image layer history",
+    "difficulty": "intermediate",
+    "description": "Display all layers that make up a Docker image, including the Dockerfile instructions and sizes that created each layer — helps diagnose bloated images.",
+    "breakdown": [
+      {
+        "part": "docker history",
+        "meaning": "Show the layer-by-layer history of a Docker image"
+      },
+      {
+        "part": "--no-trunc",
+        "meaning": "Show the full command for each layer, not a truncated version"
+      },
+      {
+        "part": "nginx:alpine",
+        "meaning": "The image to inspect"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--no-trunc",
+        "description": "Show full commands without truncation",
+        "source": "local"
+      },
+      {
+        "flag": "--format",
+        "description": "Custom output format using Go template (e.g. --format \"{{.Size}} {{.CreatedBy}}\")",
+        "source": "local"
+      },
+      {
+        "flag": "-q",
+        "description": "Show only image layer IDs",
+        "source": "local"
+      }
+    ],
+    "example": "docker history --no-trunc --format \"{{.Size}}\\t{{.CreatedBy}}\" nginx:alpine",
+    "output": "IMAGE          CREATED        CREATED BY                                      SIZE\nabc123def456   3 weeks ago    CMD [\"nginx\" \"-g\" \"daemon off;\"]                 0B\n<missing>      3 weeks ago    RUN apk add --no-cache nginx                    3.4MB\n<missing>      3 weeks ago    COPY conf/nginx.conf /etc/nginx/nginx.conf      2.1kB",
+    "tip": "Large layers are often caused by not combining RUN commands or not cleaning up package manager caches. Merge RUN instructions and add cleanup in the same layer: RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*",
+    "tags": [
+      "history",
+      "layers",
+      "image",
+      "inspect",
+      "dockerfile",
+      "size",
+      "optimize",
+      "bloat",
+      "debug image"
+    ],
+    "package": "docker",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
   }
 ]

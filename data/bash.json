@@ -1018,5 +1018,80 @@
       "alpine"
     ],
     "manPage": "1"
+  },
+  {
+    "id": "bash-getopts",
+    "category": "bash",
+    "command": "while getopts \":f:vo:\" opt; do case $opt in f) FILE=\"$OPTARG\" ;; v) VERBOSE=1 ;; o) OUTPUT=\"$OPTARG\" ;; \\?) echo \"Invalid option: -$OPTARG\" >&2 ;; esac; done",
+    "title": "Parse script arguments",
+    "difficulty": "intermediate",
+    "description": "Parse command-line flags and their arguments in a bash script using getopts — the built-in POSIX-compliant way to add option handling to shell scripts.",
+    "breakdown": [
+      {
+        "part": "getopts \":f:vo:\"",
+        "meaning": "Define accepted options: f requires an argument (f:), v is a flag, o requires an argument (o:). Leading colon enables silent error handling."
+      },
+      {
+        "part": "opt",
+        "meaning": "Variable that receives the current option letter on each iteration"
+      },
+      {
+        "part": "case $opt in",
+        "meaning": "Switch on the current option"
+      },
+      {
+        "part": "f) FILE=\"$OPTARG\"",
+        "meaning": "When -f is passed, store its argument in FILE"
+      },
+      {
+        "part": "v) VERBOSE=1",
+        "meaning": "When -v is passed, set VERBOSE flag"
+      },
+      {
+        "part": "\\?) echo ... >&2",
+        "meaning": "Handle unknown options — send error message to stderr"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "optstring with :",
+        "description": "Leading colon enables silent error handling (you handle errors in \\?)",
+        "source": "local"
+      },
+      {
+        "flag": "OPT:",
+        "description": "Colon after option letter means it requires an argument stored in $OPTARG",
+        "source": "local"
+      },
+      {
+        "flag": "$OPTARG",
+        "description": "The argument value for the current option",
+        "source": "local"
+      },
+      {
+        "flag": "$OPTIND",
+        "description": "Index of the next argument to process — useful to shift past options: shift $((OPTIND - 1))",
+        "source": "local"
+      }
+    ],
+    "example": "#!/bin/bash\nwhile getopts \":f:v\" opt; do\n  case $opt in\n    f) FILE=\"$OPTARG\" ;;\n    v) VERBOSE=1 ;;\n    \\?) echo \"Usage: script.sh -f FILE [-v]\" >&2; exit 1 ;;\n  esac\ndone\nshift $((OPTIND - 1))\necho \"File: $FILE, Verbose: ${VERBOSE:-0}\"",
+    "output": "$ ./script.sh -f data.csv -v\nFile: data.csv, Verbose: 1",
+    "tip": "After the while loop, run shift $((OPTIND - 1)) to remove processed options from $@ so remaining positional arguments (non-flag args) are accessible via $1, $2 etc. getopts does not support long options (--flag) — use getopt (with a t) for that.",
+    "tags": [
+      "getopts",
+      "arguments",
+      "flags",
+      "options",
+      "scripting",
+      "bash",
+      "parse args",
+      "cli",
+      "posix"
+    ],
+    "package": "bash",
+    "os": [
+      "linux",
+      "macos"
+    ]
   }
 ]

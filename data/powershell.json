@@ -1023,5 +1023,138 @@
       "macos"
     ],
     "manPage": "1"
+  },
+  {
+    "id": "ps-try-catch",
+    "category": "powershell",
+    "command": "try { Get-Content C:\\file.txt -ErrorAction Stop } catch { Write-Error \"Failed: $_\" }",
+    "title": "Error handling with try/catch",
+    "difficulty": "intermediate",
+    "description": "Catch and handle errors in PowerShell scripts using try/catch blocks — prevents script termination on non-fatal errors and enables custom error responses.",
+    "breakdown": [
+      {
+        "part": "try { ... }",
+        "meaning": "Execute the block and watch for terminating errors"
+      },
+      {
+        "part": "Get-Content C:\\file.txt",
+        "meaning": "Read the file — this is the operation that might fail"
+      },
+      {
+        "part": "-ErrorAction Stop",
+        "meaning": "Convert non-terminating errors to terminating ones so catch fires"
+      },
+      {
+        "part": "catch { ... }",
+        "meaning": "Execute this block if a terminating error occurs"
+      },
+      {
+        "part": "Write-Error \"Failed: $_\"",
+        "meaning": "Output the error — $_ contains the current exception object"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-ErrorAction Stop",
+        "description": "Promote cmdlet errors to terminating so they are caught by catch",
+        "source": "local"
+      },
+      {
+        "flag": "-ErrorAction SilentlyContinue",
+        "description": "Suppress all errors from a cmdlet",
+        "source": "local"
+      },
+      {
+        "flag": "finally { ... }",
+        "description": "Optional block that always runs after try/catch, even on error",
+        "source": "local"
+      },
+      {
+        "flag": "$_.Exception.Message",
+        "description": "Access the error message string from the caught exception",
+        "source": "local"
+      }
+    ],
+    "example": "try { Invoke-WebRequest https://api.example.com -ErrorAction Stop } catch [System.Net.WebException] { Write-Warning 'Network error' }",
+    "output": "Failed: Cannot find path 'C:\\file.txt' because it does not exist.",
+    "tip": "PowerShell has two types of errors: terminating and non-terminating. Catch only intercepts terminating errors — add -ErrorAction Stop to any cmdlet that should be caught. Use $_.Exception to access the full exception object.",
+    "tags": [
+      "try catch",
+      "error handling",
+      "exception",
+      "powershell",
+      "scripting",
+      "error action",
+      "robust"
+    ],
+    "package": "powershell",
+    "os": [
+      "windows",
+      "linux",
+      "macos"
+    ]
+  },
+  {
+    "id": "ps-convertfrom-json",
+    "category": "powershell",
+    "command": "Get-Content config.json | ConvertFrom-Json",
+    "title": "Parse JSON in PowerShell",
+    "difficulty": "beginner",
+    "description": "Convert a JSON string or file content into a PowerShell object — lets you access fields using dot notation, enabling easy API response and config file processing.",
+    "breakdown": [
+      {
+        "part": "Get-Content config.json",
+        "meaning": "Read the file contents as a string"
+      },
+      {
+        "part": "|",
+        "meaning": "Pipe the string to the next cmdlet"
+      },
+      {
+        "part": "ConvertFrom-Json",
+        "meaning": "Parse the JSON string into a PowerShell PSCustomObject"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "ConvertFrom-Json",
+        "description": "Parse JSON string to PowerShell object",
+        "source": "local"
+      },
+      {
+        "flag": "ConvertTo-Json -Depth 5",
+        "description": "Convert a PowerShell object back to JSON (increase -Depth for nested objects)",
+        "source": "local"
+      },
+      {
+        "flag": "-AsHashtable",
+        "description": "Parse to a hashtable instead of PSCustomObject (easier for dynamic keys)",
+        "source": "local"
+      },
+      {
+        "flag": "Invoke-RestMethod URL",
+        "description": "Fetch a URL and automatically parse the JSON response — no ConvertFrom-Json needed",
+        "source": "local"
+      }
+    ],
+    "example": "(Invoke-RestMethod https://api.github.com/repos/microsoft/vscode).stargazers_count",
+    "output": "name        : myapp\nversion     : 1.2.0\nenvironment : production",
+    "tip": "For REST APIs, prefer Invoke-RestMethod over Invoke-WebRequest — it automatically parses JSON responses. For deeply nested JSON, increase the -Depth parameter of ConvertTo-Json (default is 2, which truncates nested objects).",
+    "tags": [
+      "json",
+      "parse",
+      "convert",
+      "object",
+      "powershell",
+      "api response",
+      "config",
+      "rest api"
+    ],
+    "package": "powershell",
+    "os": [
+      "windows",
+      "linux",
+      "macos"
+    ]
   }
 ]

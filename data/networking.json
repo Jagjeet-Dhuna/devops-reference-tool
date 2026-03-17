@@ -65,7 +65,12 @@
       "alive",
       "network"
     ],
-    "manPage": "8"
+    "manPage": "8",
+    "package": "iputils-ping",
+    "os": [
+      "linux",
+      "macos"
+    ]
   },
   {
     "id": "curl-request",
@@ -142,7 +147,13 @@
       "json",
       "test"
     ],
-    "manPage": "1"
+    "manPage": "1",
+    "package": "curl",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
   },
   {
     "id": "wget-download",
@@ -212,7 +223,12 @@
       "save",
       "get"
     ],
-    "manPage": "1"
+    "manPage": "1",
+    "package": "wget",
+    "os": [
+      "linux",
+      "macos"
+    ]
   },
   {
     "id": "ip-addr",
@@ -282,7 +298,8 @@
     "os": [
       "linux"
     ],
-    "manPage": "8"
+    "manPage": "8",
+    "package": "iproute2"
   },
   {
     "id": "ip-route",
@@ -346,7 +363,8 @@
     "os": [
       "linux"
     ],
-    "manPage": "8"
+    "manPage": "8",
+    "package": "iproute2"
   },
   {
     "id": "ifconfig",
@@ -394,7 +412,11 @@
       "mac"
     ],
     "package": "net-tools",
-    "manPage": "8"
+    "manPage": "8",
+    "os": [
+      "linux",
+      "macos"
+    ]
   },
   {
     "id": "ss-listening",
@@ -465,7 +487,11 @@
       "what is listening",
       "port check"
     ],
-    "manPage": "8"
+    "manPage": "8",
+    "package": "iproute2",
+    "os": [
+      "linux"
+    ]
   },
   {
     "id": "netstat-ports",
@@ -544,7 +570,12 @@
       "network"
     ],
     "package": "net-tools",
-    "manPage": "8"
+    "manPage": "8",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
   },
   {
     "id": "dig-dns",
@@ -616,7 +647,12 @@
       "nameserver",
       "nslookup"
     ],
-    "manPage": "1"
+    "manPage": "1",
+    "package": "dnsutils",
+    "os": [
+      "linux",
+      "macos"
+    ]
   },
   {
     "id": "nslookup",
@@ -677,7 +713,13 @@
       "domain",
       "windows"
     ],
-    "manPage": "1"
+    "manPage": "1",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "package": "dnsutils"
   },
   {
     "id": "host-lookup",
@@ -737,7 +779,12 @@
       "resolve",
       "domain"
     ],
-    "manPage": "1"
+    "manPage": "1",
+    "package": "dnsutils",
+    "os": [
+      "linux",
+      "macos"
+    ]
   },
   {
     "id": "traceroute",
@@ -799,7 +846,12 @@
       "debug",
       "trace"
     ],
-    "manPage": "8"
+    "manPage": "8",
+    "package": "traceroute",
+    "os": [
+      "linux",
+      "macos"
+    ]
   },
   {
     "id": "mtr-trace",
@@ -866,7 +918,11 @@
       "debug"
     ],
     "package": "mtr",
-    "manPage": "8"
+    "manPage": "8",
+    "os": [
+      "linux",
+      "macos"
+    ]
   },
   {
     "id": "netcat",
@@ -941,7 +997,12 @@
       "tcp",
       "open"
     ],
-    "manPage": "1"
+    "manPage": "1",
+    "package": "netcat",
+    "os": [
+      "linux",
+      "macos"
+    ]
   },
   {
     "id": "nmap",
@@ -1023,7 +1084,13 @@
       "network scan",
       "probe"
     ],
-    "manPage": "1"
+    "manPage": "1",
+    "package": "nmap",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
   },
   {
     "id": "tcpdump",
@@ -1105,7 +1172,12 @@
       "wireshark",
       "pcap"
     ],
-    "manPage": "8"
+    "manPage": "8",
+    "package": "tcpdump",
+    "os": [
+      "linux",
+      "macos"
+    ]
   },
   {
     "id": "iptables-list",
@@ -1184,7 +1256,8 @@
     "os": [
       "linux"
     ],
-    "manPage": "8"
+    "manPage": "8",
+    "package": "iptables"
   },
   {
     "id": "ufw-status",
@@ -1255,6 +1328,7 @@
     "os": [
       "linux"
     ],
-    "manPage": "8"
+    "manPage": "8",
+    "package": "ufw"
   }
 ]

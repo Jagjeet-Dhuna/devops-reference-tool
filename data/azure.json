@@ -2085,5 +2085,255 @@
       "windows",
       "wsl"
     ]
+  },
+  {
+    "id": "az-containerapp-create",
+    "category": "azure",
+    "command": "az containerapp create --name api --resource-group myRG --image nginx:latest --target-port 80 --ingress external --environment myEnv",
+    "title": "Create a Container App",
+    "difficulty": "intermediate",
+    "description": "Deploy a containerized application to Azure Container Apps — a serverless container platform that automatically scales to zero and manages the underlying infrastructure for you.",
+    "breakdown": [
+      {
+        "part": "az containerapp",
+        "meaning": "Azure Container Apps service"
+      },
+      {
+        "part": "create",
+        "meaning": "Create and deploy a new container app"
+      },
+      {
+        "part": "--name api",
+        "meaning": "Name of the container app"
+      },
+      {
+        "part": "--resource-group myRG",
+        "meaning": "Azure resource group to deploy into"
+      },
+      {
+        "part": "--image nginx:latest",
+        "meaning": "Container image to run (Docker Hub, ACR, or any registry)"
+      },
+      {
+        "part": "--target-port 80",
+        "meaning": "The port your container listens on"
+      },
+      {
+        "part": "--ingress external",
+        "meaning": "Make the app publicly accessible over HTTPS"
+      },
+      {
+        "part": "--environment myEnv",
+        "meaning": "The Container Apps environment (shared infrastructure)"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--name NAME",
+        "description": "App name — also becomes part of the FQDN",
+        "source": "local"
+      },
+      {
+        "flag": "--image IMAGE",
+        "description": "Container image (include registry prefix for private registries)",
+        "source": "local"
+      },
+      {
+        "flag": "--ingress external|internal",
+        "description": "external = public HTTPS endpoint; internal = accessible only within the VNet",
+        "source": "local"
+      },
+      {
+        "flag": "--min-replicas N",
+        "description": "Minimum replica count (0 = scale to zero)",
+        "source": "local"
+      },
+      {
+        "flag": "--max-replicas N",
+        "description": "Maximum replica count for autoscaling",
+        "source": "local"
+      },
+      {
+        "flag": "--env-vars KEY=VALUE",
+        "description": "Set environment variables for the container",
+        "source": "local"
+      },
+      {
+        "flag": "--registry-server URL",
+        "description": "Private container registry URL",
+        "source": "local"
+      }
+    ],
+    "example": "az containerapp show --name api --resource-group myRG --query 'properties.configuration.ingress.fqdn' -o tsv",
+    "output": "Container app created.\nFQDN: api.happybeach-abc12345.eastus.azurecontainerapps.io",
+    "tip": "Azure Container Apps automatically provisions HTTPS with a managed certificate — no cert configuration needed. Scale to zero is enabled by default, so you pay nothing when the app has no traffic. Use --min-replicas 1 to keep it warm.",
+    "tags": [
+      "container apps",
+      "serverless",
+      "containers",
+      "azure",
+      "deploy",
+      "aca",
+      "scale to zero",
+      "https"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  {
+    "id": "az-cosmosdb-list",
+    "category": "azure",
+    "command": "az cosmosdb list --resource-group myRG --query '[].{Name:name, Location:location, Kind:kind}' -o table",
+    "title": "List Cosmos DB accounts",
+    "difficulty": "beginner",
+    "description": "List all Azure Cosmos DB accounts in a resource group with their locations and API kinds — Cosmos DB is a globally distributed, multi-model NoSQL database service.",
+    "breakdown": [
+      {
+        "part": "az cosmosdb",
+        "meaning": "Azure Cosmos DB service"
+      },
+      {
+        "part": "list",
+        "meaning": "Return all Cosmos DB accounts in the subscription or resource group"
+      },
+      {
+        "part": "--resource-group myRG",
+        "meaning": "Filter to a specific resource group"
+      },
+      {
+        "part": "--query '[].{Name:name, Location:location, Kind:kind}'",
+        "meaning": "JMESPath query to reshape output to relevant fields"
+      },
+      {
+        "part": "-o table",
+        "meaning": "Format output as a readable table"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--resource-group NAME",
+        "description": "Filter to a specific resource group",
+        "source": "local"
+      },
+      {
+        "flag": "show --name NAME",
+        "description": "Get full details for a specific account including connection strings",
+        "source": "local"
+      },
+      {
+        "flag": "keys list --name NAME",
+        "description": "Get the primary and secondary keys for an account",
+        "source": "local"
+      },
+      {
+        "flag": "sql database list --account-name NAME",
+        "description": "List SQL API databases in an account",
+        "source": "local"
+      },
+      {
+        "flag": "mongodb database list --account-name NAME",
+        "description": "List MongoDB API databases",
+        "source": "local"
+      }
+    ],
+    "example": "az cosmosdb keys list --name myCosmosAccount --resource-group myRG --type keys --query primaryMasterKey -o tsv",
+    "output": "Name              Location    Kind\n----------------  ----------  ----------\nmycosmosaccount   eastus      GlobalDocumentDB\nmymongoaccount    westus2     MongoDB",
+    "tip": "Cosmos DB supports multiple APIs — GlobalDocumentDB (SQL/Core), MongoDB, Gremlin, Table, and Cassandra. The API kind is set at account creation and cannot be changed. Use az cosmosdb keys list to retrieve connection keys for your application.",
+    "tags": [
+      "cosmosdb",
+      "nosql",
+      "database",
+      "azure",
+      "list",
+      "cosmos",
+      "mongodb",
+      "global"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  {
+    "id": "az-sql-server-list",
+    "category": "azure",
+    "command": "az sql server list --resource-group myRG --query '[].{Name:name, Location:location, Admin:administratorLogin}' -o table",
+    "title": "List Azure SQL servers",
+    "difficulty": "beginner",
+    "description": "List all Azure SQL logical servers in a resource group — a logical server is the management endpoint that hosts one or more SQL databases in Azure.",
+    "breakdown": [
+      {
+        "part": "az sql server",
+        "meaning": "Azure SQL Server management commands"
+      },
+      {
+        "part": "list",
+        "meaning": "Return all SQL servers in the subscription or resource group"
+      },
+      {
+        "part": "--resource-group myRG",
+        "meaning": "Filter to a specific resource group"
+      },
+      {
+        "part": "--query '[].{Name:name, Location:location, Admin:administratorLogin}'",
+        "meaning": "JMESPath expression to select specific fields"
+      },
+      {
+        "part": "-o table",
+        "meaning": "Format as a readable table"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--resource-group NAME",
+        "description": "Filter to a specific resource group",
+        "source": "local"
+      },
+      {
+        "flag": "az sql db list --server NAME",
+        "description": "List all databases on a specific SQL server",
+        "source": "local"
+      },
+      {
+        "flag": "az sql server firewall-rule list --server NAME",
+        "description": "List firewall rules allowing client IP access",
+        "source": "local"
+      },
+      {
+        "flag": "az sql server show --name NAME",
+        "description": "Get full details for a specific SQL server",
+        "source": "local"
+      },
+      {
+        "flag": "az sql db show-connection-string",
+        "description": "Generate a connection string for a database",
+        "source": "local"
+      }
+    ],
+    "example": "az sql db list --resource-group myRG --server my-sql-server --query '[].{Name:name, Status:status, SKU:sku.name}' -o table",
+    "output": "Name              Location    Admin\n----------------  ----------  -------\nmy-sql-server     eastus      sqladmin\nmy-sql-server-2   westus2     dbadmin",
+    "tip": "An Azure SQL logical server is not a VM — it is a management endpoint. The actual databases run on Microsoft-managed infrastructure. Use az sql server firewall-rule create to allow your client IP or whitelist Azure service IPs.",
+    "tags": [
+      "sql",
+      "azure sql",
+      "database",
+      "azure",
+      "list servers",
+      "relational",
+      "sql server",
+      "db"
+    ],
+    "package": "azure-cli",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
   }
 ]

@@ -1250,5 +1250,349 @@
       "windows"
     ],
     "manPage": "1"
+  },
+  {
+    "id": "git-revert",
+    "category": "git",
+    "command": "git revert HEAD",
+    "title": "Undo a commit safely",
+    "difficulty": "beginner",
+    "description": "Create a new commit that reverses the changes from a previous commit — the safe way to undo a pushed change because it preserves history rather than rewriting it.",
+    "breakdown": [
+      {
+        "part": "git revert",
+        "meaning": "Create a new commit that inverts the specified commit"
+      },
+      {
+        "part": "HEAD",
+        "meaning": "The most recent commit on the current branch"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "HEAD",
+        "description": "Revert the most recent commit",
+        "source": "local"
+      },
+      {
+        "flag": "HEAD~2",
+        "description": "Revert the commit two steps back",
+        "source": "local"
+      },
+      {
+        "flag": "<commit-hash>",
+        "description": "Revert a specific commit by its SHA hash",
+        "source": "local"
+      },
+      {
+        "flag": "--no-commit",
+        "description": "Stage the revert changes without committing — review before committing",
+        "source": "local"
+      },
+      {
+        "flag": "-m 1",
+        "description": "For merge commits: keep parent 1 (the target branch)",
+        "source": "local"
+      }
+    ],
+    "example": "git revert HEAD~3",
+    "output": "[main abc1234] Revert \"Add broken feature\"\n 1 file changed, 3 deletions(-)",
+    "tip": "Use git revert instead of git reset when commits have already been pushed — reset rewrites history which causes problems for anyone else who has pulled those commits.",
+    "tags": [
+      "undo",
+      "revert",
+      "rollback",
+      "undo commit",
+      "reverse",
+      "safe rollback",
+      "history",
+      "pushed commit"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  {
+    "id": "git-clean",
+    "category": "git",
+    "command": "git clean -fd",
+    "title": "Remove untracked files",
+    "difficulty": "intermediate",
+    "description": "Delete all untracked files and directories from the working tree — useful for resetting to a pristine state before a build or after a messy merge attempt.",
+    "breakdown": [
+      {
+        "part": "git clean",
+        "meaning": "Remove untracked files from the working directory"
+      },
+      {
+        "part": "-f",
+        "meaning": "Force — required flag, git will not delete without it by default"
+      },
+      {
+        "part": "-d",
+        "meaning": "Also remove untracked directories"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-f",
+        "description": "Force deletion (required — git refuses to clean without it)",
+        "source": "local"
+      },
+      {
+        "flag": "-d",
+        "description": "Remove untracked directories in addition to files",
+        "source": "local"
+      },
+      {
+        "flag": "-n",
+        "description": "Dry run — show what would be deleted without deleting",
+        "source": "local"
+      },
+      {
+        "flag": "-x",
+        "description": "Also remove files ignored by .gitignore (e.g. build artefacts)",
+        "source": "local"
+      },
+      {
+        "flag": "-i",
+        "description": "Interactive mode — confirm each deletion",
+        "source": "local"
+      }
+    ],
+    "example": "git clean -fdn",
+    "output": "Would remove build/\nWould remove node_modules/.cache/\nWould remove debug.log",
+    "tip": "Always run git clean -n (dry run) first to see exactly what will be deleted — this operation cannot be undone. Add -x to also remove build artefacts that are in .gitignore.",
+    "tags": [
+      "clean",
+      "untracked",
+      "remove files",
+      "delete",
+      "reset working tree",
+      "fresh start",
+      "build clean"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  {
+    "id": "git-config",
+    "category": "git",
+    "command": "git config --global user.name \"Your Name\"",
+    "title": "Set global git config",
+    "difficulty": "beginner",
+    "description": "Set git configuration values that apply to all repositories on your machine — required before making your first commit so git knows who authored the changes.",
+    "breakdown": [
+      {
+        "part": "git config",
+        "meaning": "Read or write git configuration settings"
+      },
+      {
+        "part": "--global",
+        "meaning": "Apply to all repositories for the current user (~/.gitconfig)"
+      },
+      {
+        "part": "user.name",
+        "meaning": "The configuration key to set"
+      },
+      {
+        "part": "\"Your Name\"",
+        "meaning": "The value to assign"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--global",
+        "description": "Set value in ~/.gitconfig — applies to all repos for this user",
+        "source": "local"
+      },
+      {
+        "flag": "--local",
+        "description": "Set value in .git/config — applies only to the current repository",
+        "source": "local"
+      },
+      {
+        "flag": "--system",
+        "description": "Set value for all users on the machine (requires root)",
+        "source": "local"
+      },
+      {
+        "flag": "--list",
+        "description": "Print all configuration values in effect",
+        "source": "local"
+      },
+      {
+        "flag": "--unset",
+        "description": "Remove a configuration key: git config --global --unset user.email",
+        "source": "local"
+      }
+    ],
+    "example": "git config --global user.email \"you@example.com\"",
+    "output": "",
+    "tip": "Set both user.name and user.email — both appear in every commit. Use --local to override your global identity for a specific work repository. Run git config --list to see all active settings.",
+    "tags": [
+      "config",
+      "setup",
+      "username",
+      "email",
+      "configure",
+      "settings",
+      "identity",
+      "gitconfig",
+      "first time setup"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  {
+    "id": "git-blame",
+    "category": "git",
+    "command": "git blame -L 10,20 src/app.ts",
+    "title": "Show who changed each line",
+    "difficulty": "intermediate",
+    "description": "Annotate each line of a file with the last commit hash, author, and date that changed it — the quickest way to find out when a specific line was introduced and why.",
+    "breakdown": [
+      {
+        "part": "git blame",
+        "meaning": "Show what revision and author last modified each line of a file"
+      },
+      {
+        "part": "-L 10,20",
+        "meaning": "Restrict output to lines 10 through 20"
+      },
+      {
+        "part": "src/app.ts",
+        "meaning": "The file to annotate"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "-L start,end",
+        "description": "Restrict annotation to a line range",
+        "source": "local"
+      },
+      {
+        "flag": "-w",
+        "description": "Ignore whitespace changes when attributing blame",
+        "source": "local"
+      },
+      {
+        "flag": "-e",
+        "description": "Show author email instead of name",
+        "source": "local"
+      },
+      {
+        "flag": "--since=<date>",
+        "description": "Ignore commits older than a date: --since=3.weeks",
+        "source": "local"
+      },
+      {
+        "flag": "-C",
+        "description": "Detect lines copied from other files in the same commit",
+        "source": "local"
+      }
+    ],
+    "example": "git blame -L 1,5 README.md",
+    "output": "a1b2c3d4 (Alice  2024-01-15 09:30:00 +0000  1) # My Project\nf4e5d6c7 (Bob    2024-02-20 14:12:00 +0000  2) \ne7f8a9b0 (Alice  2024-01-15 09:30:00 +0000  3) A useful tool.",
+    "tip": "In VS Code, the GitLens extension shows inline blame on every line without running this command. Use git log -S \"search term\" --source --all to find the commit that first introduced a specific string.",
+    "tags": [
+      "blame",
+      "annotate",
+      "who changed",
+      "author",
+      "line history",
+      "audit",
+      "trace",
+      "debug history"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  {
+    "id": "git-submodule",
+    "category": "git",
+    "command": "git submodule update --init --recursive",
+    "title": "Initialize submodules",
+    "difficulty": "intermediate",
+    "description": "Clone and check out all git submodules referenced by the repository — required after cloning a project that embeds other git repositories as dependencies.",
+    "breakdown": [
+      {
+        "part": "git submodule",
+        "meaning": "Manage embedded git repositories (submodules)"
+      },
+      {
+        "part": "update",
+        "meaning": "Update the submodule to the commit recorded in the parent repo"
+      },
+      {
+        "part": "--init",
+        "meaning": "Initialize submodules that have not yet been cloned"
+      },
+      {
+        "part": "--recursive",
+        "meaning": "Also initialize any nested submodules within submodules"
+      }
+    ],
+    "flags": [
+      {
+        "flag": "--init",
+        "description": "Initialize submodules not yet cloned",
+        "source": "local"
+      },
+      {
+        "flag": "--recursive",
+        "description": "Process nested submodules too",
+        "source": "local"
+      },
+      {
+        "flag": "--remote",
+        "description": "Update to the latest commit on the submodule branch (not the pinned one)",
+        "source": "local"
+      },
+      {
+        "flag": "add <url> <path>",
+        "description": "Add a new submodule: git submodule add https://github.com/org/repo libs/dep",
+        "source": "local"
+      },
+      {
+        "flag": "status",
+        "description": "Show the current state of all submodules",
+        "source": "local"
+      }
+    ],
+    "example": "git clone --recurse-submodules https://github.com/org/repo.git",
+    "output": "Submodule path 'libs/shared': checked out 'a1b2c3d4e5f6'",
+    "tip": "When cloning a repo that uses submodules, pass --recurse-submodules to git clone to initialize them automatically. If you forgot, run git submodule update --init --recursive after cloning.",
+    "tags": [
+      "submodule",
+      "nested repos",
+      "dependencies",
+      "recursive",
+      "init",
+      "clone",
+      "embed",
+      "external"
+    ],
+    "package": "git",
+    "os": [
+      "linux",
+      "macos",
+      "windows"
+    ]
   }
 ]
