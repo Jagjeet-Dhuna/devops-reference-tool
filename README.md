@@ -2,7 +2,7 @@
 
 I built this for myself. When I'm on a tablet or away from my main machine, I wanted somewhere fast and clean to look up commands, check what flags do, and not have to dig through man pages. It grew into something that felt worth sharing.
 
-Most of the code and content was put together with AI assistance, built using Claude Code. The direction and editorial calls are mine.
+I programmed this and used AI along the way when I needed it.
 
 If it's useful to you, add to it. More commands, more categories, whatever's missing for your workflow.
 
@@ -85,7 +85,6 @@ Open [http://localhost:3000](http://localhost:3000).
 - [TypeScript](https://www.typescriptlang.org)
 - [Tailwind CSS v4](https://tailwindcss.com)
 - [Shadcn/ui](https://ui.shadcn.com)
-- [Claude Code](https://claude.ai/code) (built with)
 
 ## License
 
